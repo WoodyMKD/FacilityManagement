@@ -1,8 +1,18 @@
-﻿@{
+﻿@model HomeViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<ul class="tile-layout">
+    @foreach (var invObject in Model.InventoryObjects)
+    {
+        <li class="tile-layout-item">
+            <div class="tile-layout-item-content">
+                <h2><a asp-controller="Home" asp-action="Details" asp-route-id="@invObject.Id">@invObject.Name</a></h2>
+                <img src="~/images/chiller.jpg" alt="" />
+                <p>@invObject.Manufacturer | @invObject.Model</p>
+            </div>
+        </li>
+    }
+</ul>

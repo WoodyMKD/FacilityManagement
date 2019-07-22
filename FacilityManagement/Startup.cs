@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authorization;
+using FacilityManagement.Web.Models.Repositories;
 
 namespace FacilityManagement
 {
@@ -42,6 +43,8 @@ namespace FacilityManagement
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddTransient<IInventoryRepository, InventoryRepository>();
 
             services.AddMvc(o =>
             {
