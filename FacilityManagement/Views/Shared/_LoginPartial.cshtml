@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@using FacilityManagement.Web.Areas.Identity
+
+@inject SignInManager<EmployeeUser> SignInManager
+@inject UserManager<EmployeeUser> UserManager
 
 <div class="navbar-custom-menu">
     <ul class="nav navbar-nav">
@@ -21,7 +23,7 @@
                                 <!-- start message -->
                                 <a href="#">
                                     <div class="pull-left">
-                                        <img src="~/lib/admin-lte/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                        <img src="~/images/Employee-Photos/@((await UserManager.FindByNameAsync(User.Identity.Name)).ThumbnailUrl)" class="img-circle" alt="User Image">
                                     </div>
                                     <h4>
                                         Support Team
@@ -213,42 +215,27 @@
                 <!-- <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello John</a>
                     -->
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="~/lib/admin-lte/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                    <span class="hidden-xs">@User.Identity.Name</span>
+                    <img src="~/images/Employee-Photos/@((await UserManager.FindByNameAsync(User.Identity.Name)).ThumbnailUrl)" class="user-image" alt="User Image">
+                    <span class="hidden-xs">@((await UserManager.FindByNameAsync(User.Identity.Name)).Name)</span>
                 </a>
                 <ul class="dropdown-menu">
                     <!-- User image -->
                     <li class="user-header">
-                        <img src="~/lib/admin-lte/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <img src="~/images/Employee-Photos/@((await UserManager.FindByNameAsync(User.Identity.Name)).ThumbnailUrl)" class="img-circle" alt="User Image">
 
                         <p>
-                            @User.Identity.Name - Web Developer
-                            <small>Member since Nov. 2012</small>
+                            @((await UserManager.FindByNameAsync(User.Identity.Name)).Name)
+                            <small>@((await UserManager.FindByNameAsync(User.Identity.Name)).Position)</small>
                         </p>
-                    </li>
-                    <!-- Menu Body -->
-                    <li class="user-body">
-                        <div class="row">
-                            <div class="col-xs-4 text-center">
-                                <a href="#">Followers</a>
-                            </div>
-                            <div class="col-xs-4 text-center">
-                                <a href="#">Sales</a>
-                            </div>
-                            <div class="col-xs-4 text-center">
-                                <a href="#">Friends</a>
-                            </div>
-                        </div>
-                        <!-- /.row -->
                     </li>
                     <!-- Menu Footer-->
                     <li class="user-footer">
                         <div class="pull-left">
-                            <a class="btn btn-default btn-flat" asp-area="Identity" asp-page="/Account/Manage/Index" title="Profile">Profile</a>
+                            <a class="btn btn-default btn-flat" asp-area="Identity" asp-page="/Account/Manage/Index" title="Profile">Профил</a>
                         </div>
                         <div class="pull-right">
                             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                <button type="submit" class="btn btn-default btn-flat">Sign out</button>
+                                <button type="submit" class="btn btn-default btn-flat">Одјави се</button>
                             </form>
                         </div>
                     </li>
@@ -258,10 +245,10 @@
         else
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Регистрација</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Најава</a>
             </li>
         }
     </ul>
