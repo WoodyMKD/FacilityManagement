@@ -5,11 +5,19 @@ using System.Threading.Tasks;
 
 namespace FacilityManagement.Web.Models
 {
+    public enum InventoryObjectType
+    {
+        CHILLER,
+        CLIMATIC_CHAMBER,
+        COMPRESSOR,
+        BOILER
+    }
+
     public class InventoryObject
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Type { get; set; }
+        public InventoryObjectType Type { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }
     }

@@ -5,6 +5,7 @@ using FacilityManagement.Web.Areas.Identity;
 using FacilityManagement.Web.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FacilityManagement.Data
 {
@@ -16,5 +17,15 @@ namespace FacilityManagement.Data
         }
 
         public DbSet<InventoryObject> InventoryObjects { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder
+                .Entity<InventoryObject>()
+                .Property(o => o.Type)
+                .HasConversion(new EnumToStringConverter<InventoryObjectType>());
+        }
     }
 }

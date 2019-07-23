@@ -29,6 +29,10 @@ a {
 	background-size: cover;
 }
 
+#dt-inventory-objects {
+	margin-top: 15px;
+}
+
 /* Home Page tile layout
 -------------------------------------------------- */
 .tile-layout {
@@ -84,6 +88,7 @@ a {
 -------------------------------------------------- */
 .login-wrap {
 	width: 100%;
+	padding-top: 25px;
 	color: #bbbbbb;
 	font: 600 14px/18px 'Open Sans',sans-serif;
 	margin: auto;

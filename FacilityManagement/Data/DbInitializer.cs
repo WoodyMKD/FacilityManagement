@@ -15,12 +15,12 @@ namespace FacilityManagement.Web.Data
             {
                 context.AddRange
                 (
-                    new InventoryObject { Name = "Чилер #1", Type = "chiller", Manufacturer = "Cleveland", Model = "ABC123MK" },
-                    new InventoryObject { Name = "Чилер #2", Type = "chiller", Manufacturer = "Nike", Model = "ABC123MK" },
-                    new InventoryObject { Name = "Клима Комора #1", Type = "climate-chamber", Manufacturer = "Adidas", Model = "ABC123MK" },
-                    new InventoryObject { Name = "Компресор #1", Type = "compressor", Manufacturer = "Puma", Model = "ABC123MK" },
-                    new InventoryObject { Name = "Компресор #2", Type = "compressor", Manufacturer = "Gucci", Model = "ABC123MK" },
-                    new InventoryObject { Name = "Бојлер #1", Type = "boiler", Manufacturer = "Louis Vitton", Model = "ABC123MK" }
+                    new InventoryObject { Name = "Чилер #1", Type = InventoryObjectType.CHILLER, Manufacturer = "Cleveland", Model = "ABC123MK" },
+                    new InventoryObject { Name = "Чилер #2", Type = InventoryObjectType.CHILLER, Manufacturer = "Nike", Model = "ABC123MK" },
+                    new InventoryObject { Name = "Клима Комора #1", Type = InventoryObjectType.CLIMATIC_CHAMBER, Manufacturer = "Adidas", Model = "ABC123MK" },
+                    new InventoryObject { Name = "Компресор #1", Type = InventoryObjectType.COMPRESSOR, Manufacturer = "Puma", Model = "ABC123MK" },
+                    new InventoryObject { Name = "Компресор #2", Type = InventoryObjectType.COMPRESSOR, Manufacturer = "Gucci", Model = "ABC123MK" },
+                    new InventoryObject { Name = "Бојлер #1", Type = InventoryObjectType.BOILER, Manufacturer = "Louis Vitton", Model = "ABC123MK" }
                 );
 
                 context.SaveChanges();

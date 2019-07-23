@@ -15,6 +15,10 @@
       "provider": "cdnjs",
       "library": "font-awesome@4.7.0",
       "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "Dynatable@0.3.1",
+      "destination": "wwwroot/lib/Dynatable/"
     }
   ]
 }
