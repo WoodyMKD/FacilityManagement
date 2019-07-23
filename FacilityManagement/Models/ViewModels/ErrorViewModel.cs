@@ -1,6 +1,6 @@
 using System;
 
-namespace FacilityManagement.Web.Models
+namespace FacilityManagement.Web.Models.ViewModels
 {
     public class ErrorViewModel
     {

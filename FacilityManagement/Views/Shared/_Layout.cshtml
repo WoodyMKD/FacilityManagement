@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -42,6 +46,7 @@
                 </a>
 
                 <partial name="_LoginPartial" />
+                <partial name="_SelectLanguagePartial" />
 
             </nav>
         </header>
@@ -97,7 +102,7 @@
     <environment exclude="Development">
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/twitter-bootstrap/js/bootstrap.min.js"></script>
-        <script src="~/lib/Dynatable/jquery.dynatable.min.js""></script>
+        <script src="~/lib/Dynatable/jquery.dynatable.min.js" "></script>
         <script src="~/lib/admin-lte/js/adminlte.min.js"></script>
     </environment>
 

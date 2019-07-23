@@ -255,8 +255,9 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    -webkit-animation: autofill 0s forwards;
-    animation: autofill 0s forwards;
+	-webkit-animation: autofill 0s forwards;
+	-moz-animation: autofill 0s forwards;
+	animation: autofill 0s forwards;
 }
 
 @keyframes autofill {

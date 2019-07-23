@@ -42,7 +42,7 @@ namespace FacilityManagement.Web.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Име и Презиме")]
+            [Display(Name = "Full name")]
             public string Name { get; set; }
 
             [Required]

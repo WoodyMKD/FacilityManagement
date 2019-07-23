@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using FacilityManagement.Data;
 using FacilityManagement.Web.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -11,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace FacilityManagement
+namespace FacilityManagement.Web
 {
     public class Program
     {
@@ -29,11 +28,11 @@ namespace FacilityManagement
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("Се отишло у ку***...");
+                    // Problem...
                 }
             }
 
-            CreateWebHostBuilder(args).Build().Run();
+            host.Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

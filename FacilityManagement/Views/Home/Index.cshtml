@@ -5,6 +5,8 @@
     ViewData["Description"] = "Кратко инфо";
 }
 
+<h1>@ViewBag.Loc</h1>
+
 <ul id="dt-inventory-objects" class="tile-layout">
     @foreach (var invObject in Model.InventoryObjects)
     {

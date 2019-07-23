@@ -1,5 +1,5 @@
 ﻿using System;
-using FacilityManagement.Data;
+using FacilityManagement.Web.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;

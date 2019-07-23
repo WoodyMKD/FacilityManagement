@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace FacilityManagement.Data
+namespace FacilityManagement.Web.Data
 {
     public class ApplicationDbContext : IdentityDbContext<EmployeeUser>
     {
