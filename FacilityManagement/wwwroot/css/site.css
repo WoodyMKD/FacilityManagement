@@ -29,6 +29,30 @@ a {
 	background-size: cover;
 }
 
+.removeButtonStyle {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+.removeButtonStyle:hover {
+	background: rgba(0, 0, 0, 0.1);
+}
+
+.lang-image {
+	float: left;
+	width: 40px;
+	height: 35px;
+	margin-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
 #dt-inventory-objects {
 	margin-top: 15px;
 }

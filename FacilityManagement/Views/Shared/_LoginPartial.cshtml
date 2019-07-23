@@ -4,41 +4,37 @@
 @inject SignInManager<EmployeeUser> SignInManager
 @inject UserManager<EmployeeUser> UserManager
 
-<div class="navbar-custom-menu">
-    <ul class="nav navbar-nav">
-        @if (SignInManager.IsSignedIn(User))
-        {
-            <!-- User Account: style can be found in dropdown.less -->
-            <li class="dropdown user user-menu">
-                <!-- <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello John</a>
-                    -->
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="~/images/Employee-Photos/@((await UserManager.FindByNameAsync(User.Identity.Name)).ThumbnailUrl)" class="user-image" alt="User Image">
-                    <span class="hidden-xs">@((await UserManager.FindByNameAsync(User.Identity.Name)).Name)</span>
-                </a>
-                <ul class="dropdown-menu">
-                    <!-- User image -->
-                    <li class="user-header">
-                        <img src="~/images/Employee-Photos/@((await UserManager.FindByNameAsync(User.Identity.Name)).ThumbnailUrl)" class="img-circle" alt="User Image">
+@if (SignInManager.IsSignedIn(User))
+{
+    <!-- User Account: style can be found in dropdown.less -->
+    <li class="dropdown user user-menu">
+        <!-- <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello John</a>
+            -->
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <img src="~/images/Employee-Photos/@((await UserManager.FindByNameAsync(User.Identity.Name)).ThumbnailUrl)" class="user-image" alt="User Image">
+            <span class="hidden-xs">@((await UserManager.FindByNameAsync(User.Identity.Name)).Name)</span>
+        </a>
+        <ul class="dropdown-menu">
+            <!-- User image -->
+            <li class="user-header">
+                <img src="~/images/Employee-Photos/@((await UserManager.FindByNameAsync(User.Identity.Name)).ThumbnailUrl)" class="img-circle" alt="User Image">
 
-                        <p>
-                            @((await UserManager.FindByNameAsync(User.Identity.Name)).Name)
-                            <small>@((await UserManager.FindByNameAsync(User.Identity.Name)).Position)</small>
-                        </p>
-                    </li>
-                    <!-- Menu Footer-->
-                    <li class="user-footer">
-                        <div class="pull-left">
-                            <a class="btn btn-default btn-flat" asp-area="Identity" asp-page="/Account/Manage/Index" title="Profile">Профил</a>
-                        </div>
-                        <div class="pull-right">
-                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                <button type="submit" class="btn btn-default btn-flat">Одјави се</button>
-                            </form>
-                        </div>
-                    </li>
-                </ul>
+                <p>
+                    @((await UserManager.FindByNameAsync(User.Identity.Name)).Name)
+                    <small>@((await UserManager.FindByNameAsync(User.Identity.Name)).Position)</small>
+                </p>
             </li>
-        }
-    </ul>
-</div>
+            <!-- Menu Footer-->
+            <li class="user-footer">
+                <div class="pull-left">
+                    <a class="btn btn-default btn-flat" asp-area="Identity" asp-page="/Account/Manage/Index" title="Profile">Профил</a>
+                </div>
+                <div class="pull-right">
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button type="submit" class="btn btn-default btn-flat">Одјави се</button>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </li>
+}

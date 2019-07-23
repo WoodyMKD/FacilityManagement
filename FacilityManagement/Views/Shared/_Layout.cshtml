@@ -45,8 +45,12 @@
                     <span class="sr-only">Отвори мени</span>
                 </a>
 
-                <partial name="_LoginPartial" />
-                <partial name="_SelectLanguagePartial" />
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <partial name="_SelectLanguagePartial" />
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
 
             </nav>
         </header>
