@@ -1,49 +1,58 @@
 ﻿@page
 @model RegisterModel
+
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Регистрација";
+    Layout = "/Views/Shared/_BlankLayout.cshtml";
 }
 
-<h2>@ViewData["Title"]</h2>
-
-<div class="row">
-    <div class="col-md-4">
-        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>Create a new account.</h4>
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.Name"></label>
-                <input asp-for="Input.Name" class="form-control" />
-                <span asp-validation-for="Input.Name" class="text-danger"></span>
+<div class="login-wrap">
+    <div class="login-html">
+        <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Регистрација</label>
+        <div class="login-form">
+            <div class="sign-in-htm">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <div class="group">
+                        <label asp-for="Input.Name" class="label"></label>
+                        <input asp-for="Input.Name" class="input" />
+                        <span asp-validation-for="Input.Name" class="text-danger"></span>
+                    </div>
+                    <div class="group">
+                        <label asp-for="Input.Email" class="label"></label>
+                        <input asp-for="Input.Email" class="input" />
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div class="group">
+                        <label asp-for="Input.Password" class="label"></label>
+                        <input asp-for="Input.Password" class="input" />
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+                    <div class="group">
+                        <label asp-for="Input.ConfirmPassword" class="label"></label>
+                        <input asp-for="Input.ConfirmPassword" class="input" />
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div class="group">
+                        <label asp-for="Input.Position" class="label"></label>
+                        <input asp-for="Input.Position" class="input" />
+                        <span asp-validation-for="Input.Position" class="text-danger"></span>
+                    </div>
+                    <div class="group">
+                        <label asp-for="Input.ThumbnailUrl" class="label"></label>
+                        <input asp-for="Input.ThumbnailUrl" class="input" />
+                        <span asp-validation-for="Input.ThumbnailUrl" class="text-danger"></span>
+                    </div>
+                    <div class="group">
+                        <input type="submit" class="button" value="Регистрирај се">
+                    </div>
+                    <div class="hr"></div>
+                    <div class="foot-lnk">
+                        <a asp-page="Login">Најави се</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.Position"></label>
-                <input asp-for="Input.Position" class="form-control" />
-                <span asp-validation-for="Input.Position" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ThumbnailUrl"></label>
-                <input asp-for="Input.ThumbnailUrl" class="form-control" />
-                <span asp-validation-for="Input.ThumbnailUrl" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-default">Register</button>
-        </form>
+        </div>
     </div>
 </div>
 

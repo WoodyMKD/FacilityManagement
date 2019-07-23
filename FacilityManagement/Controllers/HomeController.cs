@@ -15,7 +15,8 @@ namespace FacilityManagement.Controllers
     {
         // Листа за целата апликација:
         // TODO: Целосна интеграција со AdminLTE, сега е hard-coded (_Layout.cshtml)
-        // TODO: Да се додаде image uploader при регистрација / менување профил (Identity)
+        // TODO: Да се додаде image uploader на слика менување профил (Identity)
+        // TODO: При регистрација немора слика... дај му default (Identity)
         // TODO: Да се направи Account System со информации за корисничко име и работна позиција
         // TODO: Да се додаде нова страница за најава
         // TODO: Почетната страница да се стилизира со bootstrap и dynatables (Home/Index.cshtml)
