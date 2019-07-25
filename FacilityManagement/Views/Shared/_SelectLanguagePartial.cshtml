@@ -14,13 +14,15 @@
         .ToList();
 }
 
-<li class="dropdown user user-menu lang-li">
+<li class="dropdown messages-menu">
     <form id="selectLanguage" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path" method="post" role="form">
         @foreach (var culture in cultureItems)
         {
-            <button type="submit" name="culture" value="@culture.Value" class="removeButtonStyle">
-                <img src="~/images/lang-@(culture.Value).png" class="lang-image" alt="@culture.Value">
-            </button>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <button type="submit" name="culture" value="@culture.Value" class="removeButtonStyle">
+                    <img src="~/images/lang-@(culture.Value).png" class="lang-image" alt="@culture.Value">
+                </button>
+            </a>
         }
     </form>
 </li>
