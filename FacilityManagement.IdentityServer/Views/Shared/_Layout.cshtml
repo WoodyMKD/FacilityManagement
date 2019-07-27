@@ -1,9 +1,9 @@
 ﻿@using IdentityServer4.Extensions
 @{
-    string name = null;
+    string Name = null;
     if (!true.Equals(ViewData["signed-out"]))
     {
-        name = Context.User?.GetDisplayName();
+        Name = Context.User?.GetDisplayName();
     }
 }
 
@@ -25,7 +25,6 @@
     </environment>
 </head>
 <body class="bodyBackground">
-
     @RenderBody()
 
     <!-- Scripts -->

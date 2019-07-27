@@ -38,6 +38,8 @@ namespace FacilityManagement.IdentityServer.Data.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
+                    b.Property<string>("Name");
+
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
 
@@ -49,6 +51,8 @@ namespace FacilityManagement.IdentityServer.Data.Migrations
                     b.Property<string>("PhoneNumber");
 
                     b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("Position");
 
                     b.Property<string>("SecurityStamp");
 

@@ -15,7 +15,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using FacilityManagement.Web.Models.Repositories;
-using FacilityManagement.Web.Areas.Identity;
 using FacilityManagement.Web.Data;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
@@ -92,11 +91,13 @@ namespace FacilityManagement.Web
                   //options.SignedOutCallbackPath = new PathString("...")
                   options.Scope.Add("openid");
                   options.Scope.Add("profile");
+                  options.Scope.Add("position");
                   options.SaveTokens = true;
                   options.ClientSecret = "secret";
                   options.GetClaimsFromUserInfoEndpoint = true;
                   options.ClaimActions.DeleteClaim("sid");
                   options.ClaimActions.DeleteClaim("idp");
+                  options.ClaimActions.MapUniqueJsonKey("position", "position");
               });
         }
 

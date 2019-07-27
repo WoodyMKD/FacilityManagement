@@ -1,40 +1,33 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using FacilityManagement.Web.Areas.Identity
+﻿@using Microsoft.AspNetCore.Authorization
+@using System.Security.Claims;
+@inject IAuthorizationService AuthorizationService
 
-@inject SignInManager<EmployeeUser> SignInManager
-@inject UserManager<EmployeeUser> UserManager
+<!-- User Account: style can be found in dropdown.less -->
+<li class="dropdown user user-menu">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 
-@if (SignInManager.IsSignedIn(User))
-{
-    <!-- User Account: style can be found in dropdown.less -->
-    <li class="dropdown user user-menu">
-        <!-- <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello John</a>
-            -->
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="~/images/Employee-Photos/@((await UserManager.FindByNameAsync(User.Identity.Name)).ThumbnailUrl)" class="user-image" alt="User Image">
-            <span class="hidden-xs">@((await UserManager.FindByNameAsync(User.Identity.Name)).Name)</span>
-        </a>
-        <ul class="dropdown-menu">
-            <!-- User image -->
-            <li class="user-header">
-                <img src="~/images/Employee-Photos/@((await UserManager.FindByNameAsync(User.Identity.Name)).ThumbnailUrl)" class="img-circle" alt="User Image">
+       <img src="~/images/Employee-Photos/avatar5.png" class="user-image" alt="User Image">
+       <span class="hidden-xs">@(((ClaimsIdentity)User.Identity).FindFirst("name").Value)</span>
 
-                <p>
-                    @((await UserManager.FindByNameAsync(User.Identity.Name)).Name)
-                    <small>@((await UserManager.FindByNameAsync(User.Identity.Name)).Position)</small>
-                </p>
-            </li>
-            <!-- Menu Footer-->
-            <li class="user-footer">
-                <div class="pull-left">
-                    <a class="btn btn-default btn-flat" asp-area="Identity" asp-page="/Account/Manage/Index" title="Profile">Профил</a>
-                </div>
-                <div class="pull-right">
-                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                        <button type="submit" class="btn btn-default btn-flat">Одјави се</button>
-                    </form>
-                </div>
-            </li>
-        </ul>
-    </li>
+    </a>
+    <ul class="dropdown-menu">
+        <!-- User image -->
+        <li class="user-header">
+            <img src="~/images/Employee-Photos/avatar5.png" class="img-circle" alt="User Image">
+            <p>
+                @(((ClaimsIdentity)User.Identity).FindFirst("name").Value)
+                <small>@(((ClaimsIdentity)User.Identity).FindFirst("position").Value)</small>
+            </p>
+        </li>
+        <!-- Menu Footer-->
+        <li class="user-footer">
+            <div class="pull-left">
+                <a class="btn btn-default btn-flat" href="#" title="Profile">Профил</a>
+            </div>
+            <div class="pull-right">
+                <a class="btn btn-default btn-flat" asp-controller="Home" asp-action="Logout" title="Logout">Одјави се</a>
+            </div>
+        </li>
+    </ul>
+</li>
 }

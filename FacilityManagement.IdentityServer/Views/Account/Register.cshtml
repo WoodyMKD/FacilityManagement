@@ -11,8 +11,13 @@
         <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Регистрација</label>
         <div class="login-form">
             <div class="sign-in-htm">
-                <div asp-validation-summary="All" class="text-danger"></div>
+                <partial name="_ValidationSummary" />
                 <form asp-route="Register" method="post">
+                    <div class="group">
+                        <label asp-for="Name" class="label"></label>
+                        <input asp-for="Name" class="input" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
                     <div class="group">
                         <label asp-for="Email" class="label"></label>
                         <input asp-for="Email" class="input" />
@@ -23,34 +28,45 @@
                         <input asp-for="Password" class="input" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
+                    <div class="group">
+                        <label asp-for="ConfirmPassword" class="label"></label>
+                        <input asp-for="ConfirmPassword" class="input" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <div class="group">
+                        <label asp-for="Position" class="label"></label>
+                        <input asp-for="Position" class="input" />
+                        <span asp-validation-for="Position" class="text-danger"></span>
+                    </div>
                     <!--
-        <div class="group">
-            <label asp-for="Input.Password" class="label"></label>
-            <input asp-for="Input.Password" class="input" />
-            <span asp-validation-for="Input.Password" class="text-danger"></span>
-        </div>
-        <div class="group">
-            <label asp-for="Input.ConfirmPassword" class="label"></label>
-            <input asp-for="Input.ConfirmPassword" class="input" />
-            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-        </div>
-        <div class="group">
-            <label asp-for="Input.Position" class="label"></label>
-            <input asp-for="Input.Position" class="input" />
-            <span asp-validation-for="Input.Position" class="text-danger"></span>
-        </div>
-        <div class="group">
-            <label asp-for="Input.ThumbnailUrl" class="label"></label>
-            <input asp-for="Input.ThumbnailUrl" class="input" />
-            <span asp-validation-for="Input.ThumbnailUrl" class="text-danger"></span>
-        </div>
-        -->
+    <div class="group">
+        <label asp-for="Input.Password" class="label"></label>
+        <input asp-for="Input.Password" class="input" />
+        <span asp-validation-for="Input.Password" class="text-danger"></span>
+    </div>
+    <div class="group">
+        <label asp-for="Input.ConfirmPassword" class="label"></label>
+        <input asp-for="Input.ConfirmPassword" class="input" />
+        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+    </div>
+    <div class="group">
+        <label asp-for="Input.Position" class="label"></label>
+        <input asp-for="Input.Position" class="input" />
+        <span asp-validation-for="Input.Position" class="text-danger"></span>
+    </div>
+    <div class="group">
+        <label asp-for="Input.ThumbnailUrl" class="label"></label>
+        <input asp-for="Input.ThumbnailUrl" class="input" />
+        <span asp-validation-for="Input.ThumbnailUrl" class="text-danger"></span>
+    </div>
+    -->
                     <div class="group">
                         <input type="submit" class="button" value="Регистрирај се">
                     </div>
                     <div class="hr"></div>
                     <div class="foot-lnk">
-                        <a asp-controller="Account" asp-action="Login">Најави се</a>
+                        <a href="https://localhost:44302/">Најави се</a>
                     </div>
                 </form>
             </div>

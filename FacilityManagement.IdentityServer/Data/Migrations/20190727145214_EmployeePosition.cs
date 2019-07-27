@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace FacilityManagement.Web.Data.Migrations
+namespace FacilityManagement.IdentityServer.Data.Migrations
 {
-    public partial class AddedUserName : Migration
+    public partial class EmployeePosition : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Name",
+                name: "Position",
                 table: "AspNetUsers",
                 nullable: true);
         }
@@ -15,7 +15,7 @@ namespace FacilityManagement.Web.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Name",
+                name: "Position",
                 table: "AspNetUsers");
         }
     }

@@ -263,6 +263,14 @@ namespace IdentityServer4.Quickstart.UI
                 filtered.Add(new Claim(JwtClaimTypes.Email, email));
             }
 
+            // position
+            var position = claims.FirstOrDefault(x => x.Type == "position")?.Value ??
+               claims.FirstOrDefault(x => x.Type == "position")?.Value;
+            if (position != null)
+            {
+                filtered.Add(new Claim("position", position));
+            }
+
             var user = new EmployeeUser
             {
                 UserName = Guid.NewGuid().ToString(),

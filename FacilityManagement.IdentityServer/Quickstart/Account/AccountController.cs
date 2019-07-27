@@ -199,8 +199,8 @@ namespace IdentityServer4.Quickstart.UI
                 // this triggers a redirect to the external provider for sign-out
                 return SignOut(new AuthenticationProperties { RedirectUri = url }, vm.ExternalAuthenticationScheme);
             }
-
-            return Redirect("https://localhost:44302");
+            
+            return Redirect(vm.PostLogoutRedirectUri);
         }
 
         [HttpGet]
@@ -226,13 +226,13 @@ namespace IdentityServer4.Quickstart.UI
         public async Task<IActionResult> Register(RegisterRequestViewModel rvm)
         {
             var result = await RegisterAPI(rvm) as OkResult;
-            //Треба да вратиш грешка... Случај: Дупликат име... Направи Статус во вјумоделот
 
             if(result != null)
             {
                 return Redirect("https://localhost:44302/");
+                //Треба да вратиш грешка... Случај: Дупликат име... Направи Статус во вјумоделот
             }
-            
+
             return View(rvm);
         }
 
@@ -248,15 +248,15 @@ namespace IdentityServer4.Quickstart.UI
                 return BadRequest(ModelState);
             }
 
-            var user = new EmployeeUser { UserName = model.Email, Email = model.Email };
+            var user = new EmployeeUser { UserName = model.Email, Email = model.Email, Name = model.Name, Position = model.Position };
 
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded) return BadRequest(result.Errors);
 
-            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("userName", user.UserName));
-            //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("name", user.Name));
-            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("email", user.Email));
+            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim(JwtClaimTypes.Email, user.Email));
+            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim(JwtClaimTypes.Name, user.Name));
+            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("position", user.Position));
             //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("role", Roles.Consumer));
 
             return Ok();

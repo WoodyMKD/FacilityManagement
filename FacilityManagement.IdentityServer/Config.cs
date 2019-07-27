@@ -18,6 +18,10 @@ namespace FacilityManagement.IdentityServer
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResource(
+                    "position",
+                    "Job title",
+                     new List<string>() { "position" }),
             };
         }
         
@@ -34,10 +38,15 @@ namespace FacilityManagement.IdentityServer
                     {
                         "https://localhost:44302/signin-oidc"
                     },
+                    PostLogoutRedirectUris = new List<string>()
+                    {
+                        "https://localhost:44302/signout-callback-oidc"
+                    },
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "position"
                     },
                     ClientSecrets =
                     {

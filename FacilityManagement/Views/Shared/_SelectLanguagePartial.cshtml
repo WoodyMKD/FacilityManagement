@@ -17,8 +17,13 @@
 <li class="dropdown messages-menu">
     <form id="selectLanguage" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path" method="post" role="form">
         @foreach (var culture in cultureItems)
-        {
-            <button type="submit" name="culture" value="@culture.Value" class="removeButtonStyle">
+        { 
+            var activeClass = "";
+            if (System.Globalization.CultureInfo.CurrentUICulture.Name == culture.Value) {
+                activeClass += "active-language";
+            }
+            
+            <button type="submit" name="culture" value="@culture.Value" class="@activeClass removeButtonStyle">
                 <img src="~/images/lang-@(culture.Value).png" class="lang-image" alt="@culture.Value">
             </button>
         }
