@@ -12,15 +12,19 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace FacilityManagement.Web.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         // Листа за целата апликација:
         // TODO: Целосна интеграција со AdminLTE, сега е hard-coded (_Layout.cshtml)
         // TODO: Да се додаде image uploader на слика менување профил (Identity)
         // TODO: Да се среди преводот и да се средат копчињата за промена на јазикот
+        // TODO: Logout e broken i najava po registracicja... IDentityServer4
         // TODO: При регистрација немора слика... дај му default (Identity)
         // TODO: Да се направи Account System со информации за корисничко име и работна позиција
         // TODO: Да се додаде нова страница за најава
@@ -37,8 +41,10 @@ namespace FacilityManagement.Web.Controllers
             _localizer = localizer;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            await WriteOutIdentityInformation();
+
             var invObjects = _invObjectRepository.GetAllInventoryObjects().OrderBy(p => p.Name);
 
             var homeViewModel = new HomeViewModel()
@@ -79,6 +85,29 @@ namespace FacilityManagement.Web.Controllers
             );
 
             return LocalRedirect(returnUrl);
+        }
+
+        public async Task WriteOutIdentityInformation()
+        {
+            // get the saved identity token
+            var identityToken = await HttpContext
+                .GetTokenAsync(OpenIdConnectParameterNames.IdToken);
+
+            // write it out
+            Debug.WriteLine($"Identity token: {identityToken}");
+
+            // write out the user claims
+            foreach (var claim in User.Claims)
+            {
+                Debug.WriteLine($"Claim type: {claim.Type} - Claim value: {claim.Value}");
+            }
+        }
+
+        public async Task Logout()
+        {
+            // Clears the  local cookie ("Cookies" must match name from scheme)
+            await HttpContext.SignOutAsync("Cookies");
+            await HttpContext.SignOutAsync("oidc");
         }
     }
 }

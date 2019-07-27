@@ -21,6 +21,8 @@ using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Options;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication;
 
 namespace FacilityManagement.Web
 {
@@ -29,6 +31,7 @@ namespace FacilityManagement.Web
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
         }
 
         public IConfiguration Configuration { get; }
@@ -64,21 +67,37 @@ namespace FacilityManagement.Web
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<EmployeeUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            //services.AddDefaultIdentity<EmployeeUser>()
+                //.AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddTransient<IInventoryRepository, InventoryRepository>();
 
-            services.AddMvc(o =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .Build();
-                o.Filters.Add(new AuthorizeFilter(policy));
-            })
+            services.AddMvc()
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
             .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
             .AddDataAnnotationsLocalization();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "Cookies";
+                options.DefaultChallengeScheme = "oidc";
+            }).AddCookie("Cookies")
+              .AddOpenIdConnect("oidc", options =>
+              {
+                  options.SignInScheme = "Cookies";
+                  options.Authority = "https://localhost:44301";
+                  options.ClientId = "facilitymanagementweb";
+                  options.ResponseType = "code id_token";
+                  //options.CallbackPath = new PathString("...") Default: sign-in-odc...
+                  //options.SignedOutCallbackPath = new PathString("...")
+                  options.Scope.Add("openid");
+                  options.Scope.Add("profile");
+                  options.SaveTokens = true;
+                  options.ClientSecret = "secret";
+                  options.GetClaimsFromUserInfoEndpoint = true;
+                  options.ClaimActions.DeleteClaim("sid");
+                  options.ClaimActions.DeleteClaim("idp");
+              });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

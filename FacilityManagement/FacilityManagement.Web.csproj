@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <UserSecretsId>aspnet-FacilityManagement-F455B9D1-61F2-4922-A843-EE3192851B00</UserSecretsId>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <IISExpressSSLPort>44302</IISExpressSSLPort>
   </PropertyGroup>
 
 

@@ -18,11 +18,9 @@
     <form id="selectLanguage" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path" method="post" role="form">
         @foreach (var culture in cultureItems)
         {
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                <button type="submit" name="culture" value="@culture.Value" class="removeButtonStyle">
-                    <img src="~/images/lang-@(culture.Value).png" class="lang-image" alt="@culture.Value">
-                </button>
-            </a>
+            <button type="submit" name="culture" value="@culture.Value" class="removeButtonStyle">
+                <img src="~/images/lang-@(culture.Value).png" class="lang-image" alt="@culture.Value">
+            </button>
         }
     </form>
 </li>

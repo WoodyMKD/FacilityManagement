@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FacilityManagement.Web.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<EmployeeUser>
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
