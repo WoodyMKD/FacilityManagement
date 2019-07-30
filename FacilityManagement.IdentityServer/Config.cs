@@ -46,7 +46,8 @@ namespace FacilityManagement.IdentityServer
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "position"
+                        "position",
+                        "facilitymanagementapi"
                     },
                     ClientSecrets =
                     {
@@ -54,6 +55,16 @@ namespace FacilityManagement.IdentityServer
                     }
                 }
              };
+        }
+
+        // api-related resources (scopes)
+        public static IEnumerable<ApiResource> GetApis()
+        {
+            return new List<ApiResource>
+            {
+                new ApiResource("facilitymanagementapi", "Facility Management API",
+                new List<string>() {"position" } )
+            };
         }
     }
 }

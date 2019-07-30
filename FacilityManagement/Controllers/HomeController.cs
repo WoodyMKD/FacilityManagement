@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using FacilityManagement.Web.Models;
-using FacilityManagement.Web.Models.Repositories;
 using FacilityManagement.Web.Models.ViewModels;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
@@ -14,6 +13,9 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using FacilityManagement.Web.Services;
+using FacilityManagement.API.Models;
+using System.Net.Http;
 
 namespace FacilityManagement.Web.Controllers
 {
@@ -23,45 +25,60 @@ namespace FacilityManagement.Web.Controllers
         // Листа за целата апликација:
         // TODO: Целосна интеграција со AdminLTE, сега е hard-coded (_Layout.cshtml)
         // TODO: Да се додаде image uploader на слика менување профил (Identity)
+        // TODO: DTO, сега го користам од API моделот...
         // TODO: Да се среди преводот и да се средат копчињата за промена на јазикот
         // TODO: Logout e broken i najava po registracicja... IDentityServer4
         // TODO: При регистрација немора слика... дај му default (Identity)
         // TODO: Да се направи Account System со информации за корисничко име и работна позиција
         // TODO: Да се додаде нова страница за најава
         // TODO: Почетната страница да се стилизира со bootstrap и dynatables (Home/Index.cshtml)
-
-        private readonly IInventoryRepository _invObjectRepository;
+        
+        private readonly IFacilityManagementHttpClient _facilityManagementHttpClient;
         private readonly IStringLocalizer<HomeController> _localizer;
 
         public HomeController(
-            IInventoryRepository invObjectRepository, 
-            IStringLocalizer<HomeController> localizer)
+            IStringLocalizer<HomeController> localizer,
+            IFacilityManagementHttpClient facilityManagementHttpClient)
         {
-            _invObjectRepository = invObjectRepository;
             _localizer = localizer;
+            _facilityManagementHttpClient = facilityManagementHttpClient;
         }
 
         public async Task<IActionResult> Index()
         {
-            await WriteOutIdentityInformation();
+            //await WriteOutIdentityInformation();
 
-            var invObjects = _invObjectRepository.GetAllInventoryObjects().OrderBy(p => p.Name);
+            var httpClient = await _facilityManagementHttpClient.GetClient();
+            var response = await httpClient.GetAsync("api/InventoryObjects").ConfigureAwait(false);
 
-            var homeViewModel = new HomeViewModel()
+            if (response.IsSuccessStatusCode)
             {
-                InventoryObjects = invObjects.ToList()
-            };
+                var responseObject = response.Content.ReadAsAsync<IEnumerable<InventoryObject>>();
+                responseObject.Wait();
 
-            return View(homeViewModel);
+                var homeViewModel = new HomeViewModel()
+                {
+                    InventoryObjects = responseObject.Result.ToList()
+                };
+
+                return View(homeViewModel);
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized ||
+                    response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return RedirectToAction("AccessDenied", "Authorization");
+            }
+            
+            throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
         }
 
         public IActionResult Details(int id)
         {
-            var invObject = _invObjectRepository.GetInventoryObjectById(id);
-            if (invObject == null)
+            //var invObject = _invObjectRepository.GetInventoryObjectById(id);
+            //if (invObject == null)
                 return NotFound();
 
-            return View(invObject);
+            //return View(invObject);
         }
 
         public IActionResult Privacy()

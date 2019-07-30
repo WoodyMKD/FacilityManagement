@@ -1,11 +1,10 @@
-﻿using FacilityManagement.Web.Data;
-using FacilityManagement.Web.Models;
+﻿using FacilityManagement.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FacilityManagement.Web.Data
+namespace FacilityManagement.API.Data
 {
     public class DbInitializer
     {

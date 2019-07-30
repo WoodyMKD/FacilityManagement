@@ -230,9 +230,9 @@ namespace IdentityServer4.Quickstart.UI
             if(result != null)
             {
                 return Redirect("https://localhost:44302/");
-                //Треба да вратиш грешка... Случај: Дупликат име... Направи Статус во вјумоделот
             }
-
+            
+            ModelState.AddModelError(string.Empty, "Корисник со внесената е-пошта е веќе регистриран во базата на корисници.");
             return View(rvm);
         }
 

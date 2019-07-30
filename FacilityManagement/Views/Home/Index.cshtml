@@ -7,12 +7,13 @@
 
 <h1>@ViewBag.Loc</h1>
 
+
 <ul id="dt-inventory-objects" class="tile-layout">
     @foreach (var invObject in Model.InventoryObjects)
     {
         <li class="tile-layout-item">
             <div class="tile-layout-item-content">
-                <h2><a href="Home/Details/@invObject.Id" data-objectId="@invObject.Id">@invObject.Name</a></h2>
+                <h2><a href="Home/Details/invObject.Id" data-objectId="@invObject.Id">@invObject.Name</a></h2>
                 <img src="~/images/chiller.jpg" alt="" />
                 <p>@invObject.Manufacturer | @invObject.Model</p>
             </div>
@@ -27,13 +28,13 @@
             var cssClass = "tile-layout-item", li;
             if (rowIndex % 3 === 0) { cssClass += ' first'; }
             li = '<li class="' + cssClass + '"> \
-                        <div class="tile-layout-item-content"> \
-                            <h2><a href="Home/Details/' + record.Id + '">' + record.Name + '</a></h2> \
-                            <img src="/images/chiller.jpg" alt="" /> \
-                            <p>' + record.Description + '</p> \
-                        </div> \
-                    </li> \
-            ';
+                            <div class="tile-layout-item-content"> \
+                                <h2><a href="Home/Details/' + record.Id + '">' + record.Name + '</a></h2> \
+                                <img src="/images/chiller.jpg" alt="" /> \
+                                <p>' + record.Description + '</p> \
+                            </div> \
+                        </li> \
+                ';
             return li;
         }
 

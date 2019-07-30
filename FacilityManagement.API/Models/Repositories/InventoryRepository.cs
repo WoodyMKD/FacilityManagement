@@ -1,10 +1,10 @@
-﻿using FacilityManagement.Web.Data;
+﻿using FacilityManagement.API.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FacilityManagement.Web.Models.Repositories
+namespace FacilityManagement.API.Models.Repositories
 {
     public class InventoryRepository: IInventoryRepository
     {

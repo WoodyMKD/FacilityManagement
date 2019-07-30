@@ -14,14 +14,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authorization;
-using FacilityManagement.Web.Models.Repositories;
-using FacilityManagement.Web.Data;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication;
+using FacilityManagement.Web.Services;
 
 namespace FacilityManagement.Web
 {
@@ -63,18 +62,17 @@ namespace FacilityManagement.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddDefaultIdentity<EmployeeUser>()
-                //.AddEntityFrameworkStores<ApplicationDbContext>();
-
-            services.AddTransient<IInventoryRepository, InventoryRepository>();
-
             services.AddMvc()
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
             .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
             .AddDataAnnotationsLocalization();
+
+            // register an IHttpContextAccessor so we can access the current
+            // HttpContext in services by injecting it
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // register an IImageGalleryHttpClient
+            services.AddScoped<IFacilityManagementHttpClient, FacilityManagementHttpClient>();
 
             services.AddAuthentication(options =>
             {
@@ -92,6 +90,7 @@ namespace FacilityManagement.Web
                   options.Scope.Add("openid");
                   options.Scope.Add("profile");
                   options.Scope.Add("position");
+                  options.Scope.Add("facilitymanagementapi");
                   options.SaveTokens = true;
                   options.ClientSecret = "secret";
                   options.GetClaimsFromUserInfoEndpoint = true;
