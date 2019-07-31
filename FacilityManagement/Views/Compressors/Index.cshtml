@@ -1,0 +1,69 @@
+﻿@model CompressorIndexViewModel
+
+@{
+    ViewData["Title"] = "Компресори";
+    ViewData["Description"] = "Кратко инфо";
+}
+
+<ul id="compressors" class="tile-layout">
+    @foreach (var compressor in Model.Compressors)
+    {
+        <li class="tile-layout-item">
+            <div class="tile-layout-item-content">
+                <h2><a asp-controller="Compressors" asp-action="Details" asp-route-id="@compressor.CompressorId">@compressor.Name</a></h2>
+                <img src="~/images/chiller.jpg" alt="" />
+                <p>@compressor.Manufacturer | @compressor.Model</p>
+            </div>
+        </li>
+    }
+</ul>
+
+@section scripts {
+    <script>
+        // Function that renders the list items from our records
+        function ulWriter(rowIndex, record, columns, cellWriter) {
+            var cssClass = "tile-layout-item", li;
+            if (rowIndex % 3 === 0) { cssClass += ' first'; }
+            li = '<li class="' + cssClass + '"> \
+                                    <div class="tile-layout-item-content"> \
+                                        <h2>' + Html.ActionLink(record.Name, "Details", "Compressors", new { id = record.Id }) + '</h2> \
+                                        <img src="/images/chiller.jpg" alt="" /> \
+                                        <p>' + record.Description + '</p> \
+                                    </div> \
+                                </li> \
+                        ';
+            return li;
+        }
+
+        // Function that creates our records from the DOM when the page is loaded
+        function ulReader(index, li, record) {
+            var $li = $(li),
+                $content = $li.find('.tile-layout-item-content');
+
+            record.Id = $content.find("h2 a").attr("asp-route-id");
+            record.Name = $content.find("h2 a").html();
+            record.Description = $content.find("p").html();
+
+            console.log(record);
+        }
+
+        $('#compressors').dynatable({
+            table: {
+                bodyRowSelector: 'li'
+            },
+            dataset: {
+                perPageDefault: 4,
+                perPageOptions: [4, 8, 12]
+            },
+            writers: {
+                _rowWriter: ulWriter
+            },
+            readers: {
+                _rowReader: ulReader
+            },
+            params: {
+
+            }
+        });
+    </script>
+}

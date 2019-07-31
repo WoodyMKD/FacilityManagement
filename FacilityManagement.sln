@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacilityManagement.Web", "F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacilityManagement.IdentityServer", "FacilityManagement.IdentityServer\FacilityManagement.IdentityServer.csproj", "{3241B34A-C47A-4E21-B5CC-976F19A6E027}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacilityManagement.API", "FacilityManagement.API\FacilityManagement.API.csproj", "{F989972D-3825-4E1A-B598-E6DD7273CF16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacilityManagement.API", "FacilityManagement.API\FacilityManagement.API.csproj", "{F989972D-3825-4E1A-B598-E6DD7273CF16}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacilityManagement.DTOs", "FacilityManagement.DTOs\FacilityManagement.DTOs.csproj", "{4EF99D8B-8EE4-4A92-97BD-14527E4B1B19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{F989972D-3825-4E1A-B598-E6DD7273CF16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F989972D-3825-4E1A-B598-E6DD7273CF16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F989972D-3825-4E1A-B598-E6DD7273CF16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EF99D8B-8EE4-4A92-97BD-14527E4B1B19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EF99D8B-8EE4-4A92-97BD-14527E4B1B19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EF99D8B-8EE4-4A92-97BD-14527E4B1B19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EF99D8B-8EE4-4A92-97BD-14527E4B1B19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

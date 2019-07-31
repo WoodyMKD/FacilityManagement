@@ -1,38 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using FacilityManagement.Web.Models;
-using FacilityManagement.Web.Models.ViewModels;
 using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using FacilityManagement.Web.Services;
-using FacilityManagement.API.Models;
-using System.Net.Http;
+using FacilityManagement.Web.Models.ViewModels;
 
 namespace FacilityManagement.Web.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
-        // Листа за целата апликација:
-        // TODO: Целосна интеграција со AdminLTE, сега е hard-coded (_Layout.cshtml)
-        // TODO: Да се додаде image uploader на слика менување профил (Identity)
-        // TODO: DTO, сега го користам од API моделот...
-        // TODO: Да се среди преводот и да се средат копчињата за промена на јазикот
-        // TODO: Logout e broken i najava po registracicja... IDentityServer4
-        // TODO: При регистрација немора слика... дај му default (Identity)
-        // TODO: Да се направи Account System со информации за корисничко име и работна позиција
-        // TODO: Да се додаде нова страница за најава
-        // TODO: Почетната страница да се стилизира со bootstrap и dynatables (Home/Index.cshtml)
+        // Низок приоритет:
+        // TODO: Менаџирање профил со IdentityServer4 API (Низок приоритет)
+        // TODO: Да се промени стилот за најава и регистрација - како Нептун (Низок приоритет)
         
+        // Среден приоритет:
+        // TODO: Да се средат ресурсите за превод (Среден приоритет)
+        
+        // Висок приоритет:
+        // TODO: Token expiration (Висок приоритет)
+
         private readonly IFacilityManagementHttpClient _facilityManagementHttpClient;
         private readonly IStringLocalizer<HomeController> _localizer;
 
@@ -48,28 +41,7 @@ namespace FacilityManagement.Web.Controllers
         {
             //await WriteOutIdentityInformation();
 
-            var httpClient = await _facilityManagementHttpClient.GetClient();
-            var response = await httpClient.GetAsync("api/InventoryObjects").ConfigureAwait(false);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseObject = response.Content.ReadAsAsync<IEnumerable<InventoryObject>>();
-                responseObject.Wait();
-
-                var homeViewModel = new HomeViewModel()
-                {
-                    InventoryObjects = responseObject.Result.ToList()
-                };
-
-                return View(homeViewModel);
-            }
-            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized ||
-                    response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-            {
-                return RedirectToAction("AccessDenied", "Authorization");
-            }
-            
-            throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
+            return View();
         }
 
         public IActionResult Details(int id)

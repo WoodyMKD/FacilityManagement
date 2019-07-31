@@ -10,17 +10,45 @@ namespace FacilityManagement.API.Data
     {
         public static void Seed(ApplicationDbContext context)
         {
-            if (!context.InventoryObjects.Any())
+            if (!context.Compressors.Any())
             {
-                context.AddRange
-                (
-                    new InventoryObject { Name = "Чилер #1", Type = InventoryObjectType.CHILLER, Manufacturer = "Cleveland", Model = "ABC123MK" },
-                    new InventoryObject { Name = "Чилер #2", Type = InventoryObjectType.CHILLER, Manufacturer = "Nike", Model = "ABC123MK" },
-                    new InventoryObject { Name = "Клима Комора #1", Type = InventoryObjectType.CLIMATIC_CHAMBER, Manufacturer = "Adidas", Model = "ABC123MK" },
-                    new InventoryObject { Name = "Компресор #1", Type = InventoryObjectType.COMPRESSOR, Manufacturer = "Puma", Model = "ABC123MK" },
-                    new InventoryObject { Name = "Компресор #2", Type = InventoryObjectType.COMPRESSOR, Manufacturer = "Gucci", Model = "ABC123MK" },
-                    new InventoryObject { Name = "Бојлер #1", Type = InventoryObjectType.BOILER, Manufacturer = "Louis Vitton", Model = "ABC123MK" }
-                );
+                var compressors = new List<Compressor>
+                {
+                    new Compressor { Name = "Компресор #1", Description = "Хала 1", Manufacturer = "Adidas", Model = "Air", CompressorSubTypes = new List<CompressorSubType>() },
+                    new Compressor { Name = "Компресор #2", Description = "Хала 2", Manufacturer = "Nike", Model = "Boo", CompressorSubTypes = new List<CompressorSubType>() },
+                    new Compressor { Name = "Компресор #3", Description = "Хала 3", Manufacturer = "Puma", Model = "Foo", CompressorSubTypes = new List<CompressorSubType>() }
+                };
+                compressors.ForEach(c => context.Compressors.Add(c));
+
+                var compressorSubTypes = new List<CompressorSubType>
+                {
+                    new CompressorSubType { Name = "LX1", CompressorId = 1, CompressorSystems = new List<CompressorSystem>() },
+                    new CompressorSubType { Name = "LX2", CompressorId = 1, CompressorSystems = new List<CompressorSystem>() },
+                    new CompressorSubType { Name = "FX1", CompressorId = 1, CompressorSystems = new List<CompressorSystem>() },
+                    new CompressorSubType { Name = "FX2", CompressorId = 1, CompressorSystems = new List<CompressorSystem>() }
+                };
+                compressorSubTypes.ForEach(cst => context.CompressorSubTypes.Add(cst));
+                
+                compressors[0].CompressorSubTypes.Add(compressorSubTypes[0]);
+                compressors[0].CompressorSubTypes.Add(compressorSubTypes[1]);
+                compressors[0].CompressorSubTypes.Add(compressorSubTypes[2]);
+                compressors[0].CompressorSubTypes.Add(compressorSubTypes[3]);
+
+                var compressorSystems = new List<CompressorSystem>
+                {
+                    new CompressorSystem { Name = "Електронски систем", CompressorSubType = compressorSubTypes.FirstOrDefault(cst => cst.CompressorSubTypeId == 1), Parts = new List<Part>() }
+                };
+                compressorSystems.ForEach(cs => context.CompressorSystems.Add(cs));
+
+                compressorSubTypes[0].CompressorSystems.Add(compressorSystems[0]);
+
+                var parts = new List<Part>
+                {
+                    new Part { Name = "Filter", CompressorSystem = compressorSystems.FirstOrDefault(cs => cs.CompressorSystemId == 1)}
+                };
+                parts.ForEach(p => context.Parts.Add(p));
+
+                compressorSystems[0].Parts.Add(parts[0]);
 
                 context.SaveChanges();
             }

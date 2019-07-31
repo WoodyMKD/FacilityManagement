@@ -61,8 +61,19 @@
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">НАВИГАЦИСКО МЕНИ</li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-dashboard"></i> <span>Почетна</span></a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="GetValues"><i class="fa fa-dashboard"></i> <span>Get Values</span></a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> <span>Почетна</span></a></li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-industry"></i> <span>Инвентар</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a asp-area="" asp-controller="Compressors" asp-action="Index"><i class="fa fa-minus"></i> <span>Компресори</span></a></li>  
+                        </ul>
+                    </li>
+
                 </ul>
             </section>
             <!-- /.sidebar -->

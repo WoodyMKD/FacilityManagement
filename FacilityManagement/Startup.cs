@@ -62,10 +62,18 @@ namespace FacilityManagement.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddMvc()
+            services.AddMvc(o =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                o.Filters.Add(new AuthorizeFilter(policy));
+            })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
             .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
             .AddDataAnnotationsLocalization();
+
+
 
             // register an IHttpContextAccessor so we can access the current
             // HttpContext in services by injecting it

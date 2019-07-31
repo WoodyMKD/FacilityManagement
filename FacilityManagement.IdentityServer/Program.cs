@@ -10,19 +10,7 @@ namespace FacilityManagement.IdentityServer
     {
         public static void Main(string[] args)
         {
-            bool seed = false;
-
-            var host = CreateWebHostBuilder(args).Build();
-
-            if (seed)
-            {
-                var config = host.Services.GetRequiredService<IConfiguration>();
-                var connectionString = config.GetConnectionString("FM_IdentityServerDatabase");
-                SeedData.EnsureSeedData(connectionString);
-                return;
-            }
-
-            host.Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)

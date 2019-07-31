@@ -25,6 +25,10 @@ a {
 	background: rgba(0, 0, 0, 0.1);
 }
 
+.box .box-body .nav-pills {
+	margin-bottom: 10px;
+}
+
 .active-language {
 	background: rgba(0, 0, 0, 0.1) !important;
 }
@@ -49,16 +53,13 @@ a {
 	padding-right: 5px;
 }
 
-#dt-inventory-objects {
-	margin-top: 15px;
-}
-
 /* Home Page tile layout
 -------------------------------------------------- */
 .tile-layout {
 	display: flex;
 	flex-wrap: wrap;
 	padding: 0;
+	margin-top: 15px
 }
 
 .tile-layout-item {

@@ -15,16 +15,14 @@ namespace FacilityManagement.API.Data
         {
         }
 
-        public DbSet<InventoryObject> InventoryObjects { get; set; }
+        public DbSet<Compressor> Compressors { get; set; }
+        public DbSet<CompressorSubType> CompressorSubTypes { get; set; }
+        public DbSet<Models.CompressorSystem> CompressorSystems { get; set; }
+        public DbSet<Part> Parts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder
-                .Entity<InventoryObject>()
-                .Property(o => o.Type)
-                .HasConversion(new EnumToStringConverter<InventoryObjectType>());
         }
     }
 }
