@@ -39,8 +39,8 @@ namespace FacilityManagement.API.Controllers
             }
         }
 
-        [HttpGet("{id}", Name = "Get Compressor Data")]
-        public async Task<ActionResult<CompressorModel>> GetCompressorData(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CompressorModel>> GetCompressorDataAsync(int id)
         {
             var compressor = await _compressorRepository.GetCompressorByIdAsync(id);
 

@@ -33,5 +33,15 @@ namespace FacilityManagement.API.Models.Repositories
             var result = await query.FirstOrDefaultAsync();
             return result;
         }
+
+        public async Task<CompressorSystem[]> GetCompressorSystemsBySubTypeIdAsync(int id)
+        {
+            IQueryable<CompressorSystem> query = _appDbContext.CompressorSystems
+                .Include(cs => cs.Parts)
+                .Where(c => c.CompressorSubTypeId == id);
+
+            var result = await query.ToArrayAsync();
+            return result;
+        }
     }
 }

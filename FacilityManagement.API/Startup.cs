@@ -34,10 +34,12 @@ namespace FacilityManagement.API
         {
             services.AddMvc(o =>
             {
+                /*
                 var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .Build();
                 o.Filters.Add(new AuthorizeFilter(policy));
+                */
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddAutoMapper(typeof(Startup));
@@ -55,6 +57,8 @@ namespace FacilityManagement.API
                     options.Authority = "https://localhost:44301/";
                     options.ApiName = "facilitymanagementapi";
                 });
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +73,11 @@ namespace FacilityManagement.API
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
 
             app.UseAuthentication();
             app.UseStaticFiles();

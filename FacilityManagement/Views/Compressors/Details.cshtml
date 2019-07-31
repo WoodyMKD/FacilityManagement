@@ -58,29 +58,12 @@
             }
         </ul>
 
-        @foreach (var system in Model.CompressorSubTypes.ElementAt(0).CompressorSystems)
-        {
-            <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">@system.Name</h3>
+        <div id="box-systems-container">
+        </div>
 
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-
-                </div>
-
-                <div class="box-body">
-                    ДЕЛОВИ
-                </div>
-
-                <div class="overlay">
-                    <i class="fa fa-refresh fa-spin"></i>
-                </div>
-            </div>
-        }
+        <div id="ajax-systems-loading" class="overlay" hidden>
+            <i class="fa fa-refresh fa-spin"></i>
+        </div>
     </div>
 </div>
 
@@ -88,3 +71,50 @@
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
 </div>
+
+@section scripts {
+
+    <script>
+
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "https://localhost:44303/api/compressorSystems/byCompressorId/1",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            beforeSend: function () {
+                $('#ajax-systems-loading').show();
+            },
+            complete: function () {
+                $('#ajax-systems-loading').hide();
+            },
+            success: function (data) {
+
+                $("#box-systems-container").html('');
+                $.each(data, function (i, item) {
+                    var system = '\
+                    <div class="box">\
+                        <div class="box-header with-border">\
+                            <h3 class="box-title">' + item.name + '</h3>\
+                        </div>\
+                        <div class="box-body">\
+                            ДЕЛОВИ\
+                        </div>\
+                    </div>';
+                    $('#box-systems-container').append(system);
+                }); 
+                console.log(data);
+            }, //End of AJAX Success function
+            
+            failure: function (data) {
+                alert(data.responseText);
+            }, //End of AJAX failure function
+            error: function (data) {
+                alert(data.responseText);
+            } //End of AJAX error function
+
+        });
+    });
+    </script>
+
+}
