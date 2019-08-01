@@ -10,7 +10,8 @@ namespace FacilityManagement.API.Models.Repositories
         // Compressor
         Task<Compressor[]> GetAllCompressorsAsync();
         Task<Compressor> GetCompressorByIdAsync(int id);
-            
+        Task<bool> UpdateCompressorAsync(Compressor newModel);
+
         Task<CompressorSystem[]> GetCompressorSystemsBySubTypeIdAsync(int id);
     }
 }

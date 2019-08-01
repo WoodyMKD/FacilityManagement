@@ -23,6 +23,10 @@
     {
       "library": "datatables@1.10.19",
       "destination": "wwwroot/lib/datatables/"
+    },
+    {
+      "library": "jquery.serializeJSON@2.9.0",
+      "destination": "wwwroot/lib/jquery.serializeJSON/"
     }
   ]
 }

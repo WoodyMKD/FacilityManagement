@@ -17,6 +17,8 @@ using Microsoft.Extensions.Options;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authorization;
+using FacilityManagement.DTOs;
+using FacilityManagement.API.Models;
 
 namespace FacilityManagement.API
 {
@@ -81,6 +83,16 @@ namespace FacilityManagement.API
 
             app.UseAuthentication();
             app.UseStaticFiles();
+
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<CompressorModel, Compressor>()
+                    .ForMember(m => m.CompressorSubTypes, options => options.Ignore())
+                    .ForMember(m => m.CompressorId, options => options.Ignore());
+            });
+
+            Mapper.AssertConfigurationIsValid();
+
             app.UseHttpsRedirection();
             app.UseMvc();
         }

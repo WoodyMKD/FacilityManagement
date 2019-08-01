@@ -21,6 +21,18 @@ a {
 
 /* Custom CSS
 -------------------------------------------------- */
+html {
+	overflow-y: scroll;
+}
+
+.box .overlay, .overlay-wrapper .overlay {
+	background: rgba(255, 255, 255, 0.85);
+}
+
+.box.box-info {
+	border-top-color: #3c8dbc;
+}
+
 .removeButtonStyle:hover {
 	background: rgba(0, 0, 0, 0.1);
 }

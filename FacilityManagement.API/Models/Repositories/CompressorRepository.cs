@@ -41,5 +41,13 @@ namespace FacilityManagement.API.Models.Repositories
             var result = await query.ToArrayAsync();
             return result;
         }
+
+        public async Task<bool> UpdateCompressorAsync(Compressor newModel)
+        {
+            _appDbContext.Update(newModel);
+            await _appDbContext.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

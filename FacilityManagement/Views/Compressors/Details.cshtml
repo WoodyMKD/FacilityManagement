@@ -7,37 +7,33 @@
 
 <div class="row">
     <div class="col-md-6">
-        <div class="box">
+        <div class="box box-info">
             <div class="box-header with-border">
                 <span class="glyphicon glyphicon-align-justify"></span>
-                <h3 class="box-title">@Model.Name</h3>
+                <h3 class="box-title">Општи информации</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <dl class="dl-horizontal">
-                    <dt>Производител</dt>
-                    <dd>@Model.Manufacturer</dd>
-                    <dt>Модел</dt>
-                    <dd>@Model.Model</dd>
-                    <dt>Опис</dt>
-                    <dd>@Model.Description</dd>
-                    <dt>Работни часови</dt>
-                    <dd>@Model.WorkingHours</dd>
+                <dl class="dl-horizontal" id="compressor-info-list">
                 </dl>
             </div>
             <!-- /.box-body -->
+
+            <div id="ajax-compressor-info-loading" class="overlay" hidden>
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
         </div>
         <!-- /.box -->
     </div>
 
     <div class="col-md-6">
-        <div class="box">
+        <div class="box box-info">
             <div class="box-header with-border">
                 <span class="glyphicon glyphicon-edit"></span>
                 <h3 class="box-title">Поставки</h3>
             </div>
             <div class="box-body">
-                <button id="testbtn" type="button" class="btn btn-default btn-block btn-sm">Измени податоци</button>
+                <button data-toggle="modal" data-target="#editCompressorModal" type="button" class="btn btn-default btn-block btn-sm">Измени податоци</button>
                 <button id="testbtn2" type="button" class="btn btn-default btn-block btn-sm">Избриши</button>
                 <button type="button" class="btn btn-default btn-block btn-sm">Додади нов систем</button>
             </div>
@@ -47,7 +43,7 @@
     <!-- ./col -->
 </div>
 
-<div class="box box-solid box-container">
+<div class="box box-info box-container">
     <div class="box-header with-border">
         <span class="glyphicon glyphicon-edit"></span>
         <h3 class="box-title">Детален преглед - системи и компоненти</h3>
@@ -61,10 +57,9 @@
         </ul>
 
         <div id="box-systems-container"></div>
-
-        <div id="ajax-systems-loading" class="overlay" hidden>
-            <i class="fa fa-refresh fa-spin"></i>
-        </div>
+    </div>
+    <div id="ajax-systems-loading" class="overlay" hidden>
+        <i class="fa fa-refresh fa-spin"></i>
     </div>
 </div>
 
@@ -73,9 +68,67 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+<div id="editCompressorModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <form onsubmit="return SubmitAddEdit(this, event)" data-ajax="true">
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="CompressorId" />
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control"></input>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Manufacturer" class="control-label"></label>
+                        <input asp-for="Manufacturer" class="form-control" />
+                        <span asp-validation-for="Manufacturer" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Model" class="control-label"></label>
+                        <input asp-for="Model" class="form-control" />
+                        <span asp-validation-for="Model" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="WorkingHours" class="control-label"></label>
+                        <input asp-for="WorkingHours" class="form-control" />
+                        <span asp-validation-for="WorkingHours" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Откажи</button>
+                    <button type="submit" class="btn btn-info">Зачувај</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @section scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <environment include="Development">
+        <script src="~/lib/jquery.serializeJSON/jquery.serializejson.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/jquery.serializeJSON/jquery.serializejson.min.js"></script>
+    </environment>
+
     <script>
         $(document).ready(function () {
+            loadCompressorInfo(@Model.CompressorId);
+
             var subTypeId = $(".nav-pills li a[subTypeId]:first").attr("subTypeId");
             loadSystemsAndParts(subTypeId);
 
@@ -85,6 +138,69 @@
             });
         });
 
+        function SubmitAddEdit(form, event) {
+            event.preventDefault();
+
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                var data = $(form).serializeJSON();
+                console.log(data.compressorId);
+                var compressorId = data.CompressorId;
+                data = JSON.stringify(data);
+                $.ajax({
+                    type: 'PUT',
+                    url: 'https://localhost:44303/api/compressors',
+                    data: data,
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data.success) {
+                            console.log(data.message);
+                            loadCompressorInfo(compressorId);
+                            $('#editCompressorModal').modal('hide');
+                            //ShowMessage(data.message);
+                        }
+                    }
+                });
+            }
+        }
+
+        function loadCompressorInfo(compressorId) {
+            $.ajax({
+                type: "GET",
+                url: "https://localhost:44303/api/compressors/" + compressorId,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                beforeSend: function () {
+                    $('#ajax-compressor-info-loading').show();
+                },
+                success: function (model) {
+                    console.log(model);
+                    var htmlInfo = '\
+                        <dt>Име</dt>\
+                        <dd>' + model.name + '</dd>\
+                        <dt>Производител</dt>\
+                        <dd>' + model.manufacturer + '</dd>\
+                        <dt>Модел</dt>\
+                        <dd>' + model.model + '</dd>\
+                        <dt>Опис</dt>\
+                        <dd>' + model.description + '</dd>\
+                        <dt>Работни часови</dt>\
+                        <dd>' + model.workingHours + '</dd>\
+                    ';
+                    $("#compressor-info-list").html(htmlInfo);
+
+                    $('#ajax-compressor-info-loading').hide();
+                }, //End of AJAX Success function
+
+                failure: function (data) {
+                    alert("ГРЕШКА: " + data.responseText);
+                }, //End of AJAX failure function
+                error: function (data) {
+                    alert("ГРЕШКА: " + data.responseText);
+                } //End of AJAX error function
+            });
+        }
+
         function loadSystemsAndParts(subTypeId) {
             $.ajax({
                 type: "GET",
@@ -93,9 +209,6 @@
                 dataType: "json",
                 beforeSend: function () {
                     $('#ajax-systems-loading').show();
-                },
-                complete: function () {
-                    $('#ajax-systems-loading').hide();
                 },
                 success: function (data) {
                     $("#box-systems-container").html('');
@@ -165,6 +278,8 @@
 
                     $(".nav-pills li a[subTypeId]").parent("li").removeClass("active");
                     $(".nav-pills li a[subTypeId=" + subTypeId + "]").parent("li").addClass("active");
+
+                    $('#ajax-systems-loading').hide();
                 }, //End of AJAX Success function
 
                 failure: function (data) {
@@ -176,5 +291,4 @@
             });
         }
     </script>
-
 }

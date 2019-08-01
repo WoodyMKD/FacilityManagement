@@ -22,6 +22,7 @@ namespace FacilityManagement.Web.Controllers
 
         // Среден приоритет:
         // TODO: Да се средат ресурсите за превод (Среден приоритет)
+        // TODO: Data Annotations и валидација за AJAX CRUD
         // TODO: BreadCrumbs (Среден приоритет)
 
         // Висок приоритет:
