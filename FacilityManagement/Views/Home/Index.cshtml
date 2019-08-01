@@ -6,8 +6,18 @@
 <ul class="tile-layout">
     <li class="tile-layout-item">
         <div class="tile-layout-item-content">
-            <h2><a href="/Compressors/">Compressors</a></h2>
+            <h2>Compressors</h2>
             <img src="~/images/chiller.jpg" alt="" />
         </div>
     </li>
 </ul>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".tile-layout-item-content").click(function () {
+                window.location.href = "/Compressors/";
+            });
+        });
+    </script>
+}

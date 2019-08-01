@@ -33,6 +33,29 @@ a {
 	background: rgba(0, 0, 0, 0.1) !important;
 }
 
+.box-header[data-widget="collapse"] {
+	cursor: pointer;
+	background-color: #f3f3f3;
+}
+
+#box-systems-container .box {
+	border-left: 1px solid #d2d6de;
+	border-right: 1px solid #d2d6de;
+}
+
+.pills-in-box .nav-pills li a {
+	color: white;
+	background: #367fa9bf;
+}
+
+.pills-in-box .nav-pills li.active a {
+	background: #367fa9;
+}
+
+.pills-in-box .nav-pills li a:hover {
+	background: #367fa9;
+}
+
 .removeButtonStyle {
 	background: none;
 	color: inherit;
@@ -45,9 +68,9 @@ a {
 
 .lang-image {
 	float: left;
-	width: 40px;
-	height: 35px;
-	margin-top: 10px;
+	width: 30px;
+	height: 30px;
+	margin-top: 15px;
 	padding-bottom: 10px;
 	padding-left: 5px;
 	padding-right: 5px;
@@ -92,6 +115,19 @@ a {
 	flex-direction: column;
 	padding: 1em;
 	width: 100%;
+	cursor: pointer;
+
+	border: solid 3px #3c8dbc;
+	clip-path: polygon( calc(0% + 5px) calc(0% + 5px), /* top left */
+		calc(100% - 5px) calc(0% + 5px), /* top right */
+		calc(100% - 5px) calc(100% - 5px), /* bottom right */
+		calc(0% + 5px) calc(100% - 5px) /* bottom left */
+	);
+	transition: clip-path 0.3s linear;
+}
+
+.tile-layout-item-content:hover {
+	clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
 
 .tile-layout-item-content p {

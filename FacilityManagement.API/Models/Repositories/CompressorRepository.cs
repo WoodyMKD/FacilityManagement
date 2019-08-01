@@ -26,8 +26,6 @@ namespace FacilityManagement.API.Models.Repositories
         {
             IQueryable<Compressor> query = _appDbContext.Compressors
                 .Include(c => c.CompressorSubTypes)
-                    .ThenInclude(cst => cst.CompressorSystems)
-                        .ThenInclude(cs => cs.Parts)
                 .Where(c => c.CompressorId == id);
             
             var result = await query.FirstOrDefaultAsync();

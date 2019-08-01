@@ -19,12 +19,14 @@ namespace FacilityManagement.Web.Controllers
         // Низок приоритет:
         // TODO: Менаџирање профил со IdentityServer4 API (Низок приоритет)
         // TODO: Да се промени стилот за најава и регистрација - како Нептун (Низок приоритет)
-        
+
         // Среден приоритет:
         // TODO: Да се средат ресурсите за превод (Среден приоритет)
-        
+        // TODO: BreadCrumbs (Среден приоритет)
+
         // Висок приоритет:
         // TODO: Token expiration (Висок приоритет)
+        // TODO: Тргни коментар за API да бара авторизација
 
         private readonly IFacilityManagementHttpClient _facilityManagementHttpClient;
         private readonly IStringLocalizer<HomeController> _localizer;

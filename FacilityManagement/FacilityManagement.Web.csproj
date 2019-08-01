@@ -20,9 +20,4 @@
     <ProjectReference Include="..\FacilityManagement.API\FacilityManagement.API.csproj" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Models\ViewModels\NewFolder\" />
-  </ItemGroup>
-
 </Project>

@@ -14,9 +14,9 @@ namespace FacilityManagement.API.Data
             {
                 var compressors = new List<Compressor>
                 {
-                    new Compressor { Name = "Компресор #1", Description = "Хала 1", Manufacturer = "Adidas", Model = "Air", CompressorSubTypes = new List<CompressorSubType>() },
-                    new Compressor { Name = "Компресор #2", Description = "Хала 2", Manufacturer = "Nike", Model = "Boo", CompressorSubTypes = new List<CompressorSubType>() },
-                    new Compressor { Name = "Компресор #3", Description = "Хала 3", Manufacturer = "Puma", Model = "Foo", CompressorSubTypes = new List<CompressorSubType>() }
+                    new Compressor { Name = "Компресор #1", Description = "Хала 1", Manufacturer = "Adidas", Model = "Air", WorkingHours = 10, CompressorSubTypes = new List<CompressorSubType>() },
+                    new Compressor { Name = "Компресор #2", Description = "Хала 2", Manufacturer = "Nike", Model = "Boo", WorkingHours = 15, CompressorSubTypes = new List<CompressorSubType>() },
+                    new Compressor { Name = "Компресор #3", Description = "Хала 3", Manufacturer = "Puma", Model = "Foo", WorkingHours = 20, CompressorSubTypes = new List<CompressorSubType>() }
                 };
                 compressors.ForEach(c => context.Compressors.Add(c));
 

@@ -24,8 +24,8 @@ namespace FacilityManagement.API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("byCompressorId/{id}")]
-        public async Task<ActionResult<CompressorSystemModel>> GetSystemsByCompressorIdAsync(int id)
+        [HttpGet("bySubTypeId/{id}")]
+        public async Task<ActionResult<CompressorSystemModel>> GetSystemsBySubTypeIdAsync(int id)
         {
             var compressorSystem = await _compressorRepository.GetCompressorSystemsBySubTypeIdAsync(id);
 

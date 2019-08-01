@@ -19,6 +19,10 @@
     {
       "library": "Dynatable@0.3.1",
       "destination": "wwwroot/lib/Dynatable/"
+    },
+    {
+      "library": "datatables@1.10.19",
+      "destination": "wwwroot/lib/datatables/"
     }
   ]
 }

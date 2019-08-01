@@ -21,6 +21,8 @@
                     <dd>@Model.Model</dd>
                     <dt>Опис</dt>
                     <dd>@Model.Description</dd>
+                    <dt>Работни часови</dt>
+                    <dd>@Model.WorkingHours</dd>
                 </dl>
             </div>
             <!-- /.box-body -->
@@ -35,8 +37,8 @@
                 <h3 class="box-title">Поставки</h3>
             </div>
             <div class="box-body">
-                <button type="button" class="btn btn-default btn-block btn-sm">Измени податоци</button>
-                <button type="button" class="btn btn-default btn-block btn-sm">Избриши</button>
+                <button id="testbtn" type="button" class="btn btn-default btn-block btn-sm">Измени податоци</button>
+                <button id="testbtn2" type="button" class="btn btn-default btn-block btn-sm">Избриши</button>
                 <button type="button" class="btn btn-default btn-block btn-sm">Додади нов систем</button>
             </div>
         </div>
@@ -48,18 +50,17 @@
 <div class="box box-solid box-container">
     <div class="box-header with-border">
         <span class="glyphicon glyphicon-edit"></span>
-        <h3 class="box-title">Детален преглед</h3>
+        <h3 class="box-title">Детален преглед - системи и компоненти</h3>
     </div>
-    <div class="box-body">
+    <div class="box-body pills-in-box">
         <ul class="nav nav-pills nav-justified">
             @foreach (var subtype in Model.CompressorSubTypes)
             {
-                <li class="active"><a href="#" id="@subtype.CompressorSubTypeId">@subtype.Name</a></li>
+                <li><a href="#" subTypeId="@subtype.CompressorSubTypeId">@subtype.Name</a></li>
             }
         </ul>
 
-        <div id="box-systems-container">
-        </div>
+        <div id="box-systems-container"></div>
 
         <div id="ajax-systems-loading" class="overlay" hidden>
             <i class="fa fa-refresh fa-spin"></i>
@@ -73,48 +74,107 @@
 </div>
 
 @section scripts {
-
     <script>
+        $(document).ready(function () {
+            var subTypeId = $(".nav-pills li a[subTypeId]:first").attr("subTypeId");
+            loadSystemsAndParts(subTypeId);
 
-    $(document).ready(function () {
-        $.ajax({
-            type: "GET",
-            url: "https://localhost:44303/api/compressorSystems/byCompressorId/1",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            beforeSend: function () {
-                $('#ajax-systems-loading').show();
-            },
-            complete: function () {
-                $('#ajax-systems-loading').hide();
-            },
-            success: function (data) {
-
-                $("#box-systems-container").html('');
-                $.each(data, function (i, item) {
-                    var system = '\
-                    <div class="box">\
-                        <div class="box-header with-border">\
-                            <h3 class="box-title">' + item.name + '</h3>\
-                        </div>\
-                        <div class="box-body">\
-                            ДЕЛОВИ\
-                        </div>\
-                    </div>';
-                    $('#box-systems-container').append(system);
-                }); 
-                console.log(data);
-            }, //End of AJAX Success function
-            
-            failure: function (data) {
-                alert(data.responseText);
-            }, //End of AJAX failure function
-            error: function (data) {
-                alert(data.responseText);
-            } //End of AJAX error function
-
+            $(".nav-pills li a[subTypeId]").click(function () {
+                var subTypeId = $(this).attr("subTypeId");
+                loadSystemsAndParts(subTypeId);
+            });
         });
-    });
+
+        function loadSystemsAndParts(subTypeId) {
+            $.ajax({
+                type: "GET",
+                url: "https://localhost:44303/api/compressorSystems/bySubTypeId/" + subTypeId,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                beforeSend: function () {
+                    $('#ajax-systems-loading').show();
+                },
+                complete: function () {
+                    $('#ajax-systems-loading').hide();
+                },
+                success: function (data) {
+                    $("#box-systems-container").html('');
+                    if (data.length == 0) {
+                        $('#box-systems-container').append('<h4 class="text-center">Немате додадено системи</h4>');
+                    } else {
+                        $.each(data, function (i, item) {
+                            // РЕФАКТОР НА ШПАГЕТИ КОДООООТ!
+                            var system = '\
+                            <div class="box collapsed-box">\
+                                <div class="box-header with-border" data-widget="collapse">\
+                                    <h3 class="box-title">' + item.name + '</h3>\
+                                    <div class="box-tools pull-right">\
+                                        <button type="button" class="btn btn-box-tool">\
+                                            <i class="fa fa-plus"></i>\
+                                        </button>\
+                                    </div>\
+                                </div>\
+                                <div class="box-body" style="display: none">';
+                                if (item.parts.length > 0) {
+                                    system += '\
+                                    <div class="table-responsive">\
+                                        <table class="table table-hover table-bordered table-striped table-responsive table-parts">\
+                                            <thead>\
+                                                <tr>\
+                                                    <th>Компонента</th>\
+                                                    <th>Последен сервис</th>\
+                                                    <th>Следен сервис</th>\
+                                                    <th class="text-center">Поставки</th>\
+                                                </tr>\
+                                            </thead >\
+                                            <tbody>';
+                                            for (i = 0; i < item.parts.length; ++i) {
+                                                var part = item.parts[i];
+                                                system += '\
+                                                <tr>\
+                                                    <td>' + part.name + '</td>\
+                                                    <td> @DateTime.Now </td>\
+                                                    <td> @DateTime.Now.AddDays(2) </td>\
+                                                    <td class="text-center" style="min-width: 170px">\
+                                                        <div class="btn-group btn-group-sm">\
+                                                            <button type="button" class="btn btn-default"><i class="fa fa-edit"></i> Измени</button>\
+                                                            <button type="button" class="btn btn-default"><i class="fa fa-trash"></i> Избриши</button>\
+                                                        </div>\
+                                                    </td>\
+                                                </tr>';
+                                            }
+                                            system += '\
+                                            </tbody>\
+                                        </table>\
+                                    </div >';
+                                }
+                                else {
+                                    system += '<h4 class="text-center">Немате додадено компоненти во рамки на овој систем</h4>';
+                                }
+                                system += '\
+                                </div >\
+                            </div>';
+                            $('#box-systems-container').append(system);
+                        });
+
+                        $('table.table-parts').DataTable();
+                        $('#box-systems-container .box').boxWidget({
+                            animationSpeed: 300
+                        });
+                    }
+
+                    $(".nav-pills li a[subTypeId]").parent("li").removeClass("active");
+                    $(".nav-pills li a[subTypeId=" + subTypeId + "]").parent("li").addClass("active");
+                }, //End of AJAX Success function
+
+                failure: function (data) {
+                    alert("ГРЕШКА: " + data.responseText);
+                }, //End of AJAX failure function
+                error: function (data) {
+                    alert("ГРЕШКА: " + data.responseText);
+                } //End of AJAX error function
+            });
+        }
     </script>
 
 }

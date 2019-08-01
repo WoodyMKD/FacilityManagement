@@ -10,7 +10,7 @@
     {
         <li class="tile-layout-item">
             <div class="tile-layout-item-content">
-                <h2><a asp-controller="Compressors" asp-action="Details" asp-route-id="@compressor.CompressorId">@compressor.Name</a></h2>
+                <h2><a href="/Compressors/Details/@compressor.CompressorId" controller-id="@compressor.CompressorId">@compressor.Name</a></h2>
                 <img src="~/images/chiller.jpg" alt="" />
                 <p>@compressor.Manufacturer | @compressor.Model</p>
             </div>
@@ -19,14 +19,23 @@
 </ul>
 
 @section scripts {
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/Dynatable/jquery.dynatable.css">
+        <script src="~/lib/Dynatable/jquery.dynatable.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/lib/Dynatable/jquery.dynatable.min.css">
+        <script src="~/lib/Dynatable/jquery.dynatable.min.js"></script>
+    </environment>
+
     <script>
         // Function that renders the list items from our records
         function ulWriter(rowIndex, record, columns, cellWriter) {
             var cssClass = "tile-layout-item", li;
             if (rowIndex % 3 === 0) { cssClass += ' first'; }
             li = '<li class="' + cssClass + '"> \
-                                    <div class="tile-layout-item-content"> \
-                                        <h2>' + Html.ActionLink(record.Name, "Details", "Compressors", new { id = record.Id }) + '</h2> \
+                                    <div class="tile-layout-item-content" controller-id="' + record.Id + '"> \
+                                        <h2>' + record.Name + '</h2> \
                                         <img src="/images/chiller.jpg" alt="" /> \
                                         <p>' + record.Description + '</p> \
                                     </div> \
@@ -34,36 +43,40 @@
                         ';
             return li;
         }
-
         // Function that creates our records from the DOM when the page is loaded
         function ulReader(index, li, record) {
             var $li = $(li),
                 $content = $li.find('.tile-layout-item-content');
-
-            record.Id = $content.find("h2 a").attr("asp-route-id");
+            record.Id = $content.find("h2 a").attr("controller-id");
             record.Name = $content.find("h2 a").html();
             record.Description = $content.find("p").html();
-
             console.log(record);
         }
 
-        $('#compressors').dynatable({
-            table: {
-                bodyRowSelector: 'li'
-            },
-            dataset: {
-                perPageDefault: 4,
-                perPageOptions: [4, 8, 12]
-            },
-            writers: {
-                _rowWriter: ulWriter
-            },
-            readers: {
-                _rowReader: ulReader
-            },
-            params: {
+        $(document).ready(function () {
+            $('#compressors').dynatable({
+                table: {
+                    bodyRowSelector: 'li'
+                },
+                dataset: {
+                    perPageDefault: 4,
+                    perPageOptions: [4, 8, 12]
+                },
+                writers: {
+                    _rowWriter: ulWriter
+                },
+                readers: {
+                    _rowReader: ulReader
+                },
+                params: {
 
-            }
+                }
+            });
+
+            $(".tile-layout-item-content").click(function () {
+                var controllerId = $(this).attr("controller-id");
+                window.location.href = "/Compressors/Details/" + controllerId;
+            });
         });
     </script>
 }
