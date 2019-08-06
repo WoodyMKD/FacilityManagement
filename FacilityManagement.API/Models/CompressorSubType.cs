@@ -9,6 +9,7 @@ namespace FacilityManagement.API.Models
 {
     public class CompressorSubType
     {
+        [Key]
         public int CompressorSubTypeId { get; set; }
         public string Name { get; set; }
         public int? CompressorId { get; set; }

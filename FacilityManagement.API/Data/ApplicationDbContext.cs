@@ -23,6 +23,26 @@ namespace FacilityManagement.API.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Compressor>()
+                .HasMany(c => c.CompressorSubTypes)
+                .WithOne(cst => cst.Compressor)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<CompressorSubType>()
+                .HasOne(cst => cst.Compressor)
+                .WithMany(c => c.CompressorSubTypes)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<CompressorSystem>()
+                .HasOne(cs => cs.CompressorSubType)
+                .WithMany(cst => cst.CompressorSystems)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Part>()
+                .HasOne(p => p.CompressorSystem)
+                .WithMany(cs => cs.Parts)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

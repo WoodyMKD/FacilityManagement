@@ -1,0 +1,120 @@
+﻿@model ICollection<FacilityManagement.Web.Models.ViewModels.CompressorSystemDetailsViewModel>
+
+@if (Model.Count > 0)
+{
+    <div class="row">
+        <div class="btn-group button-add-system" role="group">
+            <button data-toggle="modal" data-target="#addCompressorSystemModal" class="btn btn-default">Додади нов систем</button>
+            <button data-toggle="modal" data-target="#editCompressorSystemModal" class="btn btn-default">Измени систем</button>
+            <button data-toggle="modal" data-target="#deleteCompressorSystemModal" class="btn btn-default">Избриши систем</button>
+        </div>
+     </div>
+
+    @foreach (var system in Model)
+    {
+        <div class="box collapsed-box">
+            <div class="box-header with-border" data-widget="collapse">
+                <h3 class="box-title">@system.Name</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body" style="display: none">
+                <button system-id="@system.CompressorSystemId" data-toggle="modal" data-target="#addPartModal" class="btn btn-info btn-block btn-sm">Додади новa компонента</button>
+
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped table-responsive table-parts">
+                        <thead>
+                            <tr>
+                                <th>Компонента</th>
+                                <th>Последен сервис</th>
+                                <th>Следен сервис</th>
+                                <th class="text-center">Поставки</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var part in system.Parts)
+                            {
+                                <tr>
+                                    <td>@part.Name</td>
+                                    <td> @DateTime.Now </td>
+                                    <td> @DateTime.Now.AddDays(2) </td>
+                                    <td class="text-center" style="min-width: 170px">
+                                        <div class="btn-group btn-group-sm">
+                                            <button part-id="@part.PartId" data-toggle="modal" data-target="#editPartModal" type="button" class="btn btn-default"><i class="fa fa-edit"></i> Измени</button>
+                                            <button part-id="@part.PartId" data-toggle="modal" data-target="#deletePartModal" type="button" class="btn btn-default"><i class="fa fa-trash"></i> Избриши</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <button data-toggle="modal" data-target="#addCompressorSystemModal" class="btn btn-info btn-block btn-sm">Додади нов систем</button>
+}
+
+
+<div id="editCompressorSystemModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form asp-action="EditCompressorSystemAjaxFormAsync" asp-controller="Compressors"
+                    data-ajax="true"
+                    data-ajax-method="POST"
+                    data-ajax-update="#ajax-edit-system-form-result"
+                    data-ajax-complete="onEditCompressorSystemComplete">
+                <div id="ajax-edit-system-form-result">
+                    <partial name="_EditCompressorSystemFormPartial" model="new EditCompressorSystemDetailsViewModel() { AllCompressorSystems = Model }" />
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div id="deleteCompressorSystemModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form asp-action="DeleteCompressorSystemAjaxFormAsync" asp-controller="Compressors"
+                  data-ajax="true"
+                  data-ajax-method="POST"
+                  data-ajax-update="#ajax-delete-system-form-result"
+                  data-ajax-complete="onDeleteCompressorSystemComplete">
+                <div id="ajax-delete-system-form-result">
+                    <partial name="_DeleteCompressorSystemFormPartial" model="new DeleteCompressorSystemDetailsViewModel() { AllCompressorSystems = Model }" />
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div id="deleteCompressorSystemConfirmModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fa fa-remove"></i>
+                </div>
+                <h4 class="modal-title">Дали сте сигурни?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Дали навистина сакате да го избришете овој систем? Со оваа акција се бришат сите делови кои му припаѓаат на овој систем.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Откажи</button>
+                <button id="deleteCompressorSystemButton" type="button" class="btn btn-danger">Избриши</button>
+            </div>
+        </div>
+    </div>
+</div>

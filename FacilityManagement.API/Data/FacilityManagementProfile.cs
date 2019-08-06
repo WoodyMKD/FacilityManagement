@@ -20,7 +20,7 @@ namespace FacilityManagement.API.Data
 
             this.CreateMap<CompressorSystem, CompressorSystemModel>()
               .ReverseMap();
-
+            
             this.CreateMap<Part, PartModel>()
               .ReverseMap();
         }

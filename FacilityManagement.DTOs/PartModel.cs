@@ -8,5 +8,6 @@ namespace FacilityManagement.DTOs
     {
         public int PartId { get; set; }
         public string Name { get; set; }
+        public int CompressorSystemId { get; set; }
     }
 }

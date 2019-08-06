@@ -3,6 +3,9 @@
 @{
     ViewData["Title"] = "Компресори";
     ViewData["Description"] = "Кратко инфо";
+    var toastNotificationType = TempData["ToastType"];
+    var toastNotificationTitle = TempData["ToastTitle"];
+    var toastNotificationMsg = TempData["ToastMessage"];
 }
 
 <ul id="compressors" class="tile-layout">
@@ -77,6 +80,10 @@
                 var controllerId = $(this).attr("controller-id");
                 window.location.href = "/Compressors/Details/" + controllerId;
             });
+
+            if ("@toastNotificationType" != "") {
+                toastr["@toastNotificationType"]("@toastNotificationMsg", "@toastNotificationTitle");
+            }
         });
     </script>
 }

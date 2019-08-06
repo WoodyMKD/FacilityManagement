@@ -8,6 +8,7 @@ namespace FacilityManagement.DTOs
     {
         public int CompressorSystemId { get; set; }
         public string Name { get; set; }
+        public int? CompressorSubTypeId { get; set; }
 
         public ICollection<PartModel> Parts { get; set; }
     }

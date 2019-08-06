@@ -15,6 +15,16 @@
             <!-- /.box-header -->
             <div class="box-body">
                 <dl class="dl-horizontal" id="compressor-info-list">
+                    <dt>Име</dt>
+                    <dd id="compressor-name">@Model.Name</dd>
+                    <dt>Производител</dt>
+                    <dd id="compressor-manufacturer">@Model.Manufacturer</dd>
+                    <dt>Модел</dt>
+                    <dd id="compressor-model">@Model.Model</dd>
+                    <dt>Опис</dt>
+                    <dd id="compressor-description">@Model.Description</dd>
+                    <dt>Работни часови</dt>
+                    <dd id="compressor-working-hours">@Model.WorkingHours</dd>
                 </dl>
             </div>
             <!-- /.box-body -->
@@ -33,9 +43,21 @@
                 <h3 class="box-title">Поставки</h3>
             </div>
             <div class="box-body">
-                <button data-toggle="modal" data-target="#editCompressorModal" type="button" class="btn btn-default btn-block btn-sm">Измени податоци</button>
-                <button id="testbtn2" type="button" class="btn btn-default btn-block btn-sm">Избриши</button>
-                <button type="button" class="btn btn-default btn-block btn-sm">Додади нов систем</button>
+                <button data-toggle="modal" data-target="#editCompressorModal" class="btn btn-default btn-block btn-sm">Ажурирај општи податоци</button>
+                <button data-toggle="modal" data-target="#deleteCompressorModal" class="btn btn-default btn-block btn-sm">Избриши го компресорот</button>
+
+
+                <div class="btn-group custom-dropdown-button-group">
+                    <button type="button" class="btn btn-default btn-block btn-sm dropdown-toggle custom-dropdown-button" data-toggle="dropdown" aria-expanded="false">
+                        Акции за типот на компресорот
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu custom-dropdown-button-list">
+                        <li><a data-toggle="modal" data-target="#addCompressorTypeModal">Додади нов тип</a></li>
+                        <li hidden><a data-toggle="modal" data-target="#editCompressorTypeModal">Измени постоечки тип</a></li>
+                        <li hidden><a data-toggle="modal" data-target="#deleteCompressorTypeModal">Избриши постоечки тип</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
         <!-- /.box -->
@@ -49,14 +71,13 @@
         <h3 class="box-title">Детален преглед - системи и компоненти</h3>
     </div>
     <div class="box-body pills-in-box">
-        <ul class="nav nav-pills nav-justified">
-            @foreach (var subtype in Model.CompressorSubTypes)
-            {
-                <li><a href="#" subTypeId="@subtype.CompressorSubTypeId">@subtype.Name</a></li>
-            }
-        </ul>
+
+        <div id="box-types-container">
+            <partial name="_CompressorTypesPartial" model="Model" />
+        </div>
 
         <div id="box-systems-container"></div>
+
     </div>
     <div id="ajax-systems-loading" class="overlay" hidden>
         <i class="fa fa-refresh fa-spin"></i>
@@ -70,54 +91,196 @@
 
 <div id="editCompressorModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
-
-        <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
-            </div>
-            <form onsubmit="return SubmitAddEdit(this, event)" data-ajax="true">
-                <div class="modal-body">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="CompressorId" />
-                    <div class="form-group">
-                        <label asp-for="Name" class="control-label"></label>
-                        <input asp-for="Name" class="form-control"></input>
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Description" class="control-label"></label>
-                        <input asp-for="Description" class="form-control" />
-                        <span asp-validation-for="Description" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Manufacturer" class="control-label"></label>
-                        <input asp-for="Manufacturer" class="form-control" />
-                        <span asp-validation-for="Manufacturer" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Model" class="control-label"></label>
-                        <input asp-for="Model" class="form-control" />
-                        <span asp-validation-for="Model" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="WorkingHours" class="control-label"></label>
-                        <input asp-for="WorkingHours" class="form-control" />
-                        <span asp-validation-for="WorkingHours" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Откажи</button>
-                    <button type="submit" class="btn btn-info">Зачувај</button>
+
+            <form asp-action="UpdateCompressorAjaxFormAsync" asp-controller="Compressors"
+                  data-ajax="true"
+                  data-ajax-method="POST"
+                  data-ajax-update="#ajax-update-form-result"
+                  data-ajax-complete="onUpdateCompressorComplete">
+                <div id="ajax-update-form-result">
+                    <partial name="_UpdateFormPartial" model="Model" />
                 </div>
             </form>
+
+        </div>
+    </div>
+</div>
+
+<div id="deleteCompressorModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fa fa-remove"></i>
+                </div>
+                <h4 class="modal-title">Дали сте сигурни?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Дали навистина сакате да го избришете овој компресор? Со оваа акција се бришат сите системи и делови кои му припаѓаат на овој компресор.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Откажи</button>
+                <button id="deleteCompressorButton" type="button" class="btn btn-danger">Избриши</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="addCompressorTypeModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form asp-action="AddCompressorTypeAjaxFormAsync" asp-controller="Compressors"
+                  data-ajax="true"
+                  data-ajax-method="POST"
+                  data-ajax-update="#ajax-add-type-form-result"
+                  data-ajax-complete="onAddCompressorTypeComplete">
+                <div id="ajax-add-type-form-result">
+                    <partial name="_AddCompressorTypeFormPartial" model="new CompressorTypeDetailsViewModel() { CompressorId = Model.CompressorId }" />
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div id="editCompressorTypeModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form asp-action="EditCompressorTypeAjaxFormAsync" asp-controller="Compressors"
+                  data-ajax="true"
+                  data-ajax-method="POST"
+                  data-ajax-update="#ajax-edit-type-form-result"
+                  data-ajax-complete="onEditCompressorTypeComplete">
+                <div id="ajax-edit-type-form-result">
+                    <partial name="_EditCompressorTypeFormPartial" model="new EditCompressorTypeDetailsViewModel() { CompressorId = Model.CompressorId, AllCompressorTypes = Model.CompressorSubTypes }" />
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div id="addCompressorSystemModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form asp-action="AddCompressorSystemAjaxFormAsync" asp-controller="Compressors"
+                  data-ajax="true"
+                  data-ajax-method="POST"
+                  data-ajax-update="#ajax-add-system-form-result"
+                  data-ajax-complete="onAddCompressorSystemComplete">
+                <div id="ajax-add-system-form-result">
+                    <partial name="_AddCompressorSystemFormPartial" model="new CompressorSystemDetailsViewModel() { CompressorSystemId = -1 }" />
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div id="deleteCompressorTypeModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form asp-action="DeleteCompressorTypeAjaxFormAsync" asp-controller="Compressors"
+                  data-ajax="true"
+                  data-ajax-method="POST"
+                  data-ajax-update="#ajax-delete-type-form-result"
+                  data-ajax-complete="onDeleteCompressorTypeComplete">
+                <div id="ajax-delete-type-form-result">
+                    <partial name="_DeleteCompressorTypeFormPartial" model="new DeleteCompressorTypeDetailsViewModel() { CompressorId = Model.CompressorId, AllCompressorTypes = Model.CompressorSubTypes }" />
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div id="deleteCompressorTypeConfirmModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fa fa-remove"></i>
+                </div>
+                <h4 class="modal-title">Дали сте сигурни?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Дали навистина сакате да го избришете овој тип? Со оваа акција се бришат сите податоци кои му припаѓаат на овој тип.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Откажи</button>
+                <button id="deleteCompressorTypeButton" type="button" class="btn btn-danger">Избриши</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="addPartModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form asp-action="AddPartAjaxFormAsync" asp-controller="Compressors"
+                  data-ajax="true"
+                  data-ajax-method="POST"
+                  data-ajax-update="#ajax-add-part-form-result"
+                  data-ajax-complete="onAddPartComplete">
+                <div id="ajax-add-part-form-result">
+                    <partial name="_AddPartFormPartial" model="new PartDetailsViewModel()" />
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div id="editPartModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form asp-action="EditPartAjaxFormAsync" asp-controller="Compressors"
+                  data-ajax="true"
+                  data-ajax-method="POST"
+                  data-ajax-update="#ajax-edit-part-form-result"
+                  data-ajax-complete="onEditPartComplete">
+                <div id="ajax-edit-part-form-result">
+                    <partial name="_EditPartFormPartial" model="new EditPartDetailsViewModel()" />
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div id="deletePartModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fa fa-remove"></i>
+                </div>
+                <h4 class="modal-title">Дали сте сигурни?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Дали навистина сакате да ја избришете оваа компонента? Со оваа акција се бришат сите системи и делови кои му припаѓаат на оваа компонента.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Откажи</button>
+                <button id="deletePartButton" part-id="undefined" type="button" class="btn btn-danger">Избриши</button>
+            </div>
         </div>
     </div>
 </div>
 
 @section scripts {
     <partial name="_ValidationScriptsPartial" />
+
     <environment include="Development">
         <script src="~/lib/jquery.serializeJSON/jquery.serializejson.js"></script>
     </environment>
@@ -126,169 +289,374 @@
     </environment>
 
     <script>
+        var reloading = false;
+
+        $(document)
+            .on('show.bs.modal', '#addPartModal', function (event) {
+                var triggerElement = $(event.relatedTarget);
+                var systemId = triggerElement.attr("system-id");
+
+                if (systemId != null) {
+                    $("#currentCompressorSystem").val(systemId);
+                }
+            })
+            .on('show.bs.modal', '#editPartModal', function (event) {
+                var triggerElement = $(event.relatedTarget);
+                var partId = triggerElement.attr("part-id");
+
+                if (partId != null) {
+                    $("#currentPart").val(partId);
+                }
+            })
+            .on('show.bs.modal', '#deletePartModal', function (event) {
+                var triggerElement = $(event.relatedTarget);
+                var partId = triggerElement.attr("part-id");
+
+                if (partId != null) {
+                    $("#deletePartButton").attr("part-id", partId);
+                }
+            });
+
         $(document).ready(function () {
-            loadCompressorInfo(@Model.CompressorId);
-
             var subTypeId = $(".nav-pills li a[subTypeId]:first").attr("subTypeId");
-            loadSystemsAndParts(subTypeId);
+            if (subTypeId != null) {
+                reloadSystemsAndParts(subTypeId);
+            }
 
-            $(".nav-pills li a[subTypeId]").click(function () {
-                var subTypeId = $(this).attr("subTypeId");
-                loadSystemsAndParts(subTypeId);
+            $("#deleteCompressorButton").click(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "/Compressors/DeleteCompressorAjaxAsync/" + @Model.CompressorId,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    beforeSend: function () {
+                    },
+                    statusCode: {
+                        200: function (response) {
+                            window.location.href = "@Url.Action("Index", "Compressors")";
+                        },
+                        400: function (response) {
+                            console.log(data.responseText);
+                            toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                        },
+                        404: function (response) {
+                            console.log(data.responseText);
+                            toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                        }
+                    },
+                });
+            });
+
+            $("#deleteCompressorTypeButton").click(function () {
+                var selectedCompressorType = $("#deleteCompressorTypeModal #CompressorSubTypeId").val();
+
+                $.ajax({
+                    type: "GET",
+                    url: "/Compressors/DeleteCompressorTypeAjaxAsync/" + selectedCompressorType,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    beforeSend: function () {
+
+                    },
+                    statusCode: {
+                        200: function (response) {
+                            reloadCompressorInfo(@Model.CompressorId, true);
+
+                            $('#deleteCompressorTypeConfirmModal').modal('hide');
+                            $('#deleteCompressorTypeModal').modal('hide');
+
+                            toastr["success"]("Успешно гo избришавте типот", "Успешно бришење");
+                        },
+                        400: function (response) {
+                            console.log(data.responseText);
+                            toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                        },
+                        404: function (response) {
+                            console.log(data.responseText);
+                            toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                        }
+                    },
+                });
+            });
+
+            $("#deletePartButton").click(function () {
+                var partId = $(this).attr("part-id");
+                $.ajax({
+                    type: "GET",
+                    url: "/Compressors/DeletePartAjaxAsync/" + partId,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    beforeSend: function () {
+                    },
+                    statusCode: {
+                        200: function (response) {
+                            var subTypeId = $(".nav-pills li.active a").attr("subTypeId");
+                            reloadSystemsAndParts(subTypeId);
+                            
+                            $('#deletePartModal').modal('hide');
+
+                            toastr["success"]("Успешно ја избришавте компонентата", "Успешно бришење");
+                        },
+                        400: function (response) {
+                            console.log(data.responseText);
+                            toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                        },
+                        404: function (response) {
+                            console.log(data.responseText);
+                            toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                        }
+                    },
+                });
             });
         });
 
-        function SubmitAddEdit(form, event) {
-            event.preventDefault();
+        function refreshClickEvent() {
+            $(".nav-pills li a[subTypeId]").click(function () {
+                var subTypeId = $(this).attr("subTypeId");
+                if (subTypeId != -1) {
+                    reloadSystemsAndParts(subTypeId);
+                }
+            });
 
-            $.validator.unobtrusive.parse(form);
-            if ($(form).valid()) {
-                var data = $(form).serializeJSON();
-                console.log(data.compressorId);
-                var compressorId = data.CompressorId;
-                data = JSON.stringify(data);
+            $("#deleteCompressorSystemButton").click(function () {
+                var selectedCompressorSystem = $("#deleteCompressorSystemModal #CompressorSystemId").val();
+
                 $.ajax({
-                    type: 'PUT',
-                    url: 'https://localhost:44303/api/compressors',
-                    data: data,
-                    contentType: 'application/json',
-                    success: function (data) {
-                        if (data.success) {
-                            console.log(data.message);
-                            loadCompressorInfo(compressorId);
-                            $('#editCompressorModal').modal('hide');
-                            //ShowMessage(data.message);
+                    type: "GET",
+                    url: "/Compressors/DeleteCompressorSystemAjaxAsync/" + selectedCompressorSystem,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    beforeSend: function () {
+
+                    },
+                    statusCode: {
+                        200: function (response) {
+                            var subTypeId = $(".nav-pills li.active a").attr("subTypeId");
+                            reloadSystemsAndParts(subTypeId);
+
+                            $('#deleteCompressorSystemConfirmModal').modal('hide');
+                            $('#deleteCompressorSystemModal').modal('hide');
+                            $('body').removeClass('modal-open');
+                            $('.modal-backdrop').remove();
+
+                            toastr["success"]("Успешно гo избришавте системот", "Успешно бришење");
+                        },
+                        400: function (response) {
+                            console.log(data.responseText);
+                            toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                        },
+                        404: function (response) {
+                            console.log(data.responseText);
+                            toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
                         }
-                    }
+                    },
                 });
-            }
-        }
-
-        function loadCompressorInfo(compressorId) {
-            $.ajax({
-                type: "GET",
-                url: "https://localhost:44303/api/compressors/" + compressorId,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                beforeSend: function () {
-                    $('#ajax-compressor-info-loading').show();
-                },
-                success: function (model) {
-                    console.log(model);
-                    var htmlInfo = '\
-                        <dt>Име</dt>\
-                        <dd>' + model.name + '</dd>\
-                        <dt>Производител</dt>\
-                        <dd>' + model.manufacturer + '</dd>\
-                        <dt>Модел</dt>\
-                        <dd>' + model.model + '</dd>\
-                        <dt>Опис</dt>\
-                        <dd>' + model.description + '</dd>\
-                        <dt>Работни часови</dt>\
-                        <dd>' + model.workingHours + '</dd>\
-                    ';
-                    $("#compressor-info-list").html(htmlInfo);
-
-                    $('#ajax-compressor-info-loading').hide();
-                }, //End of AJAX Success function
-
-                failure: function (data) {
-                    alert("ГРЕШКА: " + data.responseText);
-                }, //End of AJAX failure function
-                error: function (data) {
-                    alert("ГРЕШКА: " + data.responseText);
-                } //End of AJAX error function
             });
         }
 
-        function loadSystemsAndParts(subTypeId) {
+        onUpdateCompressorComplete = function () {
+            var errors = $("#editCompressorModal .validation-summary-errors li").length;
+
+            if (errors == 0) {
+                $('#editCompressorModal').modal('hide');
+                reloadCompressorInfo(@Model.CompressorId);
+                toastr["success"]("Успешно ги ажуриравте податоците за компресорот", "Успешно ажурирање");
+            }
+        };
+
+        onEditCompressorSystemComplete = function () {
+            var errors = $("#editCompressorSystemModal .validation-summary-errors li").length;
+
+            if (errors == 0) {
+                var subTypeId = $(".nav-pills li.active a").attr("subTypeId");
+                $('#editCompressorSystemModal').modal('hide');
+                //Zaradi ajax replace na celiot modal...
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+
+                reloadSystemsAndParts(subTypeId);
+                toastr["success"]("Успешно ги ажуриравте податоците за системот", "Успешно ажурирање");
+            }
+        };
+
+        onEditPartComplete = function () {
+            var errors = $("#editPartModal .validation-summary-errors li").length;
+
+            if (errors == 0) {
+                $('#editPartModal').modal('hide');
+
+                var subTypeId = $(".nav-pills li.active a").attr("subTypeId");
+                reloadSystemsAndParts(subTypeId);
+                
+                toastr["success"]("Успешно ги ажуриравте податоците за компонентата", "Успешно ажурирање");
+            }
+        };
+
+        onDeleteCompressorSystemComplete = function () {
+            var errors = $("#deleteCompressorSystemModal .validation-summary-errors li").length;
+
+            if (errors == 0) {
+                var selectedCompressorSystem = $("#deleteCompressorSystemModal #CompressorSystemId").val();
+                $('#deleteCompressorSystemConfirmModal').modal('show');
+            }
+        };
+
+        onAddCompressorSystemComplete = function () {
+            var errors = $("#addCompressorSystemModal .validation-summary-errors li").length;
+
+            if (errors == 0) {
+                var subTypeId = $(".nav-pills li.active a").attr("subTypeId");
+                $('#addCompressorSystemModal').modal('hide');
+                reloadSystemsAndParts(subTypeId);
+                toastr["success"]("Успешно додадовте нов систем во рамките на овој тип", "Успешно додавање");
+            }
+        };
+
+        onAddCompressorTypeComplete = function () {
+            var errors = $("#addCompressorTypeModal .validation-summary-errors li").length;
+
+            if (errors == 0) {
+                $('#addCompressorTypeModal').modal('hide');
+                reloadCompressorInfo(@Model.CompressorId, true);
+                toastr["success"]("Успешно додадовте нов тип во рамките на овој компресор", "Успешно додавање");
+            }
+        };
+
+        onAddPartComplete = function () {
+            var errors = $("#addPartModal .validation-summary-errors li").length;
+
+            if (errors == 0) {
+                $('#addPartModal').modal('hide');
+                
+                var subTypeId = $(".nav-pills li.active a").attr("subTypeId");
+                reloadSystemsAndParts(subTypeId);
+
+                toastr["success"]("Успешно додадовте нова компонента во рамките на овој компресор", "Успешно додавање");
+            }
+        };
+
+        onEditCompressorTypeComplete = function () {
+            var errors = $("#editCompressorTypeModal .validation-summary-errors li").length;
+
+            if (errors == 0) {
+                var compressorId = @Model.CompressorId;
+                $('#editCompressorTypeModal').modal('hide');
+
+                reloadCompressorInfo(compressorId, true);
+                toastr["success"]("Успешно ги ажуриравте податоците за типот", "Успешно ажурирање");
+            }
+        };
+
+        onDeleteCompressorTypeComplete = function () {
+            var errors = $("#deleteCompressorTypeModal .validation-summary-errors li").length;
+
+            if (errors == 0) {
+                var selectedCompressorSystem = $("#deleteCompressorTypeModal #CompressorSystemId").val();
+                $('#deleteCompressorTypeConfirmModal').modal('show');
+            }
+        };
+
+        function reloadCompressorInfo(compressorId, returnPartial = false) {
+            var urlStr = "/Compressors/GetCompressorInfoByIdAjaxAsync/" + compressorId;
+            var dataTypeStr = "json";
+            if (returnPartial) {
+                urlStr += "?returnPartial=true";
+                dataTypeStr = "html";
+            }
+
             $.ajax({
                 type: "GET",
-                url: "https://localhost:44303/api/compressorSystems/bySubTypeId/" + subTypeId,
+                url: urlStr,
                 contentType: "application/json; charset=utf-8",
-                dataType: "json",
+                dataType: dataTypeStr,
                 beforeSend: function () {
-                    $('#ajax-systems-loading').show();
+                    if (returnPartial == false) {
+                        $('#ajax-compressor-info-loading').show();
+                    } else {
+                        $('#ajax-systems-loading').show();
+                    }
                 },
                 success: function (data) {
-                    $("#box-systems-container").html('');
-                    if (data.length == 0) {
-                        $('#box-systems-container').append('<h4 class="text-center">Немате додадено системи</h4>');
+                    if (returnPartial == false) {
+                        $("#compressor-name").html(data.name);
+                        $("#compressor-manufacturer").html(data.manufacturer);
+                        $("#compressor-model").html(data.model);
+                        $("#compressor-description").html(data.description);
+                        $("#compressor-working-hours").html(data.workingHours);
+
+                        $('#ajax-compressor-info-loading').hide();
                     } else {
-                        $.each(data, function (i, item) {
-                            // РЕФАКТОР НА ШПАГЕТИ КОДООООТ!
-                            var system = '\
-                            <div class="box collapsed-box">\
-                                <div class="box-header with-border" data-widget="collapse">\
-                                    <h3 class="box-title">' + item.name + '</h3>\
-                                    <div class="box-tools pull-right">\
-                                        <button type="button" class="btn btn-box-tool">\
-                                            <i class="fa fa-plus"></i>\
-                                        </button>\
-                                    </div>\
-                                </div>\
-                                <div class="box-body" style="display: none">';
-                                if (item.parts.length > 0) {
-                                    system += '\
-                                    <div class="table-responsive">\
-                                        <table class="table table-hover table-bordered table-striped table-responsive table-parts">\
-                                            <thead>\
-                                                <tr>\
-                                                    <th>Компонента</th>\
-                                                    <th>Последен сервис</th>\
-                                                    <th>Следен сервис</th>\
-                                                    <th class="text-center">Поставки</th>\
-                                                </tr>\
-                                            </thead >\
-                                            <tbody>';
-                                            for (i = 0; i < item.parts.length; ++i) {
-                                                var part = item.parts[i];
-                                                system += '\
-                                                <tr>\
-                                                    <td>' + part.name + '</td>\
-                                                    <td> @DateTime.Now </td>\
-                                                    <td> @DateTime.Now.AddDays(2) </td>\
-                                                    <td class="text-center" style="min-width: 170px">\
-                                                        <div class="btn-group btn-group-sm">\
-                                                            <button type="button" class="btn btn-default"><i class="fa fa-edit"></i> Измени</button>\
-                                                            <button type="button" class="btn btn-default"><i class="fa fa-trash"></i> Избриши</button>\
-                                                        </div>\
-                                                    </td>\
-                                                </tr>';
-                                            }
-                                            system += '\
-                                            </tbody>\
-                                        </table>\
-                                    </div >';
-                                }
-                                else {
-                                    system += '<h4 class="text-center">Немате додадено компоненти во рамки на овој систем</h4>';
-                                }
-                                system += '\
-                                </div >\
-                            </div>';
-                            $('#box-systems-container').append(system);
-                        });
+                        var subTypeId = $(".nav-pills li.active a").attr("subTypeId");
+
+                        $("#box-types-container").html(data);
+
+                        if (subTypeId == null) {
+                            subTypeId = $(".nav-pills li a[subTypeId]:first").attr("subTypeId");
+                        }
+
+                        if (subTypeId != null) {
+                            reloadSystemsAndParts(subTypeId);
+                        }
+                    }
+                },
+                failure: function (data) {
+                    console.log(data.responseText);
+                    toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                },
+                error: function (data) {
+                    console.log(data.responseText);
+                    toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                }
+            });
+        }
+
+        function reloadSystemsAndParts(subTypeId) {
+            if (!reloading) {
+                $.ajax({
+                    type: "GET",
+                    url: "/Compressors/GetCompressorSystemsAndPartsBySubTypeIdAjaxAsync/" + subTypeId,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "html",
+                    beforeSend: function () {
+                        reloading = true;
+                        $('#ajax-systems-loading').show();
+                    },
+                    success: function (data) {
+                        $("#box-systems-container").html(data);
 
                         $('table.table-parts').DataTable();
                         $('#box-systems-container .box').boxWidget({
                             animationSpeed: 300
                         });
+
+                        $(".nav-pills li a[subTypeId]").parent("li").removeClass("active");
+                        $(".nav-pills li a[subTypeId=" + subTypeId + "]").parent("li").addClass("active");
+
+                        $(".selectedSubTypeIdValue").val(subTypeId);
+
+                        $('#ajax-systems-loading').hide();
+
+                        if (subTypeId == null) {
+                            $(".custom-dropdown-button-group li:not(:first-child)").hide();
+                        } else {
+                            $(".custom-dropdown-button-group li:not(:first-child)").show();
+                        }
+
+                        refreshClickEvent();
+                    },
+                    failure: function (data) {
+                        console.log(data.responseText);
+                        toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                    },
+                    error: function (data) {
+                        console.log(data.responseText);
+                        toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                    },
+                    complete: function (data) {
+                        reloading = false;
                     }
-
-                    $(".nav-pills li a[subTypeId]").parent("li").removeClass("active");
-                    $(".nav-pills li a[subTypeId=" + subTypeId + "]").parent("li").addClass("active");
-
-                    $('#ajax-systems-loading').hide();
-                }, //End of AJAX Success function
-
-                failure: function (data) {
-                    alert("ГРЕШКА: " + data.responseText);
-                }, //End of AJAX failure function
-                error: function (data) {
-                    alert("ГРЕШКА: " + data.responseText);
-                } //End of AJAX error function
-            });
+                });
+            }
         }
     </script>
 }

@@ -89,6 +89,23 @@ namespace FacilityManagement.API
                 cfg.CreateMap<CompressorModel, Compressor>()
                     .ForMember(m => m.CompressorSubTypes, options => options.Ignore())
                     .ForMember(m => m.CompressorId, options => options.Ignore());
+
+                cfg.CreateMap<CompressorSystemModel, CompressorSystem>()
+                    .ForMember(m => m.CompressorSubTypeId, options => options.Ignore())
+                    .ForMember(m => m.CompressorSubType, options => options.Ignore())
+                    .ForMember(m => m.CompressorSystemId, options => options.Ignore())
+                    .ForMember(m => m.Parts, options => options.Ignore());
+
+                cfg.CreateMap<CompressorSubTypeModel, CompressorSubType>()
+                    .ForMember(m => m.Compressor, options => options.Ignore())
+                    .ForMember(m => m.CompressorId, options => options.Ignore())
+                    .ForMember(m => m.CompressorSubTypeId, options => options.Ignore())
+                    .ForMember(m => m.CompressorSystems, options => options.Ignore());
+
+                cfg.CreateMap<PartModel, Part>()
+                    .ForMember(m => m.CompressorSystem, options => options.Ignore())
+                    .ForMember(m => m.CompressorSystemId, options => options.Ignore())
+                    .ForMember(m => m.PartId, options => options.Ignore());
             });
 
             Mapper.AssertConfigurationIsValid();

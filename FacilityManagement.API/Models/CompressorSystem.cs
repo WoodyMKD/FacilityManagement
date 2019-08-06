@@ -9,7 +9,7 @@ namespace FacilityManagement.API.Models
     {
         public int CompressorSystemId { get; set; }
         public string Name { get; set; }
-        public int? CompressorSubTypeId { get; set; }
+        public int CompressorSubTypeId { get; set; }
 
         public CompressorSubType CompressorSubType { get; set; }
         public ICollection<Part> Parts { get; set; }

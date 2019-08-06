@@ -1,0 +1,15 @@
+﻿@model FacilityManagement.Web.Models.ViewModels.CompressorDetailsViewModel
+
+<ul class="nav nav-pills nav-justified">
+    @if (Model.CompressorSubTypes.Count > 0)
+    {
+        foreach (var subtype in Model.CompressorSubTypes)
+        {
+            <li><a href="#" subTypeId="@subtype.CompressorSubTypeId">@subtype.Name</a></li>
+        }
+    }
+    else
+    {
+        <button data-toggle="modal" data-target="#addCompressorTypeModal" class="btn btn-info btn-block btn-sm">Додади нов тип</button>
+    }
+</ul>

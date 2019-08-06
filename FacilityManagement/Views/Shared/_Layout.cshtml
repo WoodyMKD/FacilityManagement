@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="~/lib/admin-lte/css/AdminLTE.css" />
         <link rel="stylesheet" href="~/lib/admin-lte/css/skins/skin-blue.css">
         <link rel="stylesheet" href="~/lib/datatables/css/dataTables.bootstrap.css">
+        <link rel="stylesheet" href="~/lib/toastr.js/toastr.css">
         <link rel="stylesheet" href="~/css/site.css">
     </environment>
     <environment exclude="Development">
@@ -24,6 +25,7 @@
         <link rel="stylesheet" href="~/lib/admin-lte/css/AdminLTE.min.css" />
         <link rel="stylesheet" href="~/lib/admin-lte/css/skins/skin-blue.min.css">
         <link rel="stylesheet" href="~/lib/datatables/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css">
         <link rel="stylesheet" href="~/css/site.css">
     </environment>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -110,20 +112,43 @@
     <!-- ./wrapper -->
     <!-- Scripts -->
     <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/jquery/jquery.js"></script>
         <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
         <script src="~/lib/admin-lte/js/adminlte.js"></script>
         <script src="~/lib/datatables/js/jquery.dataTables.js"></script>
         <script src="~/lib/datatables/js/dataTables.bootstrap.js"></script>
+        <script src="~/lib/toastr.js/toastr.min.js"></script>
     </environment>
     <environment exclude="Development">
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/jquery/jquery.min.js"></script>
         <script src="~/lib/twitter-bootstrap/js/bootstrap.min.js"></script>
         <script src="~/lib/admin-lte/js/adminlte.min.js"></script>
         <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
         <script src="~/lib/datatables/js/dataTables.bootstrap.min.js"></script>
+        <script src="~/lib/toastr.js/toastr.min.js"></script>
     </environment>
+
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "4000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    </script>
 
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+

@@ -12,7 +12,7 @@ namespace FacilityManagement.API.Controllers
 {
     [Route("api/compressors")]
     [ApiController]
-    public class CompressorsController : Controller
+    public class CompressorsController : ControllerBase
     {
         private readonly ICompressorRepository _compressorRepository;
         private readonly IMapper _mapper;
@@ -80,31 +80,21 @@ namespace FacilityManagement.API.Controllers
 
             await _compressorRepository.UpdateCompressorAsync(compressor);
 
-            return Json(new { success = true, message = "Add new data success." });
+            return Ok(new { success = true, message = "Add new data success." });
+        }
 
-
-
-            if (!ModelState.IsValid)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCompressorAsync(int id)
+        {
+            var compressor = await _compressorRepository.GetCompressorByIdAsync(id, true);
+            if (compressor == null)
             {
-                return BadRequest(ModelState);
+                return NotFound();
             }
 
-            if (model.CompressorId == 0)
-            {
-                //_compressorRepository.Add(model);
+            _compressorRepository.DeleteCompressor(compressor);
 
-                //await _compressorRepository.SaveChangesAsync();
-
-                return Json(new { success = true, message = "Add new data success." });
-            }
-            else
-            {
-                //_context.Update(todo);
-
-                //await _context.SaveChangesAsync();
-
-                return Json(new { success = true, message = "Edit data success." });
-            }
+            return Ok(new { success = true, message = "Succ deleted." });
         }
     }
 }
