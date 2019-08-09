@@ -1,0 +1,14 @@
+﻿@model ModalDelete
+
+<form asp-controller="@Model.Controller" asp-action="@Model.Action" asp-route-id="@Model.ModelId" method="post">
+
+    <partial name="Modals/_ModalHeader"
+             model='new ModalHeader { IsDeleteHeader = true }' />
+
+    <div class="modal-body form-horizontal">
+        @Model.Message
+    </div>
+
+    <partial name="Modals/_ModalFooter" model='new ModalFooter { SubmitButtonText = "Delete" }' />
+
+</form>

@@ -1,15 +1,25 @@
-﻿@model FacilityManagement.Web.Models.ViewModels.CompressorDetailsViewModel
+﻿@model FacilityManagement.Web.Models.ViewModels.TypesViewModel
 
+@{
+    var modalID = "details-modal";
+}
+
+<!-- START: Types navigation list -->
 <ul class="nav nav-pills nav-justified">
-    @if (Model.CompressorSubTypes.Count > 0)
+    @if (Model.Types.Count > 0)
     {
-        foreach (var subtype in Model.CompressorSubTypes)
+        foreach (var subtype in Model.Types)
         {
             <li><a href="#" subTypeId="@subtype.CompressorSubTypeId">@subtype.Name</a></li>
         }
     }
     else
     {
-        <button data-toggle="modal" data-target="#addCompressorTypeModal" class="btn btn-info btn-block btn-sm">Додади нов тип</button>
+        <a data-toggle="modal" data-target="#@modalID"
+           asp-action="AddCompressorTypeAjaxFormAsync" asp-controller="Compressors" asp-route-id="@Model.CompressorId"
+           class="btn btn-info btn-block btn-sm">
+            Додади нов тип
+        </a>
     }
 </ul>
+<!-- END: Types navigation list -->

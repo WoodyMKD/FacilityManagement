@@ -11,6 +11,6 @@ namespace FacilityManagement.API.Models
         public string Name { get; set; }
         public int CompressorSystemId { get; set; }
         
-        public CompressorSystem CompressorSystem { get; set; }
+        public virtual CompressorSystem CompressorSystem { get; set; }
     }
 }

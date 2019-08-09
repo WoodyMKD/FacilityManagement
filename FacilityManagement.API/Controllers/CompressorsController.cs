@@ -41,9 +41,10 @@ namespace FacilityManagement.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<CompressorModel>> GetCompressorDataAsync(int id)
+        public async Task<ActionResult<CompressorModel>> GetCompressorByIdAsync(int id, 
+            bool includeTypes = false, bool includeSystems = false, bool includeParts = false)
         {
-            var compressor = await _compressorRepository.GetCompressorByIdAsync(id);
+            var compressor = await _compressorRepository.GetCompressorByIdAsync(id, includeTypes, includeSystems, includeParts);
 
             if (compressor == null)
             {

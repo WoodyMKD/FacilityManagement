@@ -1,0 +1,31 @@
+﻿@model FacilityManagement.Web.Models.ViewModels.DeleteCompressorSystemDetailsViewModel
+
+<div id="replaceWithAjax">
+    <form asp-action="DeleteCompressorSystemAjaxFormAsync" asp-controller="Compressors"
+          data-ajax="true"
+          data-ajax-method="POST"
+          data-ajax-complete="onDeleteCompressorSystemComplete"
+          data-ajax-mode="replace"
+          data-ajax-update="#replaceWithAjax"
+          data-ajax-loading="#modal-overlay-loading">
+
+        <partial name="Modals/_ModalHeader" model='new ModalHeader() {
+                 Heading = "Избриши систем"
+        }' />
+
+        <div class="modal-body">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="CompressorSubTypeId" class="selectedSubTypeIdValue" />
+
+                <label asp-for="CompressorSystemId" class="control-label"></label>
+                <select asp-for="CompressorSystemId" class="form-control"
+                        asp-items='new SelectList(Model.AllCompressorSystems, "CompressorSystemId", "Name")'></select>
+                <span asp-validation-for="CompressorSystemId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <partial name="Modals/_ModalFooter" model='new ModalFooter() { }' />
+
+    </form>
+</div>

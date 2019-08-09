@@ -9,7 +9,8 @@ namespace FacilityManagement.API.Models.Repositories
     {
         // Compressor
         Task<Compressor[]> GetAllCompressorsAsync();
-        Task<Compressor> GetCompressorByIdAsync(int id, bool includeSystemsAndParts = false);
+        Task<Compressor> GetCompressorByIdAsync(int id,
+            bool includeTypes = false, bool includeSystems = false, bool includeParts = false);
         Task<bool> UpdateCompressorAsync(Compressor newModel);
         void DeleteCompressor(Compressor toDelete);
 

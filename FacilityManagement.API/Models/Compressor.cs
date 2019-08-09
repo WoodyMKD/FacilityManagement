@@ -16,6 +16,6 @@ namespace FacilityManagement.API.Models
         public string Model { get; set; }
         public int WorkingHours { get; set; }
 
-        public ICollection<CompressorSubType> CompressorSubTypes { get; set; } 
+        public virtual ICollection<CompressorSubType> CompressorSubTypes { get; set; } 
     }
 }

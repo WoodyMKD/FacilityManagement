@@ -30,6 +30,7 @@ namespace FacilityManagement.Web.Controllers
         // TODO: Token expiration (Висок приоритет)
         // TODO: CRUD DETAILS EDIT  (Висок приоритет)
         // TODO: Тргни коментар за API да бара авторизација
+        // TODO: AJAX стави лоадинг анимација и на modal.. некогаш касни...
 
         private readonly IFacilityManagementHttpClient _facilityManagementHttpClient;
         private readonly IStringLocalizer<HomeController> _localizer;

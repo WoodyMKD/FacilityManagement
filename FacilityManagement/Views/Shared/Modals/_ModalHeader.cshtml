@@ -1,0 +1,23 @@
+﻿@model ModalHeader
+
+<div id="modal-overlay-loading" hidden>
+    <div class="modal-overlay-text">
+        <h3>Се вчитува...</h3>
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+</div>
+
+<div class="modal-header">
+
+    @if(!@Model.IsDeleteHeader) {
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">@Model.Heading</h4>
+    } else {
+        <div class="icon-box">
+            <i class="fa fa-remove"></i>
+        </div>
+        <h4 class="modal-title">Дали сте сигурни?</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    }
+
+</div>

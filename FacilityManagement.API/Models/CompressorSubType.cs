@@ -15,7 +15,7 @@ namespace FacilityManagement.API.Models
         public int? CompressorId { get; set; }
 
         [ForeignKey("CompressorId")]
-        public Compressor Compressor { get; set; }
-        public ICollection<CompressorSystem> CompressorSystems { get; set; }
+        public virtual Compressor Compressor { get; set; }
+        public virtual ICollection<CompressorSystem> CompressorSystems { get; set; }
     }
 }

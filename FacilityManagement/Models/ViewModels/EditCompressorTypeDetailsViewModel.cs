@@ -12,7 +12,7 @@ namespace FacilityManagement.Web.Models.ViewModels
         public int CompressorSubTypeId { get; set; }
         [Required]
         public string Name { get; set; }
-        public int? CompressorId { get; set; }
+        public int CompressorId { get; set; }
 
         public ICollection<CompressorSubTypeModel> AllCompressorTypes { get; set; }
     }

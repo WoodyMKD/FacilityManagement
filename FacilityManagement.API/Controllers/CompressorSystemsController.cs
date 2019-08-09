@@ -30,7 +30,7 @@ namespace FacilityManagement.API.Controllers
         public async Task<ActionResult<CompressorSystemModel>> GetSystemsBySubTypeIdAsync(int id)
         {
             var compressorSystem = await _compressorRepository.GetCompressorSystemsBySubTypeIdAsync(id);
-
+            
             var result = _mapper.Map<CompressorSystemModel[]>(compressorSystem);
 
             return Ok(result);

@@ -11,7 +11,7 @@ namespace FacilityManagement.Web.Models.ViewModels
         public int CompressorSystemId { get; set; }
         [Required]
         public string Name { get; set; }
-        public int? CompressorSubTypeId { get; set; }
+        public int CompressorSubTypeId { get; set; }
         
         public ICollection<CompressorSystemDetailsViewModel> AllCompressorSystems { get; set; }
     }

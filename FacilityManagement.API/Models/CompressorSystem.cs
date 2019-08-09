@@ -11,7 +11,7 @@ namespace FacilityManagement.API.Models
         public string Name { get; set; }
         public int CompressorSubTypeId { get; set; }
 
-        public CompressorSubType CompressorSubType { get; set; }
-        public ICollection<Part> Parts { get; set; }
+        public virtual CompressorSubType CompressorSubType { get; set; }
+        public virtual ICollection<Part> Parts { get; set; }
     }
 }

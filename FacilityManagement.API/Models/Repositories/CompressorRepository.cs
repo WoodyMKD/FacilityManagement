@@ -23,19 +23,34 @@ namespace FacilityManagement.API.Models.Repositories
             return await query.ToArrayAsync();
         }
 
-        public async Task<Compressor> GetCompressorByIdAsync(int id, bool includeSystemsAndParts = false)
+        public async Task<Compressor> GetCompressorByIdAsync(int id,
+            bool includeTypes = false, bool includeSystems = false, bool includeParts = false)
         {
             IQueryable<Compressor> query = _appDbContext.Compressors;
 
-            if (includeSystemsAndParts)
+            if (includeTypes)
             {
-                query = query.Include(c => c.CompressorSubTypes)
-                    .ThenInclude(cst => cst.CompressorSystems)
-                        .ThenInclude(cs => cs.Parts);
-            } 
-            else
-            {
-                query = query.Include(c => c.CompressorSubTypes);
+                if(includeSystems)
+                {
+                    if(includeParts)
+                    {
+                        query = query
+                            .Include(c => c.CompressorSubTypes)
+                                .ThenInclude(cst => cst.CompressorSystems)
+                                    .ThenInclude(cs => cs.Parts);
+                    }
+                    else
+                    {
+                        query = query
+                            .Include(c => c.CompressorSubTypes)
+                                .ThenInclude(cst => cst.CompressorSystems);
+                    }
+                }
+                else
+                {
+                    query = query
+                        .Include(c => c.CompressorSubTypes);
+                }
             }
 
             query = query.Where(c => c.CompressorId == id);
@@ -111,7 +126,12 @@ namespace FacilityManagement.API.Models.Repositories
         public void AddCompressorSystem(CompressorSystem toAdd)
         {
             _appDbContext.CompressorSystems.Add(toAdd);
-            _appDbContext.SaveChanges();
+            try { 
+                _appDbContext.SaveChanges();
+            } catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
         public void AddCompressorType(CompressorSubType toAdd)
@@ -149,6 +169,7 @@ namespace FacilityManagement.API.Models.Repositories
         {
             IQueryable<CompressorSubType> query = _appDbContext.CompressorSubTypes
                 .Include(cst => cst.CompressorSystems)
+                    .ThenInclude(cs => cs.Parts)
                 .Where(cst => cst.CompressorSubTypeId == id);
 
             var result = await query.FirstOrDefaultAsync();

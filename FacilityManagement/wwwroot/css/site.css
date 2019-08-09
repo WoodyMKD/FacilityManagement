@@ -21,6 +21,29 @@ a {
 
 /* Custom CSS
 -------------------------------------------------- */
+#modal-overlay-loading {
+	background-color: #ffffffe8;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	z-index: 1;
+}
+
+.modal-confirm #modal-overlay-loading {
+	margin-top: -20px;
+	margin-left: -20px;
+}
+
+.modal-overlay-text {
+	text-align: center;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
 .custom-dropdown-button-group {
 	width: 100%;
 	margin-top: 5px;
@@ -103,14 +126,15 @@ a {
 	margin-top: 13px;
 }
 .modal-confirm .btn {
-    color: #fff;
-    border-radius: 4px;
-	background: #60c7c1;
+	color: black;
+	border-radius: 4px !important;
+	border: 1px solid #f15e5e !important;
+	background: white;
 	text-decoration: none;
 	transition: all 0.4s;
-    line-height: normal;
+	line-height: normal;
 	min-width: 120px;
-    border: none;
+	border: none;
 	min-height: 40px;
 	border-radius: 3px;
 	margin: 0 5px;
@@ -201,6 +225,7 @@ a {
 .tile-layout {
 	display: flex;
 	flex-wrap: wrap;
+	width: 100%;
 	padding: 0;
 	margin-top: 15px
 }

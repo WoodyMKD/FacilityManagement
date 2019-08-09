@@ -27,21 +27,22 @@ namespace FacilityManagement.API.Data
             modelBuilder.Entity<Compressor>()
                 .HasMany(c => c.CompressorSubTypes)
                 .WithOne(cst => cst.Compressor)
+                .HasForeignKey(cst => cst.CompressorId)
+                .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<CompressorSubType>()
-                .HasOne(cst => cst.Compressor)
-                .WithMany(c => c.CompressorSubTypes)
+                .HasMany(cst => cst.CompressorSystems)
+                .WithOne(cs => cs.CompressorSubType)
+                .HasForeignKey(cs => cs.CompressorSubTypeId)
+                .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<CompressorSystem>()
-                .HasOne(cs => cs.CompressorSubType)
-                .WithMany(cst => cst.CompressorSystems)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Part>()
-                .HasOne(p => p.CompressorSystem)
-                .WithMany(cs => cs.Parts)
+                .HasMany(cs => cs.Parts)
+                .WithOne(p => p.CompressorSystem)
+                .HasForeignKey(p => p.CompressorSystemId)
+                .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

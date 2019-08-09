@@ -1,4 +1,7 @@
-﻿using System;
+﻿using FacilityManagement.API.Models;
+using FacilityManagement.DTOs;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,12 +9,9 @@ using System.Threading.Tasks;
 
 namespace FacilityManagement.Web.Models.ViewModels
 {
-    public class DeleteCompressorSystemDetailsViewModel
+    public class PartsViewModel
     {
-        [Required]
         public int CompressorSystemId { get; set; }
-        public int CompressorSubTypeId { get; set; }
-
-        public ICollection<CompressorSystemDetailsViewModel> AllCompressorSystems { get; set; }
+        public ICollection<PartModel> Parts { get; set; }
     }
 }
