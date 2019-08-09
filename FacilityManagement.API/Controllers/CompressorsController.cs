@@ -87,7 +87,7 @@ namespace FacilityManagement.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCompressorAsync(int id)
         {
-            var compressor = await _compressorRepository.GetCompressorByIdAsync(id, true);
+            var compressor = await _compressorRepository.GetCompressorByIdAsync(id, true, true, true);
             if (compressor == null)
             {
                 return NotFound();

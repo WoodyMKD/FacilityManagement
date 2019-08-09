@@ -93,8 +93,24 @@ function reloadSystemsAndParts(selectedType) {
 
             $(".nav-pills li a[subTypeId]").parent("li").removeClass("active");
             $(".nav-pills li a[subTypeId=" + selectedType + "]").parent("li").addClass("active");
-
-            $('table.table-parts').DataTable();
+            
+            $('table.table-parts').DataTable({
+                dom: "<'row'<'col-sm-3'l><'col-sm-6 text-center'<'add-part-button-div'>><'col-sm-3'f>>" +
+                     "<'row'<'col-sm-12'tr>>" +
+                     "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                'columnDefs': [{
+                    'targets': [3], 
+                    'orderable': false
+                }],
+                initComplete: function () {
+                    var systemId = $(this).parents(".table-responsive").attr("system-id");
+                    var button = $("#add-part-button-" + systemId);
+                    var buttonContainer = $(this).parents(".table-responsive").find(".add-part-button-div");
+                    
+                    buttonContainer.html(button.html());
+                    button.remove();
+                }  
+            });
 
             $('#box-systems-container .box').boxWidget({
                 animationSpeed: 300

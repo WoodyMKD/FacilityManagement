@@ -21,6 +21,12 @@ a {
 
 /* Custom CSS
 -------------------------------------------------- */
+.add-part-button-div {
+	width: 135px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 #modal-overlay-loading {
 	background-color: #ffffffe8;
 	position: absolute;

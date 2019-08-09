@@ -25,10 +25,6 @@
       "destination": "wwwroot/lib/datatables/"
     },
     {
-      "library": "jquery.serializeJSON@2.9.0",
-      "destination": "wwwroot/lib/jquery.serializeJSON/"
-    },
-    {
       "library": "jquery@3.4.1",
       "destination": "wwwroot/lib/jquery/"
     },

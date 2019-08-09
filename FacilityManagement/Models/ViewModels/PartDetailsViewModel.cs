@@ -11,6 +11,7 @@ namespace FacilityManagement.Web.Models.ViewModels
     public class PartDetailsViewModel
     {
         public int PartId { get; set; }
+        [Required]
         public string Name { get; set; }
         public int CompressorSystemId { get; set; }
     }

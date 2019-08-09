@@ -4,14 +4,16 @@
     var modalID = "details-modal";
 }
 
-<a data-toggle="modal" data-target="#@modalID"
-   asp-action="AddPartAjaxFormAsync" asp-controller="Compressors" asp-route-id="@Model.CompressorSystemId"
-   class="btn btn-info btn-block btn-sm">
-    Додади нова систем
-</a>
+<div id="add-part-button-@Model.CompressorSystemId">
+    <a data-toggle="modal" data-target="#@modalID"
+       asp-action="AddPartAjaxFormAsync" asp-controller="Compressors" asp-route-id="@Model.CompressorSystemId"
+       class="btn btn-info btn-block btn-sm">
+        Додади компонента
+    </a>
+</div>
 
 <!-- START: Parts table -->
-<div class="table-responsive">
+<div class="table-responsive" system-id="@Model.CompressorSystemId">
     <table class="table table-hover table-bordered table-striped table-responsive table-parts">
         <thead>
             <tr>
