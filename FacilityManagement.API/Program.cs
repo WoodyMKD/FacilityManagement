@@ -19,9 +19,7 @@ namespace FacilityManagement.API
                 try
                 {
                     var context = services.GetRequiredService<ApplicationDbContext>();
-                    Debug.WriteLine("Pocnat DBINitializer");
                     DbInitializer.Seed(context);
-                    Debug.WriteLine("Zavrsen DBINitializer");
                 }
                 catch (Exception)
                 {
