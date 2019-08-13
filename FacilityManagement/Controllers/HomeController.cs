@@ -24,13 +24,10 @@ namespace FacilityManagement.Web.Controllers
         // TODO: Да се средат ресурсите за превод (Среден приоритет)
         // TODO: Data Annotations и валидација за AJAX CRUD / Моделите да се средат за валидација
         // TODO: BreadCrumbs (Среден приоритет)
-        // TODO: Edit modal имаат буг не се рефрешираат и нигде нема Modal.Clear (Среден приоритет)
 
         // Висок приоритет:
         // TODO: Token expiration (Висок приоритет)
-        // TODO: CRUD DETAILS EDIT  (Висок приоритет)
         // TODO: Тргни коментар за API да бара авторизација
-        // TODO: AJAX стави лоадинг анимација и на modal.. некогаш касни...
 
         private readonly IFacilityManagementHttpClient _facilityManagementHttpClient;
         private readonly IStringLocalizer<HomeController> _localizer;
@@ -48,15 +45,6 @@ namespace FacilityManagement.Web.Controllers
             //await WriteOutIdentityInformation();
 
             return View();
-        }
-
-        public IActionResult Details(int id)
-        {
-            //var invObject = _invObjectRepository.GetInventoryObjectById(id);
-            //if (invObject == null)
-                return NotFound();
-
-            //return View(invObject);
         }
 
         public IActionResult Privacy()

@@ -1,0 +1,31 @@
+﻿@model FacilityManagement.Web.Models.ViewModels.DeleteTypeDetailsViewModel
+
+<div id="replaceWithAjax">
+    <form asp-action="DeleteInventoryObjectTypeAjaxFormAsync" asp-controller="InventoryObjectTypes"
+          data-ajax="true"
+          data-ajax-method="POST"
+          data-ajax-complete="onDeleteCompressorTypeComplete"
+          data-ajax-mode="replace"
+          data-ajax-update="#replaceWithAjax"
+          data-ajax-loading="#modal-overlay-loading">
+
+        <partial name="Modals/_ModalHeader" model='new ModalHeader() {
+                 Heading = "Избриши тип"
+        }' />
+
+        <div class="modal-body">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="InventoryObjectId" />
+
+                <label asp-for="InventoryObjectTypeId" class="control-label"></label>
+                <select asp-for="InventoryObjectTypeId" class="form-control"
+                        asp-items='new SelectList(Model.AllTypes, "InventoryObjectTypeId", "Name")'></select>
+                <span asp-validation-for="InventoryObjectTypeId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <partial name="Modals/_ModalFooter" model='new ModalFooter() { }' />
+
+    </form>
+</div>

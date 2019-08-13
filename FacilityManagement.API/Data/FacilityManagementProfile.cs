@@ -12,16 +12,16 @@ namespace FacilityManagement.API.Data
     {
         public FacilityManagementProfile()
         {
-            this.CreateMap<Compressor, CompressorModel>()
+            this.CreateMap<InventoryObject, InventoryObjectDTO>()
               .ReverseMap();
 
-            this.CreateMap<CompressorSubType, CompressorSubTypeModel>()
+            this.CreateMap<InventoryObjectType, InventoryObjectTypeDTO>()
               .ReverseMap();
 
-            this.CreateMap<CompressorSystem, CompressorSystemModel>()
+            this.CreateMap<InventoryObjectSystem, InventoryObjectSystemDTO>()
               .ReverseMap();
             
-            this.CreateMap<Part, PartModel>()
+            this.CreateMap<InventoryObjectPart, InventoryObjectPartDTO>()
               .ReverseMap();
         }
     }

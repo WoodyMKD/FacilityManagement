@@ -15,33 +15,33 @@ namespace FacilityManagement.API.Data
         {
         }
 
-        public DbSet<Compressor> Compressors { get; set; }
-        public DbSet<CompressorSubType> CompressorSubTypes { get; set; }
-        public DbSet<Models.CompressorSystem> CompressorSystems { get; set; }
-        public DbSet<Part> Parts { get; set; }
+        public DbSet<InventoryObject> InventoryObjects { get; set; }
+        public DbSet<InventoryObjectType> InventoryObjectTypes { get; set; }
+        public DbSet<InventoryObjectSystem> InventoryObjectSystems { get; set; }
+        public DbSet<InventoryObjectPart> InventoryObjectParts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Compressor>()
-                .HasMany(c => c.CompressorSubTypes)
-                .WithOne(cst => cst.Compressor)
-                .HasForeignKey(cst => cst.CompressorId)
+            modelBuilder.Entity<InventoryObject>()
+                .HasMany(c => c.Types)
+                .WithOne(cst => cst.InventoryObject)
+                .HasForeignKey(cst => cst.InventoryObjectId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<CompressorSubType>()
-                .HasMany(cst => cst.CompressorSystems)
-                .WithOne(cs => cs.CompressorSubType)
-                .HasForeignKey(cs => cs.CompressorSubTypeId)
+            modelBuilder.Entity<InventoryObjectType>()
+                .HasMany(cst => cst.Systems)
+                .WithOne(cs => cs.Type)
+                .HasForeignKey(cs => cs.InventoryObjectTypeId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<CompressorSystem>()
+            modelBuilder.Entity<InventoryObjectSystem>()
                 .HasMany(cs => cs.Parts)
-                .WithOne(p => p.CompressorSystem)
-                .HasForeignKey(p => p.CompressorSystemId)
+                .WithOne(p => p.Systems)
+                .HasForeignKey(p => p.InventoryObjectSystemId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         }

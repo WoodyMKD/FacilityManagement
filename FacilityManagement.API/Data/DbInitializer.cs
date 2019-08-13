@@ -10,45 +10,45 @@ namespace FacilityManagement.API.Data
     {
         public static void Seed(ApplicationDbContext context)
         {
-            if (!context.Compressors.Any())
+            if (!context.InventoryObjects.Any())
             {
-                var compressors = new List<Compressor>
+                var invObjects = new List<InventoryObject>
                 {
-                    new Compressor { Name = "Компресор #1", Description = "Хала 1", Manufacturer = "Adidas", Model = "Air", WorkingHours = 10, CompressorSubTypes = new List<CompressorSubType>() },
-                    new Compressor { Name = "Компресор #2", Description = "Хала 2", Manufacturer = "Nike", Model = "Boo", WorkingHours = 15, CompressorSubTypes = new List<CompressorSubType>() },
-                    new Compressor { Name = "Компресор #3", Description = "Хала 3", Manufacturer = "Puma", Model = "Foo", WorkingHours = 20, CompressorSubTypes = new List<CompressorSubType>() }
+                    new InventoryObject { Name = "Компресор #1", Category = Category.Compressor, Description = "Хала 1", Manufacturer = "Adidas", Model = "Air", WorkingHours = 10, Types = new List<InventoryObjectType>() },
+                    new InventoryObject { Name = "Компресор #2", Category = Category.Compressor, Description = "Хала 2", Manufacturer = "Nike", Model = "Boo", WorkingHours = 15, Types = new List<InventoryObjectType>() },
+                    new InventoryObject { Name = "Компресор #3", Category = Category.Compressor, Description = "Хала 3", Manufacturer = "Puma", Model = "Foo", WorkingHours = 20, Types = new List<InventoryObjectType>() }
                 };
-                compressors.ForEach(c => context.Compressors.Add(c));
+                invObjects.ForEach(c => context.InventoryObjects.Add(c));
 
-                var compressorSubTypes = new List<CompressorSubType>
+                var types = new List<InventoryObjectType>
                 {
-                    new CompressorSubType { Name = "LX1", CompressorId = 1, CompressorSystems = new List<CompressorSystem>() },
-                    new CompressorSubType { Name = "LX2", CompressorId = 1, CompressorSystems = new List<CompressorSystem>() },
-                    new CompressorSubType { Name = "FX1", CompressorId = 1, CompressorSystems = new List<CompressorSystem>() },
-                    new CompressorSubType { Name = "FX2", CompressorId = 1, CompressorSystems = new List<CompressorSystem>() }
+                    new InventoryObjectType { Name = "LX1", InventoryObjectId = 1, Systems = new List<InventoryObjectSystem>() },
+                    new InventoryObjectType { Name = "LX2", InventoryObjectId = 1, Systems = new List<InventoryObjectSystem>() },
+                    new InventoryObjectType { Name = "FX1", InventoryObjectId = 1, Systems = new List<InventoryObjectSystem>() },
+                    new InventoryObjectType { Name = "FX2", InventoryObjectId = 1, Systems = new List<InventoryObjectSystem>() }
                 };
-                compressorSubTypes.ForEach(cst => context.CompressorSubTypes.Add(cst));
-                
-                compressors[0].CompressorSubTypes.Add(compressorSubTypes[0]);
-                compressors[0].CompressorSubTypes.Add(compressorSubTypes[1]);
-                compressors[0].CompressorSubTypes.Add(compressorSubTypes[2]);
-                compressors[0].CompressorSubTypes.Add(compressorSubTypes[3]);
+                types.ForEach(cst => context.InventoryObjectTypes.Add(cst));
 
-                var compressorSystems = new List<CompressorSystem>
+                invObjects[0].Types.Add(types[0]);
+                invObjects[0].Types.Add(types[1]);
+                invObjects[0].Types.Add(types[2]);
+                invObjects[0].Types.Add(types[3]);
+
+                var systems = new List<InventoryObjectSystem>
                 {
-                    new CompressorSystem { Name = "Електронски систем", CompressorSubType = compressorSubTypes.FirstOrDefault(cst => cst.CompressorSubTypeId == 1), Parts = new List<Part>() }
+                    new InventoryObjectSystem { Name = "Електронски систем", Type = types.FirstOrDefault(cst => cst.InventoryObjectTypeId == 1), Parts = new List<InventoryObjectPart>() }
                 };
-                compressorSystems.ForEach(cs => context.CompressorSystems.Add(cs));
+                systems.ForEach(cs => context.InventoryObjectSystems.Add(cs));
 
-                compressorSubTypes[0].CompressorSystems.Add(compressorSystems[0]);
+                types[0].Systems.Add(systems[0]);
 
-                var parts = new List<Part>
+                var parts = new List<InventoryObjectPart>
                 {
-                    new Part { Name = "Filter", CompressorSystem = compressorSystems.FirstOrDefault(cs => cs.CompressorSystemId == 1)}
+                    new InventoryObjectPart { Name = "Filter", Systems = systems.FirstOrDefault(cs => cs.InventoryObjectSystemId == 1)}
                 };
-                parts.ForEach(p => context.Parts.Add(p));
+                parts.ForEach(p => context.InventoryObjectParts.Add(p));
 
-                compressorSystems[0].Parts.Add(parts[0]);
+                systems[0].Parts.Add(parts[0]);
 
                 context.SaveChanges();
             }

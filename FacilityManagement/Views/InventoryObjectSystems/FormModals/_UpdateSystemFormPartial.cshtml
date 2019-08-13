@@ -1,0 +1,36 @@
+﻿@model FacilityManagement.Web.Models.ViewModels.UpdateSystemDetailsViewModel
+
+<div id="replaceWithAjax">
+    <form asp-action="EditInventoryObjectSystemAjaxFormAsync" asp-controller="InventoryObjectSystems"
+          data-ajax="true"
+          data-ajax-method="POST"
+          data-ajax-complete="onEditCompressorSystemComplete"
+          data-ajax-mode="replace"
+          data-ajax-update="#replaceWithAjax"
+          data-ajax-loading="#modal-overlay-loading">
+
+        <partial name="Modals/_ModalHeader" model='new ModalHeader() {
+                 Heading = "Измени систем"
+        }' />
+
+        <div class="modal-body">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="InventoryObjectTypeId" />
+
+                <label asp-for="InventoryObjectSystemId" class="control-label"></label>
+                <select asp-for="InventoryObjectSystemId" class="form-control"
+                        asp-items='new SelectList(Model.AllSystems, "InventoryObjectSystemId", "Name")'></select>
+                <span asp-validation-for="InventoryObjectSystemId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+
+        <partial name="Modals/_ModalFooter" model='new ModalFooter() { }' />
+
+    </form>
+</div>

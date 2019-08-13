@@ -3,7 +3,7 @@ var modalID = "details-modal";
 var confirmModalID = "details-confirm-modal";
 
 function reloadGeneralInformationBox() {
-    var urlStr = "/Compressors/GetCompressorGeneralInformationPartial/" + compressorId;
+    var urlStr = "/InventoryObjects/GetInventoryObjectGeneralInformationPartial/" + compressorId;
 
     $.ajax({
         type: "GET",
@@ -29,7 +29,7 @@ function reloadGeneralInformationBox() {
 }
 
 function reloadTypes() {
-    var urlStr = "/Compressors/GetCompressorTypesListPartial/" + compressorId;
+    var urlStr = "/InventoryObjectTypes/GetInventoryObjectTypesListPartial/" + compressorId;
 
     $.ajax({
         type: "GET",
@@ -78,7 +78,7 @@ function reloadSystemsAndParts(selectedType) {
         $('#ajax-full-details-box-loading').show();
     }
 
-    var urlStr = "/Compressors/GetCompressorSystemsAndPartsPartial/" + selectedType;
+    var urlStr = "/InventoryObjectSystems/GetInventoryObjectSystemsAndPartsPartial/" + selectedType;
 
     $.ajax({
         type: "GET",
@@ -174,7 +174,7 @@ $(document).on('submit', '#' + confirmModalID + ' form:first', function (event) 
 
     $.ajax({
         type: "GET",
-        url: "/Compressors/DeletePartAjaxAsync/" + partId,
+        url: "/InventoryObjectParts/DeleteInventoryObjectPartAjaxAsync/" + partId,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         beforeSend: function () {
@@ -203,7 +203,7 @@ $(document).on('submit', '#' + confirmModalID + ' form:first', function (event) 
     $("#delete-compressor-btn").click(function () {
         $.ajax({
             type: "GET",
-            url: "/Compressors/DeleteCompressorAjaxAsync/" + compressorId,
+            url: "/InventoryObjects/DeleteInventoryObjectAjaxAsync/" + compressorId,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             beforeSend: function () {
@@ -260,7 +260,7 @@ onDeleteCompressorTypeComplete = function (data) {
 
             $.ajax({
                 type: "GET",
-                url: "/Compressors/DeleteCompressorTypeAjaxAsync/" + selectedCompressorType,
+                url: "/InventoryObjectTypes/DeleteInventoryObjectTypeAjaxAsync/" + selectedCompressorType,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 beforeSend: function () {
@@ -313,7 +313,7 @@ onDeleteCompressorSystemComplete = function (data) {
 
             $.ajax({
                 type: "GET",
-                url: "/Compressors/DeleteCompressorSystemAjaxAsync/" + selectedCompressorSystem,
+                url: "/InventoryObjectSystems/DeleteInventoryObjectSystemAjaxAsync/" + selectedCompressorSystem,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 beforeSend: function () {

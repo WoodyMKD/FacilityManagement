@@ -4,10 +4,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacilityManagement.Web", "FacilityManagement\FacilityManagement.Web.csproj", "{22D3D223-D57E-4F83-91C8-ABDAF4DCED3F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3241B34A-C47A-4E21-B5CC-976F19A6E027} = {3241B34A-C47A-4E21-B5CC-976F19A6E027}
+		{4EF99D8B-8EE4-4A92-97BD-14527E4B1B19} = {4EF99D8B-8EE4-4A92-97BD-14527E4B1B19}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacilityManagement.IdentityServer", "FacilityManagement.IdentityServer\FacilityManagement.IdentityServer.csproj", "{3241B34A-C47A-4E21-B5CC-976F19A6E027}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacilityManagement.API", "FacilityManagement.API\FacilityManagement.API.csproj", "{F989972D-3825-4E1A-B598-E6DD7273CF16}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3241B34A-C47A-4E21-B5CC-976F19A6E027} = {3241B34A-C47A-4E21-B5CC-976F19A6E027}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FacilityManagement.DTOs", "FacilityManagement.DTOs\FacilityManagement.DTOs.csproj", "{4EF99D8B-8EE4-4A92-97BD-14527E4B1B19}"
 EndProject

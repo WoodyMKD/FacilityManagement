@@ -1,0 +1,89 @@
+﻿@model IndexViewModel
+
+@{
+    ViewData["Title"] = "Компресори";
+    ViewData["Description"] = "Кратко инфо";
+    var toastNotificationType = TempData["ToastType"];
+    var toastNotificationTitle = TempData["ToastTitle"];
+    var toastNotificationMsg = TempData["ToastMessage"];
+}
+
+<ul id="compressors" class="tile-layout">
+    @foreach (var compressor in Model.InventoryObjects)
+    {
+        <li class="tile-layout-item">
+            <div class="tile-layout-item-content">
+                <h2><a href="/InventoryObjects/Details/@compressor.InventoryObjectId" controller-id="@compressor.InventoryObjectId">@compressor.Name</a></h2>
+                <img src="~/images/chiller.jpg" alt="" />
+                <p>@compressor.Manufacturer | @compressor.Model</p>
+            </div>
+        </li>
+    }
+</ul>
+
+@section scripts {
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/Dynatable/jquery.dynatable.css">
+        <script src="~/lib/Dynatable/jquery.dynatable.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/lib/Dynatable/jquery.dynatable.min.css">
+        <script src="~/lib/Dynatable/jquery.dynatable.min.js"></script>
+    </environment>
+
+    <script>
+        // Function that renders the list items from our records
+        function ulWriter(rowIndex, record, columns, cellWriter) {
+            var cssClass = "tile-layout-item", li;
+            if (rowIndex % 3 === 0) { cssClass += ' first'; }
+            li = '<li class="' + cssClass + '"> \
+                                    <div class="tile-layout-item-content" controller-id="' + record.Id + '"> \
+                                        <h2>' + record.Name + '</h2> \
+                                        <img src="/images/chiller.jpg" alt="" /> \
+                                        <p>' + record.Description + '</p> \
+                                    </div> \
+                                </li> \
+                        ';
+            return li;
+        }
+        // Function that creates our records from the DOM when the page is loaded
+        function ulReader(index, li, record) {
+            var $li = $(li),
+                $content = $li.find('.tile-layout-item-content');
+            record.Id = $content.find("h2 a").attr("controller-id");
+            record.Name = $content.find("h2 a").html();
+            record.Description = $content.find("p").html();
+            console.log(record);
+        }
+
+        $(document).ready(function () {
+            $('#compressors').dynatable({
+                table: {
+                    bodyRowSelector: 'li'
+                },
+                dataset: {
+                    perPageDefault: 4,
+                    perPageOptions: [4, 8, 12]
+                },
+                writers: {
+                    _rowWriter: ulWriter
+                },
+                readers: {
+                    _rowReader: ulReader
+                },
+                params: {
+
+                }
+            });
+
+            $(".tile-layout-item-content").click(function () {
+                var controllerId = $(this).attr("controller-id");
+                window.location.href = "/InventoryObjects/Details/" + controllerId;
+            });
+
+            if ("@toastNotificationType" != "") {
+                toastr["@toastNotificationType"]("@toastNotificationMsg", "@toastNotificationTitle");
+            }
+        });
+    </script>
+}

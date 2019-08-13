@@ -1,0 +1,25 @@
+﻿@model FacilityManagement.Web.Models.ViewModels.TypesViewModel
+
+@{
+    var modalID = "details-modal";
+}
+
+<!-- START: Types navigation list -->
+<ul class="nav nav-pills nav-justified">
+    @if (Model.Types.Count > 0)
+    {
+        foreach (var subtype in Model.Types)
+        {
+            <li><a href="#" subTypeId="@subtype.InventoryObjectTypeId">@subtype.Name</a></li>
+        }
+    }
+    else
+    {
+        <a data-toggle="modal" data-target="#@modalID"
+           asp-action="AddInventoryObjectTypeAjaxFormAsync" asp-controller="InventoryObjectTypes" asp-route-id="@Model.InventoryObjectId"
+           class="btn btn-info btn-block btn-sm">
+            Додади нов тип
+        </a>
+    }
+</ul>
+<!-- END: Types navigation list -->
