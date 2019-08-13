@@ -31,7 +31,7 @@ namespace FacilityManagement.API
 
             host.Run();
 
-            Debug.WriteLine("Skoknato?");
+            
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
