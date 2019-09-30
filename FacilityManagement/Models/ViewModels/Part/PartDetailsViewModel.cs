@@ -11,7 +11,9 @@ namespace FacilityManagement.Web.Models.ViewModels
     public class PartDetailsViewModel
     {
         public int InventoryObjectPartId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "This field is required.")]
+        [StringLength(64, ErrorMessage = "This field must be at least {2} characters long.", MinimumLength = 3)]
+        [Display(Name = "Name")]
         public string Name { get; set; }
         public int InventoryObjectSystemId { get; set; }
     }

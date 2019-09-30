@@ -8,7 +8,8 @@ namespace FacilityManagement.Web.Models.ViewModels
 {
     public class DeleteSystemDetailsViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "This field is required.")]
+        [Display(Name = "System")]
         public int InventoryObjectSystemId { get; set; }
         public int InventoryObjectTypeId { get; set; }
 

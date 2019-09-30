@@ -117,14 +117,50 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add component" xml:space="preserve">
+    <value>Додади компонента</value>
+  </data>
+  <data name="Add system" xml:space="preserve">
+    <value>Додади систем</value>
+  </data>
+  <data name="Add type" xml:space="preserve">
+    <value>Додади тип</value>
+  </data>
   <data name="All rights reserved" xml:space="preserve">
     <value>Сите права задржани</value>
+  </data>
+  <data name="Are you sure?" xml:space="preserve">
+    <value>Дали сте сигурни?</value>
   </data>
   <data name="Compressors" xml:space="preserve">
     <value>Компресори</value>
   </data>
+  <data name="Delete system" xml:space="preserve">
+    <value>Избриши систем</value>
+  </data>
+  <data name="Delete type" xml:space="preserve">
+    <value>Избриши тип</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Опис</value>
+  </data>
   <data name="Details" xml:space="preserve">
     <value>Детали</value>
+  </data>
+  <data name="Edit component" xml:space="preserve">
+    <value>Измени компонента</value>
+  </data>
+  <data name="Edit system" xml:space="preserve">
+    <value>Измени систем</value>
+  </data>
+  <data name="Edit type" xml:space="preserve">
+    <value>Измени тип</value>
+  </data>
+  <data name="Edit unit" xml:space="preserve">
+    <value>Измени единица</value>
+  </data>
+  <data name="Everything about the unit in one place" xml:space="preserve">
+    <value>Се за единицата на едно место</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Почетна</value>
@@ -132,14 +168,29 @@
   <data name="Inventory" xml:space="preserve">
     <value>Инвентар</value>
   </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Се вчитува</value>
+  </data>
   <data name="Log out" xml:space="preserve">
     <value>Одјави се</value>
+  </data>
+  <data name="Manufacturer" xml:space="preserve">
+    <value>Производител</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Модел</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Име</value>
   </data>
   <data name="Navigational Menu" xml:space="preserve">
     <value>Навигациско Мени</value>
   </data>
   <data name="Open Menu" xml:space="preserve">
     <value>Отвори Мени</value>
+  </data>
+  <data name="Please enter a valid number." xml:space="preserve">
+    <value>Ве молиме валидна целобројна вредност.</value>
   </data>
   <data name="Preview of all units in the inventory" xml:space="preserve">
     <value>Преглед на сите единици во инвентарот</value>
@@ -150,7 +201,22 @@
   <data name="Short information" xml:space="preserve">
     <value>Кратка информација</value>
   </data>
+  <data name="System" xml:space="preserve">
+    <value>Систем</value>
+  </data>
+  <data name="This field is required." xml:space="preserve">
+    <value>Ова поле е задолжително.</value>
+  </data>
+  <data name="This field must be at least {2} characters long." xml:space="preserve">
+    <value>Ова поле мора да биде најмалку {2} карактери долго.</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Тип</value>
+  </data>
   <data name="Version" xml:space="preserve">
     <value>Верзија</value>
+  </data>
+  <data name="Working Hours" xml:space="preserve">
+    <value>Работни часови</value>
   </data>
 </root>

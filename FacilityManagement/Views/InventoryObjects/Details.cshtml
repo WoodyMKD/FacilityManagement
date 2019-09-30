@@ -1,14 +1,12 @@
 ﻿@model FacilityManagement.Web.Models.ViewModels.DetailsViewModel
 
-@using FacilityManagement.Web
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
-@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 
 @{
     ViewData["Title"] = SharedLocalizer["Details"];
-    ViewData["Description"] = SharedLocalizer["Short information"];
+    ViewData["Description"] = SharedLocalizer["Everything about the unit in one place"].Value;
 
     var modalID = "details-modal";
     var confirmModalID = "details-confirm-modal";
@@ -53,7 +51,7 @@
                 </a>
                 <a id="delete-compressor-btn"
                    class="btn btn-default btn-block btn-sm">
-                    @Localizer["Delete the object"]
+                    @Localizer["Delete the unit"]
                 </a>
                 <div class="btn-group custom-dropdown-button-group">
                     <button type="button" class="btn btn-default btn-block btn-sm dropdown-toggle custom-dropdown-button" data-toggle="dropdown" aria-expanded="false">

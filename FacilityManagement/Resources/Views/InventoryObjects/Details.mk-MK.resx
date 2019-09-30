@@ -123,8 +123,8 @@
   <data name="Delete existing type" xml:space="preserve">
     <value>Избриши постоечки тип</value>
   </data>
-  <data name="Delete the object" xml:space="preserve">
-    <value>Избриши го објектот</value>
+  <data name="Delete the unit" xml:space="preserve">
+    <value>Избриши ја единицата</value>
   </data>
   <data name="Detailed view - systems and components" xml:space="preserve">
     <value>Детален преглед - системи и компоненти</value>

@@ -87,7 +87,7 @@ namespace FacilityManagement.Web
             services.AddBreadcrumbs(GetType().Assembly, options =>
             {
                 options.TagName = "nav";
-                options.TagClasses = "";
+                options.TagClasses = "breadcrumb-box box box-info";
                 options.OlClasses = "breadcrumb";
                 options.LiClasses = "breadcrumb-item";
                 options.ActiveLiClasses = "breadcrumb-item active";

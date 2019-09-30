@@ -187,7 +187,7 @@ namespace FacilityManagement.Web.Controllers
                 Controller = "InventoryObjects",
                 Action = "DeleteInventoryObjectAjaxAsync",
                 ModelId = id,
-                Message = "Сигурен си комп?"
+                Message = ""
             };
 
             return PartialView("Modals/_ModalDelete", model: ModalDeleteModel);

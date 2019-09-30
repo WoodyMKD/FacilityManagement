@@ -23,9 +23,7 @@ namespace FacilityManagement.Web.Controllers
         // TODO: Да се промени стилот за најава и регистрација - како Нептун (Низок приоритет)
 
         // Среден приоритет:
-        // TODO: Да се средат ресурсите за превод (Среден приоритет)
-        // TODO: Data Annotations и валидација за AJAX CRUD / Моделите да се средат за валидација
-        // TODO: BreadCrumbs (Среден приоритет)
+        // TODO: Localization на IdentityServer
 
         // Висок приоритет:
         // TODO: Token expiration (Висок приоритет)

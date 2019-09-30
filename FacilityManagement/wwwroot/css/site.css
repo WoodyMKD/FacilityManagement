@@ -21,8 +21,36 @@ a {
 
 /* Custom CSS
 -------------------------------------------------- */
+.content-header {
+	padding: 15px 15px 15px 15px;
+	background: #ffffff !important;
+}
+
+.breadcrumb-box {
+	border-top: 0px;
+	float: right;
+	margin-top: 0;
+	margin-bottom: 0;
+	position: absolute;
+	top: 15px;
+	right: 10px;
+	width: auto;
+}
+
+.section-separator {
+	border-top: 3px solid #555555;
+	margin: 0px;
+}
+
+.content-wrapper {
+	background-color: #efefef;
+}
+
 .breadcrumb {
-	margin-top: 15px;
+	margin-top: 0px;
+	background-color: #ededed;
+	margin: 0;
+	padding: 5px 10px;
 }
 
 .breadcrumb-item {
@@ -281,11 +309,11 @@ a {
 	width: 100%;
 	cursor: pointer;
 
-	border: solid 3px #3c8dbc;
+	border: solid 7px #3c8dbc;
 	clip-path: polygon( calc(0% + 5px) calc(0% + 5px), /* top left */
-		calc(100% - 5px) calc(0% + 5px), /* top right */
-		calc(100% - 5px) calc(100% - 5px), /* bottom right */
-		calc(0% + 5px) calc(100% - 5px) /* bottom left */
+	calc(100% - 5px) calc(0% + 5px), /* top right */
+	calc(100% - 5px) calc(100% - 5px), /* bottom right */
+	calc(0% + 5px) calc(100% - 5px) /* bottom left */
 	);
 	transition: clip-path 0.3s linear;
 }

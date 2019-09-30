@@ -9,7 +9,8 @@ namespace FacilityManagement.Web.Models.ViewModels
 {
     public class DeleteTypeDetailsViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "This field is required.")]
+        [Display(Name = "Type")]
         public int InventoryObjectTypeId { get; set; }
         public int InventoryObjectId { get; set; }
 
