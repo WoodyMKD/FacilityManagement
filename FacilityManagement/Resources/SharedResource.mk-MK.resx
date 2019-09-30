@@ -144,6 +144,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Откажи</value>
   </data>
+  <data name="Chillers" xml:space="preserve">
+    <value>Чилери</value>
+  </data>
   <data name="Compressors" xml:space="preserve">
     <value>Компресори</value>
   </data>

@@ -1,8 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using FacilityManagement.Web
 
-@inject IHtmlLocalizer<SharedResource> SharedLocalizer
-
 @{
     ViewData["Title"] = SharedLocalizer["Home"].Value;
     ViewData["Description"] = "";
@@ -10,8 +8,15 @@
 
 <ul class="tile-layout">
     <li class="tile-layout-item">
-        <div class="tile-layout-item-content">
-            <h2>Compressors</h2>
+        <div class="tile-layout-item-content" category="Compressor">
+            <h2>@SharedLocalizer["Compressors"].Value</h2>
+            <img src="~/images/chiller.jpg" alt="" />
+        </div>
+    </li>
+
+    <li class="tile-layout-item">
+        <div class="tile-layout-item-content" category="Chiller">
+            <h2>@SharedLocalizer["Chillers"].Value</h2>
             <img src="~/images/chiller.jpg" alt="" />
         </div>
     </li>
@@ -21,7 +26,7 @@
     <script>
         $(document).ready(function () {
             $(".tile-layout-item-content").click(function () {
-                window.location.href = "/InventoryObjects/";
+                window.location.href = "/InventoryObjects?category=" + $(this).attr("category");
             });
         });
     </script>

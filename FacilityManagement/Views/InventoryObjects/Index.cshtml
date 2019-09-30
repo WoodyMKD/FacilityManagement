@@ -23,7 +23,14 @@
     {
         toastNotificationMsg = SharedLocalizer[(string)toastNotificationMsg].Value;
     }
-    }
+}
+
+Категорија: 
+<select id="search-year" name="category">
+    <option></option>
+    <option value="Compressor">Компресори</option>
+    <option value="Chiller">Чилери</option>
+</select>
 
 <ul id="compressors" class="tile-layout">
     @foreach (var compressor in Model.InventoryObjects)
@@ -33,6 +40,7 @@
                 <h2><a href="/InventoryObjects/Details/@compressor.InventoryObjectId" controller-id="@compressor.InventoryObjectId">@compressor.Name</a></h2>
                 <img src="~/images/chiller.jpg" alt="" />
                 <p>@compressor.Manufacturer | @compressor.Model</p>
+                <p hidden>@compressor.Category</p>
             </div>
         </li>
     }
@@ -49,6 +57,17 @@
     </environment>
 
     <script>
+        function getUrlParam(sParam) {
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) {
+                    return sParameterName[1];
+                }
+            }
+        }
+
         // Function that renders the list items from our records
         function ulWriter(rowIndex, record, columns, cellWriter) {
             var cssClass = "tile-layout-item", li;
@@ -58,6 +77,7 @@
                                         <h2>' + record.Name + '</h2> \
                                         <img src="/images/chiller.jpg" alt="" /> \
                                         <p>' + record.Description + '</p> \
+                                        <p hidden>' + record.Category + '</p> \
                                     </div> \
                                 </li> \
                         ';
@@ -70,36 +90,77 @@
             record.Id = $content.find("h2 a").attr("controller-id");
             record.Name = $content.find("h2 a").html();
             record.Description = $content.find("p").html();
+            record.Category = $content.find("p[hidden]").html();
         }
+
+        var dynatable;
 
         $(document)
             .ready(function () {
-                $('#compressors').dynatable({
-                    table: {
-                        bodyRowSelector: 'li'
-                    },
-                    dataset: {
-                        perPageDefault: 4,
-                        perPageOptions: [4, 8, 12]
-                    },
-                    writers: {
-                        _rowWriter: ulWriter
-                    },
-                    readers: {
-                        _rowReader: ulReader
-                    },
-                    params: {
+                inventory = $('#compressors')
+                    .bind('dynatable:init', function (e, dynatable) {
+                        dynatable.queries.functions['Category'] = function (record, queryValue) {
+                            console.log(record);
+                            console.log(queryValue);
+                            if (record.Category == queryValue) {
+                                return true;
+                            }
+                            else {
+                                return false;
+                            }
 
-                    }
-                });
+                        };
+                    })
+                    .dynatable({
+                        table: {
+                            bodyRowSelector: 'li'
+                        },
+                        dataset: {
+                            perPageDefault: 4,
+                            perPageOptions: [4, 8, 12]
+                        },
+                        writers: {
+                            _rowWriter: ulWriter
+                        },
+                        readers: {
+                            _rowReader: ulReader
+                        },
+                        params: {
+
+                        }
+                    }).data('dynatable');
 
                 if ("@toastNotificationType" != "") {
                     toastr["@toastNotificationType"]("@toastNotificationMsg", "@toastNotificationTitle");
+                }
+                
+                var parameterM = getUrlParam('category');
+                if (parameterM != null) {
+                    $("#search-year").val(parameterM);
+                    inventory.queries.add("Category", parameterM);
+                    inventory.process();
                 }
             })
             .on("click", ".tile-layout-item-content", function () {
                 var controllerId = $(this).attr("controller-id");
                 window.location.href = "/InventoryObjects/Details/" + controllerId;
+            })
+            .on("change", "#search-year", function () {
+                var value = $(this).val();
+                if (value === "") {
+                    inventory.queries.remove("Category");
+                } else {
+                    inventory.queries.add("Category", value);
+                }
+                inventory.process();
+
+                var params = [];
+                $('#search-year').each(function () {
+                    $this = $(this);
+                    console.log($this);
+                    if (!$this.val() == '') params.push('category=' + encodeURIComponent($this.val()));
+                });
+                history.pushState(null, null, "/InventoryObjects?" + params.join('&'));
             });
     </script>
 }

@@ -44,7 +44,7 @@ namespace FacilityManagement.API.Data
 
                 var parts = new List<InventoryObjectPart>
                 {
-                    new InventoryObjectPart { Name = "Filter", Systems = systems.FirstOrDefault(cs => cs.InventoryObjectSystemId == 1)}
+                    new InventoryObjectPart { Name = "Филтер", Systems = systems.FirstOrDefault(cs => cs.InventoryObjectSystemId == 1)}
                 };
                 parts.ForEach(p => context.InventoryObjectParts.Add(p));
 
