@@ -1,5 +1,8 @@
 ﻿@model FacilityManagement.Web.Models.ViewModels.TypesViewModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     var modalID = "details-modal";
 }
@@ -16,9 +19,9 @@
     else
     {
         <a data-toggle="modal" data-target="#@modalID"
-           asp-action="AddInventoryObjectTypeAjaxFormAsync" asp-controller="InventoryObjectTypes" asp-route-id="@Model.InventoryObjectId"
-           class="btn btn-info btn-block btn-sm">
-            Додади нов тип
+            asp-action="AddInventoryObjectTypeAjaxFormAsync" asp-controller="InventoryObjectTypes" asp-route-id="@Model.InventoryObjectId"
+            class="btn btn-info btn-block btn-sm">
+            @Localizer["Add new type"]
         </a>
     }
 </ul>

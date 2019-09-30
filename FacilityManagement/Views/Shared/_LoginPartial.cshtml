@@ -1,13 +1,18 @@
-﻿@using Microsoft.AspNetCore.Authorization
+﻿@using Microsoft.AspNetCore.Authorization;
 @using System.Security.Claims;
+@using Microsoft.AspNetCore.Mvc.Localization
+@using FacilityManagement.Web
+
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 @inject IAuthorizationService AuthorizationService
 
 <!-- User Account: style can be found in dropdown.less -->
+
 <li class="dropdown user user-menu">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 
-       <img src="~/images/Employee-Photos/avatar5.png" class="user-image" alt="User Image">
-       <span class="hidden-xs">@(((ClaimsIdentity)User.Identity).FindFirst("name").Value)</span>
+        <img src="~/images/Employee-Photos/avatar5.png" class="user-image" alt="User Image">
+        <span class="hidden-xs">@(((ClaimsIdentity)User.Identity).FindFirst("name").Value)</span>
 
     </a>
     <ul class="dropdown-menu">
@@ -22,10 +27,10 @@
         <!-- Menu Footer-->
         <li class="user-footer">
             <div class="pull-left">
-                <a class="btn btn-default btn-flat" href="#" title="Profile">Профил</a>
+                <a class="btn btn-default btn-flat" href="#" title="Profile" disabled>@SharedLocalizer["Profile"]</a>
             </div>
             <div class="pull-right">
-                <a class="btn btn-default btn-flat" asp-controller="Home" asp-action="Logout" title="Logout">Одјави се</a>
+                <a class="btn btn-default btn-flat" asp-controller="Home" asp-action="Logout" title="Logout">@SharedLocalizer["Log out"]</a>
             </div>
         </li>
     </ul>

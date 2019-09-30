@@ -1,6 +1,11 @@
-﻿@{
-    ViewData["Title"] = "Почетна";
-    ViewData["Description"] = "Кратко инфо";
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using FacilityManagement.Web
+
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+@{
+    ViewData["Title"] = SharedLocalizer["Home"];
+    ViewData["Description"] = SharedLocalizer["Short information"];
 }
 
 <ul class="tile-layout">

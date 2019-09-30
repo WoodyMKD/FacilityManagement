@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using FacilityManagement.Web
 
-@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 <!DOCTYPE html>
 <html>
@@ -44,7 +45,7 @@
             <nav class="navbar navbar-static-top">
                 <!-- Sidebar toggle button-->
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                    <span class="sr-only">Отвори мени</span>
+                    <span class="sr-only">@SharedLocalizer["Open Menu"]</span>
                 </a>
 
                 <div class="navbar-custom-menu">
@@ -62,17 +63,17 @@
             <section class="sidebar">
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu" data-widget="tree">
-                    <li class="header">НАВИГАЦИСКО МЕНИ</li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> <span>Почетна</span></a></li>
+                    <li class="header">@SharedLocalizer["Navigational Menu"]</li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> <span>@SharedLocalizer["Home"]</span></a></li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-industry"></i> <span>Инвентар</span>
+                            <i class="fa fa-industry"></i> <span>@SharedLocalizer["Inventory"]</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a asp-area="" asp-controller="InventoryObjects" asp-action="Index"><i class="fa fa-minus"></i> <span>Компресори</span></a></li>  
+                            <li><a asp-area="" asp-controller="InventoryObjects" asp-action="Index"><i class="fa fa-minus"></i> <span>@SharedLocalizer["Compressors"]</span></a></li>
                         </ul>
                     </li>
 
@@ -90,7 +91,7 @@
                     <small>@ViewData["Description"]</small>
                 </h1>
                 <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li><a href="#"><i class="fa fa-dashboard"></i> @SharedLocalizer["Home"]</a></li>
                     <li class="active">Dashboard</li>
                 </ol>
             </section>
@@ -104,9 +105,9 @@
         <!-- /.content-wrapper -->
         <footer class="main-footer">
             <div class="pull-right hidden-xs">
-                <b>Верзија: </b> Pre-Alpha v0.0.1
+                <b>@SharedLocalizer["Version"]: </b> Pre-Alpha v0.0.1
             </div>
-            <strong>Copyright &copy; 2019 Facility Management.</strong> Сите права задржани.
+            <strong>Copyright &copy; 2019 Facility Management.</strong> @SharedLocalizer["All rights reserved"].
         </footer>
     </div>
     <!-- ./wrapper -->

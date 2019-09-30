@@ -1,5 +1,8 @@
 ﻿@model SystemsViewModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     var modalID = "details-modal";
 }
@@ -12,17 +15,17 @@
             <a id="add-system-btn" data-toggle="modal" data-target="#@modalID"
                asp-action="AddInventoryObjectSystemAjaxFormAsync" asp-controller="InventoryObjectSystems" asp-route-id="@Model.InventoryObjectTypeId"
                class="btn btn-default">
-                Додади нов систем
+                @Localizer["Add new system"]
             </a>
             <a data-toggle="modal" data-target="#@modalID"
                asp-action="EditInventoryObjectSystemAjaxFormAsync" asp-controller="InventoryObjectSystems" asp-route-id="@Model.InventoryObjectTypeId"
                class="btn btn-default">
-                Измени систем
+                @Localizer["Edit system"]
             </a>
             <a data-toggle="modal" data-target="#@modalID"
                asp-action="DeleteInventoryObjectSystemAjaxFormAsync" asp-controller="InventoryObjectSystems" asp-route-id="@Model.InventoryObjectTypeId"
                class="btn btn-default">
-                Избриши систем
+                @Localizer["Delete system"]
             </a>
         </div>
     </div>
@@ -41,8 +44,8 @@
                 </div>
             </div>
             <div class="box-body" style="display: none">
-                <partial name="../InventoryObjectParts/_PartsPartial" 
-                    model="new PartsViewModel { InventoryObjectSystemId = system.InventoryObjectSystemId, Parts = system.Parts }" />
+                <partial name="../InventoryObjectParts/_PartsPartial"
+                         model="new PartsViewModel { InventoryObjectSystemId = system.InventoryObjectSystemId, Parts = system.Parts }" />
             </div>
         </div>
         <!-- END: Single system collapsible box -->
@@ -51,8 +54,8 @@
 else
 {
     <a id="add-system-btn" data-toggle="modal" data-target="#@modalID"
-       asp-action="AddInventoryObjectSystemAjaxFormAsync" asp-controller="InventoryObjectSystems" asp-route-id="@Model.InventoryObjectTypeId"
-       class="btn btn-info btn-block btn-sm">
-        Додади нов систем
+        asp-action="AddInventoryObjectSystemAjaxFormAsync" asp-controller="InventoryObjectSystems" asp-route-id="@Model.InventoryObjectTypeId"
+        class="btn btn-info btn-block btn-sm">
+        @Localizer["Add new system"]
     </a>
 }

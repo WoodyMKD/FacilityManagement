@@ -1,5 +1,8 @@
 ﻿@model PartsViewModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     var modalID = "details-modal";
 }
@@ -8,7 +11,7 @@
     <a data-toggle="modal" data-target="#@modalID"
        asp-action="AddInventoryObjectPartAjaxFormAsync" asp-controller="InventoryObjectParts" asp-route-id="@Model.InventoryObjectSystemId"
        class="btn btn-info btn-block btn-sm">
-        Додади компонента
+        @Localizer["Add component"]
     </a>
 </div>
 
@@ -17,10 +20,10 @@
     <table class="table table-hover table-bordered table-striped table-responsive table-parts">
         <thead>
             <tr>
-                <th>Компонента</th>
-                <th>Последен сервис</th>
-                <th>Следен сервис</th>
-                <th class="text-center">Поставки</th>
+                <th>@Localizer["Component"]</th>
+                <th>@Localizer["Last service"]</th>
+                <th>@Localizer["Next service"]</th>
+                <th class="text-center">@Localizer["Settings"]</th>
             </tr>
         </thead>
         <tbody>
@@ -35,11 +38,11 @@
                             <a data-toggle="modal" data-target="#@modalID"
                                asp-action="EditInventoryObjectPartAjaxFormAsync" asp-controller="InventoryObjectParts" asp-route-id="@part.InventoryObjectPartId"
                                class="btn btn-default">
-                                Измени
+                                @Localizer["Edit"]
                             </a>
                             <a id="delete-part-btn" part-id="@part.InventoryObjectPartId"
                                class="btn btn-default">
-                                Избриши
+                                @Localizer["Delete"]
                             </a>
                         </div>
                     </td>

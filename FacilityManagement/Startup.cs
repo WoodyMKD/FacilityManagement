@@ -78,6 +78,7 @@ namespace FacilityManagement.Web
             // register an IHttpContextAccessor so we can access the current
             // HttpContext in services by injecting it
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<CultureLocalizer>();
 
             // register an IImageGalleryHttpClient
             services.AddScoped<IFacilityManagementHttpClient, FacilityManagementHttpClient>();
