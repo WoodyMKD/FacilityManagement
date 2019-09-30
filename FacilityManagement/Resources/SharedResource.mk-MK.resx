@@ -132,8 +132,14 @@
   <data name="Are you sure?" xml:space="preserve">
     <value>Дали сте сигурни?</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Откажи</value>
+  </data>
   <data name="Compressors" xml:space="preserve">
     <value>Компресори</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Избриши</value>
   </data>
   <data name="Delete system" xml:space="preserve">
     <value>Избриши систем</value>
@@ -200,6 +206,9 @@
   </data>
   <data name="Short information" xml:space="preserve">
     <value>Кратка информација</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Внеси</value>
   </data>
   <data name="System" xml:space="preserve">
     <value>Систем</value>

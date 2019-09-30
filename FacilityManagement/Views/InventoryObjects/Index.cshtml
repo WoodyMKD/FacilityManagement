@@ -58,37 +58,36 @@
             record.Id = $content.find("h2 a").attr("controller-id");
             record.Name = $content.find("h2 a").html();
             record.Description = $content.find("p").html();
-            console.log(record);
         }
 
-        $(document).ready(function () {
-            $('#compressors').dynatable({
-                table: {
-                    bodyRowSelector: 'li'
-                },
-                dataset: {
-                    perPageDefault: 4,
-                    perPageOptions: [4, 8, 12]
-                },
-                writers: {
-                    _rowWriter: ulWriter
-                },
-                readers: {
-                    _rowReader: ulReader
-                },
-                params: {
+        $(document)
+            .ready(function () {
+                $('#compressors').dynatable({
+                    table: {
+                        bodyRowSelector: 'li'
+                    },
+                    dataset: {
+                        perPageDefault: 4,
+                        perPageOptions: [4, 8, 12]
+                    },
+                    writers: {
+                        _rowWriter: ulWriter
+                    },
+                    readers: {
+                        _rowReader: ulReader
+                    },
+                    params: {
 
+                    }
+                });
+
+                if ("@toastNotificationType" != "") {
+                    toastr["@toastNotificationType"]("@toastNotificationMsg", "@toastNotificationTitle");
                 }
-            });
-
-            $(".tile-layout-item-content").click(function () {
+            })
+            .on("click", ".tile-layout-item-content", function () {
                 var controllerId = $(this).attr("controller-id");
                 window.location.href = "/InventoryObjects/Details/" + controllerId;
             });
-
-            if ("@toastNotificationType" != "") {
-                toastr["@toastNotificationType"]("@toastNotificationMsg", "@toastNotificationTitle");
-            }
-        });
     </script>
 }

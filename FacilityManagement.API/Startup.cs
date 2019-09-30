@@ -36,12 +36,10 @@ namespace FacilityManagement.API
         {
             services.AddMvc(o =>
             {
-                /*
                 var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .Build();
                 o.Filters.Add(new AuthorizeFilter(policy));
-                */
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddAutoMapper(typeof(Startup));
@@ -51,7 +49,7 @@ namespace FacilityManagement.API
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddTransient<IInventoryObjectRepository, InventoryObjectRepository>();
-            /*
+            
             services.AddAuthentication(
                 IdentityServerAuthenticationDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>
@@ -60,7 +58,7 @@ namespace FacilityManagement.API
                     options.ApiName = "facilitymanagementapi";
                 }
             );
-            */
+            
 
             services.AddCors();
         }

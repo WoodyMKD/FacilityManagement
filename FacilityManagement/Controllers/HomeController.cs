@@ -26,7 +26,6 @@ namespace FacilityManagement.Web.Controllers
         // TODO: Localization на IdentityServer
 
         // Висок приоритет:
-        // TODO: Token expiration (Висок приоритет)
         // TODO: Тргни коментар за API да бара авторизација
 
         private readonly IFacilityManagementHttpClient _facilityManagementHttpClient;
