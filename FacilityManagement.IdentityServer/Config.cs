@@ -34,6 +34,7 @@ namespace FacilityManagement.IdentityServer
                     ClientName = "Facility Management Web",
                     ClientId = "facilitymanagementweb",
                     AllowedGrantTypes = GrantTypes.Hybrid,
+                    RequireConsent = false,
                     RedirectUris = new List<string>()
                     {
                         "https://localhost:44302/signin-oidc"

@@ -18,6 +18,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.Extensions;
 using IdentityServer4.SecurityHeader;
+using System.Collections.Generic;
 
 namespace IdentityServer4.Account
 {
@@ -225,14 +226,18 @@ namespace IdentityServer4.Account
         [HttpPost]
         public async Task<IActionResult> Register(RegisterRequestViewModel rvm)
         {
-            var result = await RegisterAPI(rvm) as OkResult;
+            var result = await RegisterAPI(rvm) as ObjectResult;
 
-            if(result != null)
+            if(result.StatusCode == StatusCodes.Status200OK)
             {
                 return Redirect("https://localhost:44302/");
             }
-            
-            ModelState.AddModelError(string.Empty, "Корисник со внесената е-пошта е веќе регистриран во базата на корисници.");
+
+            var errors = result.Value as ICollection<IdentityError>;
+            foreach (IdentityError err in errors) {
+                ModelState.AddModelError(string.Empty,err.Description);
+            }
+
             return View(rvm);
         }
 
@@ -259,7 +264,7 @@ namespace IdentityServer4.Account
             await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("position", user.Position));
             //await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("role", Roles.Consumer));
 
-            return Ok();
+            return Ok("Registration successful!");
         }
 
         /*****************************************/
