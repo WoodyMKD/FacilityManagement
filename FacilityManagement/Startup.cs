@@ -21,6 +21,7 @@ using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication;
 using FacilityManagement.Web.Services;
+using SmartBreadcrumbs.Extensions;
 
 namespace FacilityManagement.Web
 {
@@ -71,7 +72,10 @@ namespace FacilityManagement.Web
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
             .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-            .AddDataAnnotationsLocalization();
+            .AddDataAnnotationsLocalization(options => {
+                options.DataAnnotationLocalizerProvider = (type, factory) =>
+                    factory.Create(typeof(SharedResource));
+            });
 
 
 
@@ -79,6 +83,16 @@ namespace FacilityManagement.Web
             // HttpContext in services by injecting it
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<CultureLocalizer>();
+
+            services.AddBreadcrumbs(GetType().Assembly, options =>
+            {
+                options.TagName = "nav";
+                options.TagClasses = "";
+                options.OlClasses = "breadcrumb";
+                options.LiClasses = "breadcrumb-item";
+                options.ActiveLiClasses = "breadcrumb-item active";
+                options.SeparatorElement = "";
+            });
 
             // register an IImageGalleryHttpClient
             services.AddScoped<IFacilityManagementHttpClient, FacilityManagementHttpClient>();

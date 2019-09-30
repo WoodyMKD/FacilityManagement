@@ -4,8 +4,8 @@
 @inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 @{
-    ViewData["Title"] = SharedLocalizer["Home"];
-    ViewData["Description"] = SharedLocalizer["Short information"];
+    ViewData["Title"] = SharedLocalizer["Home"].Value;
+    ViewData["Description"] = SharedLocalizer["Short information"].Value;
 }
 
 <ul class="tile-layout">

@@ -6,11 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
+using SmartBreadcrumbs.Attributes;
+using SmartBreadcrumbs.Nodes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,19 +24,22 @@ namespace FacilityManagement.Web.Controllers
     {
         private readonly IFacilityManagementHttpClient _facilityManagementHttpClient;
         private readonly IStringLocalizer<InventoryObjectsController> _localizer;
+        private readonly IStringLocalizer _sharedLocalizer;
 
         public InventoryObjectsController(
             IStringLocalizer<InventoryObjectsController> localizer,
+            IStringLocalizer<SharedResource> sharedLocalizer,
             IFacilityManagementHttpClient facilityManagementHttpClient)
         {
             _localizer = localizer;
+            _sharedLocalizer = sharedLocalizer;
             _facilityManagementHttpClient = facilityManagementHttpClient;
         }
 
+        [Breadcrumb("Inventory")]
         public async Task<IActionResult> Index()
         {
             //await WriteOutIdentityInformation();
-
             var httpClient = await _facilityManagementHttpClient.GetClient();
             var response = await httpClient.GetAsync("api/inventory").ConfigureAwait(false);
 
@@ -56,7 +62,7 @@ namespace FacilityManagement.Web.Controllers
 
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
         }
-
+        
         public async Task<IActionResult> Details(int id)
         {
             var httpClient = await _facilityManagementHttpClient.GetClient();
@@ -67,6 +73,13 @@ namespace FacilityManagement.Web.Controllers
                 var responseAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 var detailsViewModel = JsonConvert.DeserializeObject<DetailsViewModel>(responseAsString);
+
+                var childNode1 = new MvcBreadcrumbNode("Index", "InventoryObjects", "Inventory");
+                var childNode2 = new MvcBreadcrumbNode("Index", "InventoryObjectsController", detailsViewModel.Name)
+                {
+                    Parent = childNode1
+                };
+                ViewData["BreadcrumbNode"] = childNode2;
 
                 return View(detailsViewModel);
             }

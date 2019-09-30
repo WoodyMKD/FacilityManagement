@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using FacilityManagement.Web.Services;
 using FacilityManagement.Web.Models.ViewModels;
+using SmartBreadcrumbs.Attributes;
+using SmartBreadcrumbs.Nodes;
 
 namespace FacilityManagement.Web.Controllers
 {
@@ -40,6 +42,7 @@ namespace FacilityManagement.Web.Controllers
             _facilityManagementHttpClient = facilityManagementHttpClient;
         }
 
+        [DefaultBreadcrumb("Home")]
         public async Task<IActionResult> Index()
         {
             //await WriteOutIdentityInformation();

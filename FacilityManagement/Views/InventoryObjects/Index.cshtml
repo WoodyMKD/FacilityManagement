@@ -6,8 +6,8 @@
 @inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 @{
-    ViewData["Title"] = SharedLocalizer["Objects / Units"];
-    ViewData["Description"] = SharedLocalizer["Short information"];
+    ViewData["Title"] = SharedLocalizer["Inventory"].Value;
+    ViewData["Description"] = SharedLocalizer["Preview of all units in the inventory"].Value;
     var toastNotificationType = TempData["ToastType"];
     var toastNotificationTitle = TempData["ToastTitle"];
     var toastNotificationMsg = TempData["ToastMessage"];

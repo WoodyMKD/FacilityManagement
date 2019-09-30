@@ -21,6 +21,19 @@ a {
 
 /* Custom CSS
 -------------------------------------------------- */
+.breadcrumb {
+	margin-top: 15px;
+}
+
+.breadcrumb-item {
+	font-weight: 600;
+}
+
+.breadcrumb-item:last-of-type {
+	font-weight: 300;
+	color: #787878;
+}
+
 .add-part-button-div {
 	width: 135px;
 	margin-left: auto;

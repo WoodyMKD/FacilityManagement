@@ -138,11 +138,11 @@
   <data name="Navigational Menu" xml:space="preserve">
     <value>Навигациско Мени</value>
   </data>
-  <data name="Objects / Units" xml:space="preserve">
-    <value>Објекти / Единици</value>
-  </data>
   <data name="Open Menu" xml:space="preserve">
     <value>Отвори Мени</value>
+  </data>
+  <data name="Preview of all units in the inventory" xml:space="preserve">
+    <value>Преглед на сите единици во инвентарот</value>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>Профил</value>
