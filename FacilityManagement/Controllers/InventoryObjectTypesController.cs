@@ -292,7 +292,7 @@ namespace FacilityManagement.Web.Controllers
                 {
                     status = "success",
                     deleteModel = "type",
-                    toastMessage = "Успешно гo избришавте типот"
+                    toastMessage = "The type was successfully deleted"
                 });
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized ||

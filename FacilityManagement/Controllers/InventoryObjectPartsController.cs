@@ -152,7 +152,7 @@ namespace FacilityManagement.Web.Controllers
                 {
                     status = "success",
                     deleteModel = "part",
-                    toastMessage = "Успешно ја избришавте компонентата"
+                    toastMessage = "The component was successfully deleted"
                 });
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized ||

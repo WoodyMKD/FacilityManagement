@@ -9,9 +9,21 @@
     ViewData["Title"] = SharedLocalizer["Inventory"].Value;
     ViewData["Description"] = SharedLocalizer["Preview of all units in the inventory"].Value;
     var toastNotificationType = TempData["ToastType"];
+    if (toastNotificationType != null)
+    {
+        toastNotificationType = SharedLocalizer[(string)toastNotificationType].Value;
+    }
     var toastNotificationTitle = TempData["ToastTitle"];
+    if (toastNotificationTitle != null)
+    {
+        toastNotificationTitle = SharedLocalizer[(string)toastNotificationTitle].Value;
+    }
     var toastNotificationMsg = TempData["ToastMessage"];
-}
+    if (toastNotificationMsg != null)
+    {
+        toastNotificationMsg = SharedLocalizer[(string)toastNotificationMsg].Value;
+    }
+    }
 
 <ul id="compressors" class="tile-layout">
     @foreach (var compressor in Model.InventoryObjects)

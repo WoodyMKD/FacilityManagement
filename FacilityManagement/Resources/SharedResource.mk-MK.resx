@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="A new component was successfully added" xml:space="preserve">
+    <value>Успешно е додадена нова компонента</value>
+  </data>
+  <data name="A new system was successfully added" xml:space="preserve">
+    <value>Успешно е додаден нов систем</value>
+  </data>
+  <data name="A new type was successfully added" xml:space="preserve">
+    <value>Успешно е додаден нов тип</value>
+  </data>
   <data name="Add component" xml:space="preserve">
     <value>Додади компонента</value>
   </data>
@@ -165,6 +174,9 @@
   <data name="Edit unit" xml:space="preserve">
     <value>Измени единица</value>
   </data>
+  <data name="Error occured" xml:space="preserve">
+    <value>Настана грешка</value>
+  </data>
   <data name="Everything about the unit in one place" xml:space="preserve">
     <value>Се за единицата на едно место</value>
   </data>
@@ -198,6 +210,9 @@
   <data name="Please enter a valid number." xml:space="preserve">
     <value>Ве молиме валидна целобројна вредност.</value>
   </data>
+  <data name="Please refresh the page!" xml:space="preserve">
+    <value>Ве молиме освежете ја страницата!</value>
+  </data>
   <data name="Preview of all units in the inventory" xml:space="preserve">
     <value>Преглед на сите единици во инвентарот</value>
   </data>
@@ -210,8 +225,32 @@
   <data name="Submit" xml:space="preserve">
     <value>Внеси</value>
   </data>
+  <data name="Successful operation" xml:space="preserve">
+    <value>Успешна операција</value>
+  </data>
   <data name="System" xml:space="preserve">
     <value>Систем</value>
+  </data>
+  <data name="The component was successfully deleted" xml:space="preserve">
+    <value>Успешно ја избришавте компонентата</value>
+  </data>
+  <data name="The component was successfully updated" xml:space="preserve">
+    <value>Компонентата е успешно ажурирана</value>
+  </data>
+  <data name="The system was successfully deleted" xml:space="preserve">
+    <value>Успешно го избришавте системот</value>
+  </data>
+  <data name="The system was successfully updated" xml:space="preserve">
+    <value>Системот е успешно ажуриран</value>
+  </data>
+  <data name="The type was successfully deleted" xml:space="preserve">
+    <value>Успешно го избришавте типот</value>
+  </data>
+  <data name="The type was successfully updated" xml:space="preserve">
+    <value>Типот е успешно ажуриран</value>
+  </data>
+  <data name="The unit was successfully updated" xml:space="preserve">
+    <value>Единицата е успешно ажурирана</value>
   </data>
   <data name="This field is required." xml:space="preserve">
     <value>Ова поле е задолжително.</value>
@@ -227,5 +266,8 @@
   </data>
   <data name="Working Hours" xml:space="preserve">
     <value>Работни часови</value>
+  </data>
+  <data name="You have successfully deleted the unit" xml:space="preserve">
+    <value>Успешно ја избришавте единицата</value>
   </data>
 </root>

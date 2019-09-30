@@ -205,8 +205,8 @@ namespace FacilityManagement.Web.Controllers
                 var responseAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 TempData["ToastType"] = "success";
-                TempData["ToastTitle"] = "Успешно бришење";
-                TempData["ToastMessage"] = "Успешно го избришавте компресорот";
+                TempData["ToastTitle"] = "Successful operation";
+                TempData["ToastMessage"] = "You have successfully deleted the unit";
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized ||
                     response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
@@ -216,8 +216,8 @@ namespace FacilityManagement.Web.Controllers
             else
             {
                 TempData["ToastType"] = "error";
-                TempData["ToastTitle"] = "Грешка";
-                TempData["ToastMessage"] = "Настана грешка, освежете ја страницата!";
+                TempData["ToastTitle"] = "Error occured";
+                TempData["ToastMessage"] = "Please refresh the page!";
             }
 
             return Json(new

@@ -312,7 +312,7 @@ namespace FacilityManagement.Web.Controllers
                 {
                     status = "success",
                     deleteModel = "system",
-                    toastMessage = "Успешно гo избришавте системот"
+                    toastMessage = "The system was successfully deleted"
                 });
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized ||

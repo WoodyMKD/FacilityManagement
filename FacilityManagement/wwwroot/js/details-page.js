@@ -19,11 +19,11 @@ function reloadGeneralInformationBox() {
         },
         failure: function (data) {
             console.log(data.responseText);
-            toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+            toastr["error"]("Please refresh the page!", "Error occured");
         },
         error: function (data) {
             console.log(data.responseText);
-            toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+            toastr["error"]("Please refresh the page!", "Error occured");
         }
     });
 }
@@ -63,18 +63,18 @@ function reloadTypes() {
         },
         failure: function (data) {
             console.log(data.responseText);
-            toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+            toastr["error"]("Please refresh the page!", "Error occured");
         },
         error: function (data) {
             console.log(data.responseText);
-            toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+            toastr["error"]("Please refresh the page!", "Error occured");
         }
     });
 }
 
 function reloadSystemsAndParts(selectedType) {
     if (selectedType == null) {
-        toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+        toastr["error"]("Please refresh the page!", "Error occured");
         $('#ajax-full-details-box-loading').show();
     }
 
@@ -119,10 +119,10 @@ function reloadSystemsAndParts(selectedType) {
             $('#ajax-full-details-box-loading').hide();
         },
         failure: function (data) {
-            toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+            toastr["error"]("Please refresh the page!", "Error occured");
         },
         error: function (data) {
-            toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+            toastr["error"]("Please refresh the page!", "Error occured");
         }
     });
 }
@@ -149,18 +149,19 @@ $(document).on('submit', '#' + confirmModalID + ' form:first', function (event) 
                         var subTypeId = $(".nav-pills li.active a").attr("subTypeId");
                         reloadSystemsAndParts(subTypeId);
                     }
-                    toastr["success"](response.toastMessage, "Успешно бришење");
+                    console.log(response.toastMessage)
+                    toastr["success"](response.toastMessage, "Successful operation");
                 } else {
                     window.location.href = response.redirectToUrl;
                 }
             },
             400: function (response) {
                 console.log(data.responseText);
-                toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                toastr["error"]("Please refresh the page!", "Error occured");
             },
             404: function (response) {
                 console.log(data.responseText);
-                toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                toastr["error"]("Please refresh the page!", "Error occured");
             }
         },
     });
@@ -187,11 +188,11 @@ $(document).on('submit', '#' + confirmModalID + ' form:first', function (event) 
             },
             400: function (response) {
                 console.log(data.responseText);
-                toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                toastr["error"]("Please refresh the page!", "Error occured");
             },
             404: function (response) {
                 console.log(data.responseText);
-                toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                toastr["error"]("Please refresh the page!", "Error occured");
             }
         },
     });
@@ -216,11 +217,11 @@ $(document).on('submit', '#' + confirmModalID + ' form:first', function (event) 
                 },
                 400: function (response) {
                     console.log(data.responseText);
-                    toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                    toastr["error"]("Please refresh the page!", "Error occured");
                 },
                 404: function (response) {
                     console.log(data.responseText);
-                    toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                    toastr["error"]("Please refresh the page!", "Error occured");
                 }
             },
         });
@@ -231,7 +232,7 @@ onUpdateCompressorComplete = function (data) {
     if (data.responseText == "success") {
         $('#' + modalID).modal('hide');
         reloadGeneralInformationBox();
-        toastr["success"]("Успешно ги ажуриравте податоците за компресорот", "Успешно ажурирање");
+        toastr["success"]("The unit was successfully updated", "Successful operation");
     }
 };
 
@@ -239,7 +240,7 @@ onAddCompressorTypeComplete = function (data) {
     if (data.responseText == "success") {
         $('#' + modalID).modal('hide');
         reloadTypes();
-        toastr["success"]("Успешно додадовте нов тип во рамките на овој компресор", "Успешно додавање");
+        toastr["success"]("A new type was successfully added", "Successful operation");
     }
 };
 
@@ -247,7 +248,7 @@ onEditCompressorTypeComplete = function (data) {
     if (data.responseText == "success") {
         $('#' + modalID).modal('hide');
         reloadTypes();
-        toastr["success"]("Успешно ги ажуриравте податоците за типот", "Успешно ажурирање");
+        toastr["success"]("The type was successfully updated", "Successful operation");
     }
 };
 
@@ -274,11 +275,11 @@ onDeleteCompressorTypeComplete = function (data) {
                     },
                     400: function (response) {
                         console.log(data.responseText);
-                        toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                        toastr["error"]("Please refresh the page!", "Error occured");
                     },
                     404: function (response) {
                         console.log(data.responseText);
-                        toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                        toastr["error"]("Please refresh the page!", "Error occured");
                     }
                 },
             });
@@ -291,7 +292,7 @@ onAddCompressorSystemComplete = function (data) {
         var subTypeId = $(".nav-pills li.active a").attr("subTypeId");
         $('#' + modalID).modal('hide');
         reloadSystemsAndParts(subTypeId);
-        toastr["success"]("Успешно додадовте нов систем во рамките на овој тип", "Успешно додавање");
+        toastr["success"]("A new system was successfully added", "Successful operation");
     }
 };
 
@@ -300,7 +301,7 @@ onEditCompressorSystemComplete = function (data) {
         var subTypeId = $(".nav-pills li.active a").attr("subTypeId");
         $('#' + modalID).modal('hide');
         reloadSystemsAndParts(subTypeId);
-        toastr["success"]("Успешно ги ажуриравте податоците за системот", "Успешно ажурирање");
+        toastr["success"]("The system was successfully updated", "Successful operation");
     }
 };
 
@@ -327,11 +328,11 @@ onDeleteCompressorSystemComplete = function (data) {
                     },
                     400: function (response) {
                         console.log(data.responseText);
-                        toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                        toastr["error"]("Please refresh the page!", "Error occured");
                     },
                     404: function (response) {
                         console.log(data.responseText);
-                        toastr["error"]("Настана грешка, освежете ја страницата!", "Грешка");
+                        toastr["error"]("Please refresh the page!", "Error occured");
                     }
                 },
             });
@@ -344,7 +345,7 @@ onAddPartComplete = function (data) {
         var subTypeId = $(".nav-pills li.active a").attr("subTypeId");
         $('#' + modalID).modal('hide');
         reloadSystemsAndParts(subTypeId);
-        toastr["success"]("Успешно додадовте нов тип во рамките на овој компресор", "Успешно додавање");
+        toastr["success"]("A new component was successfully added", "Successful operation");
     }
 };
 
@@ -353,6 +354,6 @@ onEditPartComplete = function (data) {
         var subTypeId = $(".nav-pills li.active a").attr("subTypeId");
         $('#' + modalID).modal('hide');
         reloadSystemsAndParts(subTypeId);
-        toastr["success"]("Успешно ги ажуриравте податоците за типот", "Успешно ажурирање");
+        toastr["success"]("The component was successfully updated", "Successful operation");
     }
 };
