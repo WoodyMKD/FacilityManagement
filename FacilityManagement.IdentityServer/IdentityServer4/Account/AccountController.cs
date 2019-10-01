@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using IdentityServer4.Extensions;
 using IdentityServer4.SecurityHeader;
 using System.Collections.Generic;
+using IdentityServer4.Test;
 
 namespace IdentityServer4.Account
 {

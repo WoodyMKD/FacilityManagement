@@ -8,30 +8,30 @@ namespace IdentityServer4.Account
 {
     public class RegisterRequestViewModel
     {
-        [Required]
-        [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
-        [Display(Name = "Name")]
+        [Required(ErrorMessage = "Ова поле е задолжително.")]
+        [StringLength(50, ErrorMessage = "Ова поле мора да биде најмалку {2} и најмногу {1} карактери долго.", MinimumLength = 2)]
+        [Display(Name = "Име и презиме")]
         public string Name { get; set; }
 
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+        [Required(ErrorMessage = "Ова поле е задолжително.")]
+        [EmailAddress(ErrorMessage = "Е-поштата не е валидна.")]
+        [Display(Name = "Е-пошта")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
-        [Display(Name = "Position")]
+        [Required(ErrorMessage = "Ова поле е задолжително.")]
+        [StringLength(50, ErrorMessage = "Ова поле мора да биде најмалку {2} и најмногу {1} карактери долго.", MinimumLength = 3)]
+        [Display(Name = "Работна позиција")]
         public string Position { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Ова поле е задолжително.")]
+        [StringLength(100, ErrorMessage = "Ова поле мора да биде најмалку {2} и најмногу {1} карактери долго.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Лозинка")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Потврди лозинка")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "Внесените лозинки не се совпаѓаат.")]
         public string ConfirmPassword { get; set; }
     }
 }

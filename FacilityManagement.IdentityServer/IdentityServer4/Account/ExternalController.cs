@@ -12,6 +12,7 @@ using IdentityServer4.Extensions;
 using IdentityServer4.SecurityHeader;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
+using IdentityServer4.Test;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

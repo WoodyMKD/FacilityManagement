@@ -26,7 +26,7 @@
 }
 
 @SharedLocalizer["Category:"]
-<select id="search-year" name="category">
+<select id="category-selector" name="category">
     <option value="All">@SharedLocalizer["All"]</option>
     <option value="Compressor">@SharedLocalizer["Compressors"]</option>
     <option value="ClimateChamber">@SharedLocalizer["Climate chambers"]</option>
@@ -39,7 +39,7 @@
         <li class="tile-layout-item">
             <div class="tile-layout-item-content">
                 <h2><a href="/InventoryObjects/Details/@compressor.InventoryObjectId" controller-id="@compressor.InventoryObjectId">@compressor.Name</a></h2>
-                <p>@compressor.Manufacturer | @compressor.Model</p>
+                <p>@compressor.Manufacturer @compressor.Model</p>
                 <p desc>@compressor.Description</p>
                 <p hidden>@compressor.Category</p>
             </div>
@@ -102,8 +102,6 @@
                 inventory = $('#compressors')
                     .bind('dynatable:init', function (e, dynatable) {
                         dynatable.queries.functions['Category'] = function (record, queryValue) {
-                            console.log(record);
-                            console.log(queryValue);
                             if (record.Category == queryValue) {
                                 return true;
                             }
@@ -138,7 +136,7 @@
 
                 var parameterM = getUrlParam('category');
                 if (parameterM != null && parameterM != "All") {
-                    $("#search-year").val(parameterM);
+                    $("#category-selector").val(parameterM);
                     inventory.queries.add("Category", parameterM);
                     inventory.process();
                 }
@@ -147,7 +145,7 @@
                 var controllerId = $(this).attr("controller-id");
                 window.location.href = "/InventoryObjects/Details/" + controllerId;
             })
-            .on("change", "#search-year", function () {
+            .on("change", "#category-selector", function () {
                 var value = $(this).val();
                 if (value === "All") {
                     inventory.queries.remove("Category");
@@ -157,7 +155,7 @@
                 inventory.process();
 
                 var params = [];
-                $('#search-year').each(function () {
+                $('#category-selector').each(function () {
                     $this = $(this);
                     console.log($this);
                     if (!$this.val() == '') params.push('category=' + encodeURIComponent($this.val()));

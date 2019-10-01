@@ -8,10 +8,13 @@ namespace IdentityServer4.Account
 {
     public class LoginInputModel
     {
-        [Required]
+        [Required(ErrorMessage = "Ова поле е задолжително.")]
+        [Display(Name = "Е-пошта")]
         public string Username { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Ова поле е задолжително.")]
+        [Display(Name = "Лозинка")]
         public string Password { get; set; }
+        [Display(Name = "Запомни ме")]
         public bool RememberLogin { get; set; }
         public string ReturnUrl { get; set; }
     }

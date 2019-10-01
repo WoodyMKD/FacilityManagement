@@ -1,5 +1,11 @@
 ﻿/* Login/Register Page
 -------------------------------------------------- */
+.alert-danger {
+	color: #ffffff;
+	background-color: #ffffff4d;
+	border-color: #ed0026;
+}
+
 .login-wrap {
     width: 100%;
     padding-top: 25px;

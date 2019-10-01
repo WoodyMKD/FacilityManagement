@@ -20,6 +20,6 @@ namespace IdentityServer4.Account
         // if user uses windows auth, should we load the groups from windows
         public static bool IncludeWindowsGroups = false;
 
-        public static string InvalidCredentialsErrorMessage = "Invalid username or password";
+        public static string InvalidCredentialsErrorMessage = "Невалидно корисничко име или лозинка.";
     }
 }
