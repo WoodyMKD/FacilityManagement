@@ -8,7 +8,8 @@ namespace FacilityManagement.DTOs
     public enum Category
     {
         Compressor,
-        Mixer
+        ClimateChamber,
+        Chiller
     }
 
     public class InventoryObjectDTO

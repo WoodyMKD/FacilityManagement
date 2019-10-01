@@ -135,6 +135,9 @@
   <data name="Add type" xml:space="preserve">
     <value>Додади тип</value>
   </data>
+  <data name="All" xml:space="preserve">
+    <value>Сите</value>
+  </data>
   <data name="All rights reserved" xml:space="preserve">
     <value>Сите права задржани</value>
   </data>
@@ -144,8 +147,14 @@
   <data name="Cancel" xml:space="preserve">
     <value>Откажи</value>
   </data>
+  <data name="Category:" xml:space="preserve">
+    <value>Категорија:</value>
+  </data>
   <data name="Chillers" xml:space="preserve">
     <value>Чилери</value>
+  </data>
+  <data name="Climate chambers" xml:space="preserve">
+    <value>Клима комори</value>
   </data>
   <data name="Compressors" xml:space="preserve">
     <value>Компресори</value>
@@ -195,6 +204,9 @@
   <data name="Log out" xml:space="preserve">
     <value>Одјави се</value>
   </data>
+  <data name="Make an inspection" xml:space="preserve">
+    <value>Изврши контрола</value>
+  </data>
   <data name="Manufacturer" xml:space="preserve">
     <value>Производител</value>
   </data>
@@ -211,7 +223,7 @@
     <value>Отвори Мени</value>
   </data>
   <data name="Please enter a valid number." xml:space="preserve">
-    <value>Ве молиме валидна целобројна вредност.</value>
+    <value>Ве молиме внесете валидна целобројна вредност.</value>
   </data>
   <data name="Please refresh the page!" xml:space="preserve">
     <value>Ве молиме освежете ја страницата!</value>

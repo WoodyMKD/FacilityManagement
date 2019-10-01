@@ -25,11 +25,12 @@
     }
 }
 
-Категорија: 
+@SharedLocalizer["Category:"]
 <select id="search-year" name="category">
-    <option></option>
-    <option value="Compressor">Компресори</option>
-    <option value="Chiller">Чилери</option>
+    <option value="All">@SharedLocalizer["All"]</option>
+    <option value="Compressor">@SharedLocalizer["Compressors"]</option>
+    <option value="ClimateChamber">@SharedLocalizer["Climate chambers"]</option>
+    <option value="Chiller">@SharedLocalizer["Chillers"]</option>
 </select>
 
 <ul id="compressors" class="tile-layout">
@@ -38,8 +39,8 @@
         <li class="tile-layout-item">
             <div class="tile-layout-item-content">
                 <h2><a href="/InventoryObjects/Details/@compressor.InventoryObjectId" controller-id="@compressor.InventoryObjectId">@compressor.Name</a></h2>
-                <img src="~/images/chiller.jpg" alt="" />
                 <p>@compressor.Manufacturer | @compressor.Model</p>
+                <p desc>@compressor.Description</p>
                 <p hidden>@compressor.Category</p>
             </div>
         </li>
@@ -75,8 +76,8 @@
             li = '<li class="' + cssClass + '"> \
                                     <div class="tile-layout-item-content" controller-id="' + record.Id + '"> \
                                         <h2>' + record.Name + '</h2> \
-                                        <img src="/images/chiller.jpg" alt="" /> \
-                                        <p>' + record.Description + '</p> \
+                                        <p>' + record.Info + '</p> \
+                                        <p desc>' + record.Description + '</p> \
                                         <p hidden>' + record.Category + '</p> \
                                     </div> \
                                 </li> \
@@ -89,7 +90,8 @@
                 $content = $li.find('.tile-layout-item-content');
             record.Id = $content.find("h2 a").attr("controller-id");
             record.Name = $content.find("h2 a").html();
-            record.Description = $content.find("p").html();
+            record.Info = $content.find("p:first").html();
+            record.Description = $content.find("p[desc]").html();
             record.Category = $content.find("p[hidden]").html();
         }
 
@@ -133,9 +135,9 @@
                 if ("@toastNotificationType" != "") {
                     toastr["@toastNotificationType"]("@toastNotificationMsg", "@toastNotificationTitle");
                 }
-                
+
                 var parameterM = getUrlParam('category');
-                if (parameterM != null) {
+                if (parameterM != null && parameterM != "All") {
                     $("#search-year").val(parameterM);
                     inventory.queries.add("Category", parameterM);
                     inventory.process();
@@ -147,7 +149,7 @@
             })
             .on("change", "#search-year", function () {
                 var value = $(this).val();
-                if (value === "") {
+                if (value === "All") {
                     inventory.queries.remove("Category");
                 } else {
                     inventory.queries.add("Category", value);

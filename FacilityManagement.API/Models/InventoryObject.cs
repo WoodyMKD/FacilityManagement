@@ -9,7 +9,8 @@ namespace FacilityManagement.API.Models
     public enum Category
     {
         Compressor,
-        Mixer
+        Chiller,
+        ClimateChamber
     }
 
     public class InventoryObject

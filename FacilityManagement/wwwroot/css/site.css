@@ -305,6 +305,7 @@ a {
 	background-color: #fff;
 	display: flex;
 	flex-direction: column;
+	text-align: center;
 	padding: 1em;
 	width: 100%;
 	cursor: pointer;
@@ -324,9 +325,16 @@ a {
 
 .tile-layout-item-content p {
 	flex: 1 0 auto;
+	margin: 4px;
+}
+
+.tile-layout-item-content h2 {
+	margin: 4px;
 }
 
 .tile-layout-item-content img {
 	height: auto;
 	width: 75px;
+	margin-left: auto;
+	margin-right: auto;
 }

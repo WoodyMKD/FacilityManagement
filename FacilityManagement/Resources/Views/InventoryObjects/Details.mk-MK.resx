@@ -138,10 +138,10 @@
   <data name="General information" xml:space="preserve">
     <value>Општи информации</value>
   </data>
-  <data name="Object type settings" xml:space="preserve">
-    <value>Поставки за типот на објектот</value>
-  </data>
   <data name="Settings" xml:space="preserve">
     <value>Поставки</value>
+  </data>
+  <data name="Unit type settings" xml:space="preserve">
+    <value>Поставки за типот на објектот</value>
   </data>
 </root>

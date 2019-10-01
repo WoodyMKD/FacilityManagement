@@ -16,7 +16,9 @@ namespace FacilityManagement.API.Data
                 {
                     new InventoryObject { Name = "Компресор #1", Category = Category.Compressor, Description = "Хала 1", Manufacturer = "Adidas", Model = "Air", WorkingHours = 10, Types = new List<InventoryObjectType>() },
                     new InventoryObject { Name = "Компресор #2", Category = Category.Compressor, Description = "Хала 2", Manufacturer = "Nike", Model = "Boo", WorkingHours = 15, Types = new List<InventoryObjectType>() },
-                    new InventoryObject { Name = "Компресор #3", Category = Category.Compressor, Description = "Хала 3", Manufacturer = "Puma", Model = "Foo", WorkingHours = 20, Types = new List<InventoryObjectType>() }
+                    new InventoryObject { Name = "Чилер #1", Category = Category.Chiller, Description = "Хала 3", Manufacturer = "Puma", Model = "Foo", WorkingHours = 20, Types = new List<InventoryObjectType>() },
+                    new InventoryObject { Name = "Чилер #2", Category = Category.Chiller, Description = "Хала 4", Manufacturer = "New Balance", Model = "Koo", WorkingHours = 25, Types = new List<InventoryObjectType>() },
+                    new InventoryObject { Name = "Клима комора #1", Category = Category.ClimateChamber, Description = "Хала 5", Manufacturer = "Converse", Model = "Doo", WorkingHours = 30, Types = new List<InventoryObjectType>() }
                 };
                 invObjects.ForEach(c => context.InventoryObjects.Add(c));
 
