@@ -15,5 +15,6 @@ namespace FacilityManagement.API.Models
         public int InventoryObjectSystemId { get; set; }
         
         public virtual InventoryObjectSystem Systems { get; set; }
+        public bool Functional { get; set; }
     }
 }

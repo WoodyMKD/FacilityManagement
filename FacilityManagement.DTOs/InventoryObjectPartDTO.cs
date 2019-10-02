@@ -9,5 +9,6 @@ namespace FacilityManagement.DTOs
         public int InventoryObjectPartId { get; set; }
         public string Name { get; set; }
         public int InventoryObjectSystemId { get; set; }
+        public bool Functional { get; set; }
     }
 }

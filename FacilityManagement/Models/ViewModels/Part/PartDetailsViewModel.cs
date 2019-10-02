@@ -16,5 +16,6 @@ namespace FacilityManagement.Web.Models.ViewModels
         [Display(Name = "Name")]
         public string Name { get; set; }
         public int InventoryObjectSystemId { get; set; }
+        public bool Functional { get; set; }
     }
 }
