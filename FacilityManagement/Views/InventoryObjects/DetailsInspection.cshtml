@@ -97,7 +97,7 @@
             <div class="box-body pills-in-box">
                 <!-- START: Compressor Types List -->
                 <div id="box-types-container">
-                    <partial name="../InventoryObjectTypes/_TypesPartial" model="new TypesViewModel { InventoryObjectId = Model.InventoryObjectId, Types = Model.Types }" />
+                    <partial name="../InventoryObjectTypes/_TypesPartialInspection" model="new TypesViewModel { InventoryObjectId = Model.InventoryObjectId, Types = Model.Types }" />
                 </div>
                 <!-- END: Compressor Types List -->
                 <!-- START: Compressor Systems Partial View -->
@@ -128,11 +128,11 @@
 
 @section scripts {
     <environment include="Development">
-        <script src="~/js/details-page.js"></script>
+        <script src="~/js/inspection-page.js"></script>
     </environment>
     <environment exclude="Development">
         <!-- Fali minified verzija -->
-        <script src="~/js/details-page.js"></script>
+        <script src="~/js/inspection-page.js"></script>
     </environment>
 
     <partial name="_ValidationScriptsPartial" />

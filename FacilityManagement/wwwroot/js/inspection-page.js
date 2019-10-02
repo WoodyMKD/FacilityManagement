@@ -78,7 +78,7 @@ function reloadSystemsAndParts(selectedType) {
         $('#ajax-full-details-box-loading').show();
     }
 
-    var urlStr = "/InventoryObjectSystems/GetInventoryObjectSystemsAndPartsPartial/" + selectedType;
+    var urlStr = "/InventoryObjectSystems/GetInventoryObjectSystemsAndPartsPartialInspection/" + selectedType;
 
     $.ajax({
         type: "GET",
@@ -127,6 +127,60 @@ function reloadSystemsAndParts(selectedType) {
     });
 }
 
+function reloadSystemsAndPartsForInspection(selectedType) {
+    if (selectedType == null) {
+        toastr["error"]("Please refresh the page!", "Error occured");
+        $('#ajax-full-details-box-loading').show();
+    }
+
+    var urlStr = "/InventoryObjectSystems/GetInventoryObjectSystemsAndPartsPartialInspection/" + selectedType;
+
+    $.ajax({
+        type: "GET",
+        url: urlStr,
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+        beforeSend: function () {
+            $('#ajax-full-details-box-loading').show();
+        },
+        success: function (data) {
+            $("#box-systems-container").html(data);
+
+            $(".nav-pills li a[subTypeId]").parent("li").removeClass("active");
+            $(".nav-pills li a[subTypeId=" + selectedType + "]").parent("li").addClass("active");
+
+            $('table.table-parts').DataTable({
+                dom: "<'row'<'col-sm-3'l><'col-sm-6 text-center'<'add-part-button-div'>><'col-sm-3'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                'columnDefs': [{
+                    'targets': [3],
+                    'orderable': false
+                }],
+                initComplete: function () {
+                    var systemId = $(this).parents(".table-responsive").attr("system-id");
+                    var button = $("#add-part-button-" + systemId);
+                    var buttonContainer = $(this).parents(".table-responsive").find(".add-part-button-div");
+
+                    buttonContainer.html(button.html());
+                    button.remove();
+                }
+            });
+
+            $('#box-systems-container .box').boxWidget({
+                animationSpeed: 300
+            });
+
+            $('#ajax-full-details-box-loading').hide();
+        },
+        failure: function (data) {
+            toastr["error"]("Please refresh the page!", "Error occured");
+        },
+        error: function (data) {
+            toastr["error"]("Please refresh the page!", "Error occured");
+        }
+    });
+}
 
 $(document).on('submit', '#' + confirmModalID + ' form:first', function (event) {
     event.preventDefault();

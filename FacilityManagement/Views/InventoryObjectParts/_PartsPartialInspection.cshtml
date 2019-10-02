@@ -7,14 +7,6 @@
     var modalID = "details-modal";
 }
 
-<div id="add-part-button-@Model.InventoryObjectSystemId">
-    <a data-toggle="modal" data-target="#@modalID"
-       asp-action="AddInventoryObjectPartAjaxFormAsync" asp-controller="InventoryObjectParts" asp-route-id="@Model.InventoryObjectSystemId"
-       class="btn btn-info btn-block btn-sm">
-        @Localizer["Add component"]
-    </a>
-</div>
-
 <!-- START: Parts table -->
 <div class="table-responsive" system-id="@Model.InventoryObjectSystemId">
     <table class="table table-hover table-bordered table-striped table-responsive table-parts">
@@ -23,7 +15,7 @@
                 <th>@Localizer["Component"]</th>
                 <th>@Localizer["Last service"]</th>
                 <th>@Localizer["Next service"]</th>
-                <th class="text-center">@Localizer["Inspection"]</th>
+                <th class="text-center">@Localizer["Settings"]</th>
             </tr>
         </thead>
         <tbody>
@@ -39,10 +31,6 @@
                                asp-action="EditInventoryObjectPartAjaxForm" asp-controller="InventoryObjectParts" asp-route-id="@part.InventoryObjectPartId"
                                class="btn btn-default">
                                 @Localizer["Inspect"]
-                            </a>
-                            <a id="delete-part-btn" part-id="@part.InventoryObjectPartId"
-                               class="btn btn-default">
-                                @Localizer["Delete"]
                             </a>
                         </div>
                     </td>
