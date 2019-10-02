@@ -167,10 +167,15 @@ $(document).on('submit', '#' + confirmModalID + ' form:first', function (event) 
         },
     });
 })
-.on("click", ".nav-pills li a[subTypeId]", function () {
+.on("click", ".nav-pills[inspection=no] li a[subTypeId]", function () {
     var selectedType = $(this).attr("subTypeId");
     reloadSystemsAndParts(selectedType);
-})
+    })
+    .on("click", ".nav-pills[inspection=yes] li a[subTypeId]", function () {
+        var selectedType = $(this).attr("subTypeId");
+        reloadSystemsAndPartsInspection(selectedType);
+        console.log("good");
+    })
 .on("click", "#delete-part-btn", function () {
     var partId = $(this).attr("part-id");
 
