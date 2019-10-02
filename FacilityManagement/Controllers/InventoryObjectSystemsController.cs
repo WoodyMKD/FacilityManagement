@@ -55,6 +55,34 @@ namespace FacilityManagement.Web.Controllers
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetInventoryObjectSystemsAndPartsPartialInspection(int id)
+        {
+            string apiUrl = $"api/inventory/systems/byTypeId/{id}";
+            var httpClient = await _facilityManagementHttpClient.GetClient();
+            var response = await httpClient.GetAsync(apiUrl).ConfigureAwait(false);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                var compressorSystemsViewModel = new SystemsViewModel
+                {
+                    InventoryObjectTypeId = id,
+                    Systems = JsonConvert.DeserializeObject<ICollection<InventoryObjectSystemDTO>>(responseAsString)
+                };
+
+                return PartialView("_SystemsPartialInspection", compressorSystemsViewModel);
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized ||
+                    response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return RedirectToAction("AccessDenied", "Authorization");
+            }
+
+            throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
+        }
+
         public async Task<IActionResult> GetInventoryObjectSystemsAndPartsBySubTypeIdAjaxAsync(int id)
         {
             var httpClient = await _facilityManagementHttpClient.GetClient();
