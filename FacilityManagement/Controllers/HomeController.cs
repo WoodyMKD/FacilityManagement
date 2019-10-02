@@ -40,7 +40,7 @@ namespace FacilityManagement.Web.Controllers
         }
 
         [DefaultBreadcrumb("Home")]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             //await WriteOutIdentityInformation();
 

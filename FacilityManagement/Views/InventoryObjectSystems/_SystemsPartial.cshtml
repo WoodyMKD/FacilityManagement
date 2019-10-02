@@ -13,7 +13,7 @@
     <div class="row">
         <div class="btn-group button-add-system" role="group">
             <a id="add-system-btn" data-toggle="modal" data-target="#@modalID"
-               asp-action="AddInventoryObjectSystemAjaxFormAsync" asp-controller="InventoryObjectSystems" asp-route-id="@Model.InventoryObjectTypeId"
+               asp-action="AddInventoryObjectSystemAjaxForm" asp-controller="InventoryObjectSystems" asp-route-id="@Model.InventoryObjectTypeId"
                class="btn btn-default">
                 @Localizer["Add new system"]
             </a>
@@ -54,7 +54,7 @@
 else
 {
     <a id="add-system-btn" data-toggle="modal" data-target="#@modalID"
-        asp-action="AddInventoryObjectSystemAjaxFormAsync" asp-controller="InventoryObjectSystems" asp-route-id="@Model.InventoryObjectTypeId"
+        asp-action="AddInventoryObjectSystemAjaxForm" asp-controller="InventoryObjectSystems" asp-route-id="@Model.InventoryObjectTypeId"
         class="btn btn-info btn-block btn-sm">
         @Localizer["Add new system"]
     </a>
