@@ -62,8 +62,64 @@ namespace FacilityManagement.Web.Controllers
 
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
         }
-        
+
+        [Breadcrumb("Inventory")]
+        public async Task<IActionResult> Inspection()
+        {
+            //await WriteOutIdentityInformation();
+            var httpClient = await _facilityManagementHttpClient.GetClient();
+            var response = await httpClient.GetAsync("api/inventory").ConfigureAwait(false);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                var indexViewModel = new IndexViewModel()
+                {
+                    InventoryObjects = JsonConvert.DeserializeObject<IList<InventoryObjectDTO>>(responseAsString).ToList()
+                };
+
+                return View(indexViewModel);
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized ||
+                    response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return RedirectToAction("AccessDenied", "Authorization");
+            }
+
+            throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
+        }
+
         public async Task<IActionResult> Details(int id)
+        {
+            var httpClient = await _facilityManagementHttpClient.GetClient();
+            var response = await httpClient.GetAsync($"api/inventory/{id}").ConfigureAwait(false);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                var detailsViewModel = JsonConvert.DeserializeObject<DetailsViewModel>(responseAsString);
+
+                var childNode1 = new MvcBreadcrumbNode("Index", "InventoryObjects", "Inventory");
+                var childNode2 = new MvcBreadcrumbNode("Index", "InventoryObjectsController", detailsViewModel.Name)
+                {
+                    Parent = childNode1
+                };
+                ViewData["BreadcrumbNode"] = childNode2;
+
+                return View(detailsViewModel);
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized ||
+                    response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return RedirectToAction("AccessDenied", "Authorization");
+            }
+
+            throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
+        }
+
+        public async Task<IActionResult> DetailsInspection(int id)
         {
             var httpClient = await _facilityManagementHttpClient.GetClient();
             var response = await httpClient.GetAsync($"api/inventory/{id}").ConfigureAwait(false);

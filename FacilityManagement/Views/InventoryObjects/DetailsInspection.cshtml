@@ -1,0 +1,140 @@
+﻿@model FacilityManagement.Web.Models.ViewModels.DetailsViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
+@{
+    ViewData["Title"] = SharedLocalizer["Details"];
+    ViewData["Description"] = SharedLocalizer["Everything about the unit in one place"].Value;
+
+    var modalID = "details-modal";
+    var confirmModalID = "details-confirm-modal";
+}
+
+<input type="hidden" id="compressor-id" value="@Model.InventoryObjectId" />
+
+<!-- START: First row -->
+<div class="row">
+    <!-- START: General information box -->
+    <div class="col-md-6">
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <span class="glyphicon glyphicon-align-justify"></span>
+                <h3 class="box-title">@Localizer["General information"]</h3>
+            </div>
+            <div class="box-body">
+                <!-- START: General information content -->
+                <div id="box-general-information">
+                    <partial name="_GeneralInformationPartial" model="Model" />
+                </div>
+                <!-- END: General information content -->
+            </div>
+            <div id="ajax-compressor-info-loading" class="overlay" hidden>
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div>
+    </div>
+    <!-- END: General information box -->
+    <!-- START: Compressor tools box -->
+    <div class="col-md-6">
+        <div class="box box-info">
+            @*<div class="box-header with-border">
+                <span class="glyphicon glyphicon-edit"></span>
+                <h3 class="box-title">@Localizer["Settings"]</h3>
+            </div>
+            <div class="box-body">
+            <a data-toggle="modal" data-target="#@modalID"
+               asp-action="UpdateInventoryObjectAjaxFormAsync" asp-controller="InventoryObjects" asp-route-id="@Model.InventoryObjectId"
+               class="btn btn-default btn-block btn-sm">
+                @Localizer["Edit general information"]
+            </a>
+            <a id="delete-compressor-btn"
+               class="btn btn-default btn-block btn-sm">
+                @Localizer["Delete the unit"]
+            </a>
+            <div class="btn-group custom-dropdown-button-group">
+                <button type="button" class="btn btn-default btn-block btn-sm dropdown-toggle custom-dropdown-button" data-toggle="dropdown" aria-expanded="false">
+                    @Localizer["Unit type settings"]
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu custom-dropdown-button-list">
+                    <li>
+                        <a data-toggle="modal" data-target="#@modalID"
+                           asp-action="AddInventoryObjectTypeAjaxForm" asp-controller="InventoryObjectTypes" asp-route-id="@Model.InventoryObjectId">
+                            @Localizer["Add new type"]
+                        </a>
+                    </li>
+                    <li hidden>
+                        <a data-toggle="modal" data-target="#@modalID"
+                           asp-action="EditInventoryObjectTypeAjaxFormAsync" asp-controller="InventoryObjectTypes" asp-route-id="@Model.InventoryObjectId">
+                            @Localizer["Edit existing type"]
+                        </a>
+                    </li>
+                    <li hidden>
+                        <a data-toggle="modal" data-target="#@modalID"
+                           asp-action="DeleteInventoryObjectTypeAjaxFormAsync" asp-controller="InventoryObjectTypes" asp-route-id="@Model.InventoryObjectId">
+                            @Localizer["Delete existing type"]
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>*@
+        </div>
+    </div>
+    <!-- END: Compressor tools box -->
+</div>
+<!-- END: First row -->
+<!-- START: Second row -->
+<div class="row">
+    <div class="col-md-12">
+        <!-- START: Full Details box -->
+        <div class="box box-info box-container">
+            <div class="box-header with-border">
+                <span class="glyphicon glyphicon-edit"></span>
+                <h3 class="box-title">@Localizer["Detailed view - systems and components"]</h3>
+            </div>
+            <div class="box-body pills-in-box">
+                <!-- START: Compressor Types List -->
+                <div id="box-types-container">
+                    <partial name="../InventoryObjectTypes/_TypesPartial" model="new TypesViewModel { InventoryObjectId = Model.InventoryObjectId, Types = Model.Types }" />
+                </div>
+                <!-- END: Compressor Types List -->
+                <!-- START: Compressor Systems Partial View -->
+                <div id="box-systems-container"></div>
+                <!-- END: Compressor Systems Partial View -->
+            </div>
+            <div id="ajax-full-details-box-loading" class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div>
+        <!-- END: Full Details box -->
+    </div>
+</div>
+<!-- END: Second row -->
+<!-- START: Modals -->
+<partial name="Modals/_Modal" model="new Modal {
+    ID = modalID,
+    Size = ModalSize.Medium
+}" />
+
+<partial name="Modals/_Modal" model="new Modal {
+    ID = confirmModalID,
+    Size = ModalSize.Medium,
+    IsDeleteModal = true
+}" />
+<!-- END: Modals -->
+
+
+@section scripts {
+    <environment include="Development">
+        <script src="~/js/details-page.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <!-- Fali minified verzija -->
+        <script src="~/js/details-page.js"></script>
+    </environment>
+
+    <partial name="_ValidationScriptsPartial" />
+    <partial name="Modals/_ModalScriptsInit" model="modalID" />
+}

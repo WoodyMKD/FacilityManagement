@@ -1,0 +1,166 @@
+﻿@model IndexViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@using FacilityManagement.Web
+
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+@{
+    ViewData["Title"] = SharedLocalizer["Inventory"].Value;
+    ViewData["Description"] = SharedLocalizer["Preview of all units in the inventory"].Value;
+    var toastNotificationType = TempData["ToastType"];
+    if (toastNotificationType != null)
+    {
+        toastNotificationType = SharedLocalizer[(string)toastNotificationType].Value;
+    }
+    var toastNotificationTitle = TempData["ToastTitle"];
+    if (toastNotificationTitle != null)
+    {
+        toastNotificationTitle = SharedLocalizer[(string)toastNotificationTitle].Value;
+    }
+    var toastNotificationMsg = TempData["ToastMessage"];
+    if (toastNotificationMsg != null)
+    {
+        toastNotificationMsg = SharedLocalizer[(string)toastNotificationMsg].Value;
+    }
+}
+
+@SharedLocalizer["Category:"]
+<select id="category-selector" name="category">
+    <option value="All">@SharedLocalizer["All"]</option>
+    @*<option value="Compressor">@SharedLocalizer["Compressors"]</option>
+        <option value="ClimateChamber">@SharedLocalizer["Climate chambers"]</option>
+        <option value="Chiller">@SharedLocalizer["Chillers"]</option>*@
+</select>
+
+<ul id="compressors" class="tile-layout">
+    @foreach (var compressor in Model.InventoryObjects)
+    {
+        <li class="tile-layout-item">
+            <div class="tile-layout-item-content">
+                <h2><a href="/InventoryObjects/DetailsInspection/@compressor.InventoryObjectId" controller-id="@compressor.InventoryObjectId">@compressor.Name</a></h2>
+                <p>@compressor.Manufacturer @compressor.Model</p>
+                <p desc>@compressor.Description</p>
+                <p hidden>@compressor.Category</p>
+            </div>
+        </li>
+    }
+</ul>
+
+@section scripts {
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/Dynatable/jquery.dynatable.css">
+        <script src="~/lib/Dynatable/jquery.dynatable.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/lib/Dynatable/jquery.dynatable.min.css">
+        <script src="~/lib/Dynatable/jquery.dynatable.min.js"></script>
+    </environment>
+
+    <script>
+        function getUrlParam(sParam) {
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) {
+                    return sParameterName[1];
+                }
+            }
+        }
+
+        // Function that renders the list items from our records
+        function ulWriter(rowIndex, record, columns, cellWriter) {
+            var cssClass = "tile-layout-item", li;
+            if (rowIndex % 3 === 0) { cssClass += ' first'; }
+            li = '<li class="' + cssClass + '"> \
+                                    <div class="tile-layout-item-content" controller-id="' + record.Id + '"> \
+                                        <h2>' + record.Name + '</h2> \
+                                        <p>' + record.Info + '</p> \
+                                        <p desc>' + record.Description + '</p> \
+                                        <p hidden>' + record.Category + '</p> \
+                                    </div> \
+                                </li> \
+                        ';
+            return li;
+        }
+        // Function that creates our records from the DOM when the page is loaded
+        function ulReader(index, li, record) {
+            var $li = $(li),
+                $content = $li.find('.tile-layout-item-content');
+            record.Id = $content.find("h2 a").attr("controller-id");
+            record.Name = $content.find("h2 a").html();
+            record.Info = $content.find("p:first").html();
+            record.Description = $content.find("p[desc]").html();
+            record.Category = $content.find("p[hidden]").html();
+        }
+
+        var dynatable;
+
+        $(document)
+            .ready(function () {
+                inventory = $('#compressors')
+                    .bind('dynatable:init', function (e, dynatable) {
+                        dynatable.queries.functions['Category'] = function (record, queryValue) {
+                            if (record.Category == queryValue) {
+                                return true;
+                            }
+                            else {
+                                return false;
+                            }
+
+                        };
+                    })
+                    .dynatable({
+                        table: {
+                            bodyRowSelector: 'li'
+                        },
+                        dataset: {
+                            perPageDefault: 4,
+                            perPageOptions: [4, 8, 12]
+                        },
+                        writers: {
+                            _rowWriter: ulWriter
+                        },
+                        readers: {
+                            _rowReader: ulReader
+                        },
+                        params: {
+
+                        }
+                    }).data('dynatable');
+
+                if ("@toastNotificationType" != "") {
+                    toastr["@toastNotificationType"]("@toastNotificationMsg", "@toastNotificationTitle");
+                }
+
+                var parameterM = getUrlParam('category');
+                if (parameterM != null && parameterM != "All") {
+                    $("#category-selector").val(parameterM);
+                    inventory.queries.add("Category", parameterM);
+                    inventory.process();
+                }
+            })
+            .on("click", ".tile-layout-item-content", function () {
+                var controllerId = $(this).attr("controller-id");
+                window.location.href = "/InventoryObjects/Details/" + controllerId;
+            })
+            .on("change", "#category-selector", function () {
+                var value = $(this).val();
+                if (value === "All") {
+                    inventory.queries.remove("Category");
+                } else {
+                    inventory.queries.add("Category", value);
+                }
+                inventory.process();
+
+                var params = [];
+                $('#category-selector').each(function () {
+                    $this = $(this);
+                    console.log($this);
+                    if (!$this.val() == '') params.push('category=' + encodeURIComponent($this.val()));
+                });
+                history.pushState(null, null, "/InventoryObjects?" + params.join('&'));
+            });
+    </script>
+}
