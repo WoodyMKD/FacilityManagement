@@ -1,0 +1,61 @@
+﻿@model SystemsViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    var modalID = "details-modal";
+}
+
+@if (Model.Systems.Count > 0)
+{
+    <!-- START: System tools row -->
+    @*<div class="row">
+            <div class="btn-group button-add-system" role="group">
+                <a id="add-system-btn" data-toggle="modal" data-target="#@modalID"
+                   asp-action="AddInventoryObjectSystemAjaxForm" asp-controller="InventoryObjectSystems" asp-route-id="@Model.InventoryObjectTypeId"
+                   class="btn btn-default">
+                    @Localizer["Add new system"]
+                </a>
+                <a data-toggle="modal" data-target="#@modalID"
+                   asp-action="EditInventoryObjectSystemAjaxFormAsync" asp-controller="InventoryObjectSystems" asp-route-id="@Model.InventoryObjectTypeId"
+                   class="btn btn-default">
+                    @Localizer["Edit system"]
+                </a>
+                <a data-toggle="modal" data-target="#@modalID"
+                   asp-action="DeleteInventoryObjectSystemAjaxFormAsync" asp-controller="InventoryObjectSystems" asp-route-id="@Model.InventoryObjectTypeId"
+                   class="btn btn-default">
+                    @Localizer["Delete system"]
+                </a>
+            </div>
+        </div>*@
+    <!-- END: System tools row -->
+
+    @foreach (var system in Model.Systems)
+    {
+        <!-- START: Single system collapsible box -->
+        <div class="box collapsed-box">
+            <div class="box-header with-border" data-widget="collapse">
+                <h3 class="box-title">@system.Name</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body" style="display: none">
+                <partial name="../InventoryObjectParts/_PartsPartialInspection"
+                         model="new PartsViewModel { InventoryObjectSystemId = system.InventoryObjectSystemId, Parts = system.Parts }" />
+            </div>
+        </div>
+        <!-- END: Single system collapsible box -->
+    }
+}
+else
+{
+    <a id="add-system-btn" data-toggle="modal" data-target="#@modalID"
+       asp-action="AddInventoryObjectSystemAjaxForm" asp-controller="InventoryObjectSystems" asp-route-id="@Model.InventoryObjectTypeId"
+       class="btn btn-info btn-block btn-sm">
+        @Localizer["Add new system"]
+    </a>
+}
