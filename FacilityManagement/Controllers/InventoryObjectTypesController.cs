@@ -56,12 +56,12 @@ namespace FacilityManagement.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddInventoryObjectTypeAjaxFormAsync(int id)
+        public IActionResult AddInventoryObjectTypeAjaxForm(int id)
         {
             return PartialView("FormModals/_AddTypeFormPartial", new TypeDetailsViewModel() { InventoryObjectId = id });
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("AddInventoryObjectTypeAjaxForm")]
         public async Task<IActionResult> AddInventoryObjectTypeAjaxFormAsync(TypeDetailsViewModel toAddModel)
         {
             if (!ModelState.IsValid)
@@ -265,21 +265,21 @@ namespace FacilityManagement.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteInventoryObjectTypeAjaxAsync(int id)
+        public IActionResult DeleteInventoryObjectTypeAjax(int id)
         {
             var ModalDeleteModel = new ModalDelete()
             {
                 Controller = "InventoryObjectTypes",
-                Action = "DeleteInventoryObjectTypeAjaxAsync",
+                Action = "DeleteInventoryObjectTypeAjax",
                 ModelId = id,
                 Message = ""
             };
 
-            return PartialView("Modals/_ModalDelete", model: ModalDeleteModel);
+            return PartialView("Modals/_ModalDelete", ModalDeleteModel);
         }
 
-        [HttpPost, ActionName("DeleteInventoryObjectTypeAjaxAsync")]
-        public async Task<IActionResult> DeleteInventoryObjectTypeAjaxAsyncConfirmed(int id)
+        [HttpPost, ActionName("DeleteInventoryObjectTypeAjax")]
+        public async Task<IActionResult> DeleteInventoryObjectTypeAjaxConfirmedAsync(int id)
         {
             var httpClient = await _facilityManagementHttpClient.GetClient();
             var response = await httpClient.DeleteAsync($"api/inventory/types/{id}").ConfigureAwait(false);

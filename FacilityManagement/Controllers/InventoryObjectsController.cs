@@ -180,12 +180,12 @@ namespace FacilityManagement.Web.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> DeleteInventoryObjectAjaxAsync(int id)
+        public IActionResult DeleteInventoryObjectAjax(int id)
         {
             var ModalDeleteModel = new ModalDelete()
             {
                 Controller = "InventoryObjects",
-                Action = "DeleteInventoryObjectAjaxAsync",
+                Action = "DeleteInventoryObjectAjax",
                 ModelId = id,
                 Message = ""
             };
@@ -193,8 +193,8 @@ namespace FacilityManagement.Web.Controllers
             return PartialView("Modals/_ModalDelete", model: ModalDeleteModel);
         }
 
-        [HttpPost, ActionName("DeleteInventoryObjectAjaxAsync")]
-        public async Task<IActionResult> DeleteInventoryObjectAjaxAsyncConfirmed(int id)
+        [HttpPost, ActionName("DeleteInventoryObjectAjax")]
+        public async Task<IActionResult> DeleteInventoryObjectAjaxConfirmedAsync(int id)
         {
             var httpClient = await _facilityManagementHttpClient.GetClient();
             var response = await httpClient.DeleteAsync($"api/inventory/{id}").ConfigureAwait(false);

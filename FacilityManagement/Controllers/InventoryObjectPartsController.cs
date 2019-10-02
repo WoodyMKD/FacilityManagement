@@ -27,7 +27,7 @@ namespace FacilityManagement.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddInventoryObjectPartAjaxFormAsync(int id)
+        public IActionResult AddInventoryObjectPartAjaxFormAsync(int id)
         {
             return PartialView("FormModals/_AddPartFormPartial", new PartDetailsViewModel() { InventoryObjectSystemId = id });
         }
@@ -76,12 +76,12 @@ namespace FacilityManagement.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditInventoryObjectPartAjaxFormAsync(int id)
+        public IActionResult EditInventoryObjectPartAjaxForm(int id)
         {
             return PartialView("FormModals/_UpdatePartFormPartial", new UpdatePartDetailsViewModel() { InventoryObjectPartId = id });
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("EditInventoryObjectPartAjaxForm")]
         public async Task<IActionResult> EditInventoryObjectPartAjaxFormAsync(UpdatePartDetailsViewModel updatedModel)
         {
             if (!ModelState.IsValid)
@@ -125,12 +125,12 @@ namespace FacilityManagement.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteInventoryObjectPartAjaxAsync(int id)
+        public IActionResult DeleteInventoryObjectPartAjax(int id)
         {
             var ModalDeleteModel = new ModalDelete()
             {
                 Controller = "InventoryObjectParts",
-                Action = "DeleteInventoryObjectPartAjaxAsync",
+                Action = "DeleteInventoryObjectPartAjax",
                 ModelId = id,
                 Message = ""
             };
@@ -138,8 +138,8 @@ namespace FacilityManagement.Web.Controllers
             return PartialView("Modals/_ModalDelete", model: ModalDeleteModel);
         }
 
-        [HttpPost, ActionName("DeleteInventoryObjectPartAjaxAsync")]
-        public async Task<IActionResult> DeleteInventoryObjectPartAjaxAsyncConfirmed(int id)
+        [HttpPost, ActionName("DeleteInventoryObjectPartAjax")]
+        public async Task<IActionResult> DeleteInventoryObjectPartAjaxConfirmedAsync(int id)
         {
             var httpClient = await _facilityManagementHttpClient.GetClient();
             var response = await httpClient.DeleteAsync($"api/inventory/parts/{id}").ConfigureAwait(false);
