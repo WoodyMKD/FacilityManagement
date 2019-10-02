@@ -78,7 +78,7 @@ function reloadSystemsAndParts(selectedType) {
         $('#ajax-full-details-box-loading').show();
     }
 
-    var urlStr = "/InventoryObjectSystems/GetInventoryObjectSystemsAndPartsPartial/" + selectedType;
+    var urlStr = "/InventoryObjectSystems/GetInventoryObjectSystemsAndPartsPartialInspection/" + selectedType;
 
     $.ajax({
         type: "GET",
