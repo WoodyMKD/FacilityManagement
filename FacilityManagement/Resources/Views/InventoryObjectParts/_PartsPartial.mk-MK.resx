@@ -129,6 +129,12 @@
   <data name="Edit" xml:space="preserve">
     <value>Измени</value>
   </data>
+  <data name="Inspect" xml:space="preserve">
+    <value>Инспект</value>
+  </data>
+  <data name="Inspection" xml:space="preserve">
+    <value>Контрола</value>
+  </data>
   <data name="Last service" xml:space="preserve">
     <value>Последен сервис</value>
   </data>
